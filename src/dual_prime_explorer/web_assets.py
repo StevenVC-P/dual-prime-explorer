@@ -50,6 +50,64 @@ a { color: inherit; }
 .hero-block { border-radius: 24px; padding: 22px; margin-bottom: 22px; }
 .hero-copy { max-width: 68ch; }
 .theory-copy { max-width: 76ch; }
+.lab-layout { display: grid; grid-template-columns: minmax(220px, 260px) minmax(0, 1fr) minmax(220px, 280px); gap: 16px; align-items: start; }
+.explorer-lab-controls { position: sticky; top: 18px; }
+.lab-visualization-card, .lab-context-card { border: 1px solid var(--line); border-radius: 20px; background: var(--panel-soft); padding: 16px; min-width: 0; }
+.lab-card-header { display: flex; justify-content: space-between; gap: 10px; align-items: end; margin-bottom: 12px; }
+.lab-card-copy { display: grid; gap: 6px; }
+.lab-visual-tools { display: grid; gap: 10px; margin-bottom: 12px; }
+.lab-view-switch { display: flex; flex-wrap: wrap; gap: 8px; }
+.lab-view-button { border: 1px solid var(--line); background: rgba(255, 255, 255, 0.82); color: var(--muted); border-radius: 999px; padding: 8px 12px; cursor: pointer; }
+.lab-view-button.active { background: var(--accent); border-color: var(--accent); color: white; }
+.lab-view-button:hover, .lab-view-button:focus-visible { outline: none; border-color: var(--line-strong); color: var(--ink); }
+.lab-view-button.active:hover, .lab-view-button.active:focus-visible { color: white; }
+.lab-mode-note { color: var(--muted); font-size: 0.95rem; }
+.visualization-stage { min-height: 420px; border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(248,245,238,0.96) 100%); padding: 12px; overflow: auto; }
+.visualization-empty { padding: 18px; border-radius: 14px; background: rgba(24, 21, 18, 0.03); color: var(--muted); }
+.visualization-svg { display: block; width: 100%; min-width: 520px; height: auto; }
+.lab-visual-summary { display: grid; gap: 12px; margin-top: 14px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255, 255, 255, 0.72); }
+.lab-visual-summary .definition-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+.lab-visual-summary .definition-row { padding: 12px; border: 1px solid rgba(24, 21, 18, 0.08); border-radius: 14px; background: rgba(248, 245, 238, 0.9); grid-template-columns: 1fr; gap: 6px; }
+.lab-visual-summary .definition-row:first-child { padding-top: 12px; }
+.lab-visual-summary .definition-term { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.lab-visual-summary .definition-value { font-size: 1.9rem; line-height: 1; }
+.viz-bridge { fill: rgba(217, 119, 6, 0.14); stroke: rgba(217, 119, 6, 0.18); stroke-width: 1; }
+.viz-cell { stroke: rgba(24, 21, 18, 0.08); stroke-width: 1; transition: transform 120ms ease, stroke-width 120ms ease, stroke 120ms ease; }
+.viz-cell.composite { fill: #ebe4d9; }
+.viz-cell.unit { fill: #f2ede5; }
+.viz-cell.prime { fill: #5f8f72; }
+.viz-cell.twin-prime { fill: #14532d; stroke: rgba(20, 83, 45, 0.3); }
+.viz-cell.twin-center { fill: #d97706; stroke: rgba(180, 83, 9, 0.3); }
+.visualization-svg.mode-mod6 .viz-cell.residue-0, .visualization-svg.mode-mod6 .viz-cell.residue-2, .visualization-svg.mode-mod6 .viz-cell.residue-3, .visualization-svg.mode-mod6 .viz-cell.residue-4 { opacity: 0.72; }
+.visualization-svg.mode-mod6 .viz-cell.residue-1, .visualization-svg.mode-mod6 .viz-cell.residue-5 { opacity: 1; }
+.viz-cell-label { font-family: Georgia, "Times New Roman", serif; font-size: 11px; text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
+.viz-header-label { font-family: Georgia, "Times New Roman", serif; font-size: 11px; text-anchor: middle; fill: var(--muted); }
+.viz-cell-label.light { fill: #fffdf9; }
+.viz-cell-label.dark { fill: #3f372f; }
+.viz-cell-group { cursor: pointer; }
+.viz-cell-group:hover .viz-cell, .viz-cell-group:focus-visible .viz-cell { stroke: rgba(24, 21, 18, 0.35); stroke-width: 2; }
+.viz-cell-group.selected .viz-cell { stroke: #181512; stroke-width: 3; }
+.lab-hover-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.lab-inline-button { border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; background: transparent; color: var(--ink); font: inherit; cursor: pointer; }
+.lab-inline-button:hover, .lab-inline-button:focus-visible { outline: none; border-color: var(--line-strong); background: rgba(24, 21, 18, 0.03); }
+.lab-hover-card { display: grid; gap: 12px; padding: 16px; border-radius: 16px; background: rgba(255, 255, 255, 0.78); border: 1px solid var(--line); margin-bottom: 14px; }
+.lab-hover-header { display: grid; gap: 6px; }
+.lab-hover-number { font-size: 2rem; line-height: 1; }
+.lab-hover-kicker { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.76rem; color: var(--muted); }
+.lab-hover-pair { display: inline-flex; align-items: center; gap: 6px; width: fit-content; padding: 6px 10px; border-radius: 999px; background: rgba(20, 83, 45, 0.08); color: var(--accent); border: 1px solid rgba(20, 83, 45, 0.12); font-size: 0.88rem; }
+.lab-fact-list { display: grid; gap: 10px; }
+.lab-fact { display: grid; gap: 5px; padding-top: 10px; border-top: 1px solid rgba(24, 21, 18, 0.08); }
+.lab-fact:first-child { border-top: 0; padding-top: 0; }
+.lab-fact-label { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.lab-fact-value { color: var(--ink); line-height: 1.5; word-break: break-word; }
+.lab-divisor-box { max-height: 160px; overflow: auto; padding: 10px 12px; border-radius: 12px; background: rgba(24, 21, 18, 0.03); border: 1px solid rgba(24, 21, 18, 0.08); }
+.lab-legend { display: grid; gap: 10px; margin-bottom: 14px; }
+.lab-legend-item { display: flex; align-items: center; gap: 10px; color: var(--muted); }
+.lab-swatch { width: 14px; height: 14px; border-radius: 999px; border: 1px solid rgba(24, 21, 18, 0.08); display: inline-block; }
+.lab-swatch.composite { background: #ebe4d9; }
+.lab-swatch.prime { background: #5f8f72; }
+.lab-swatch.twin-prime { background: #14532d; }
+.lab-swatch.twin-center { background: #d97706; }
 .eyebrow { margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.76rem; color: var(--accent); }
 h1, h2, h3, h4 { margin: 0; font-weight: 600; }
 h1 { font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.02; letter-spacing: -0.02em; }
@@ -255,7 +313,8 @@ p { margin: 0; line-height: 1.65; }
   .filter-group-grid-wide { grid-template-columns: 1fr; }
 }
 @media (max-width: 900px) {
-  .site-header, .hero-grid, .theory-layout { grid-template-columns: 1fr; display: grid; }
+  .site-header, .hero-grid, .theory-layout, .lab-layout { grid-template-columns: 1fr; display: grid; }
+  .explorer-lab-controls { position: static; }
   .site-header { gap: 14px; }
   .top-nav { justify-content: flex-start; }
   .definition-row { grid-template-columns: 1fr; gap: 4px; }
@@ -281,7 +340,11 @@ p { margin: 0; line-height: 1.65; }
 COMMON_ANALYSIS_JS = """const state = {
   activeTab: 'modular',
   analysis: null,
+  visualHoverNumber: null,
+  selectedVisualNumber: null,
+  visualMode: 'standard',
 };
+const analysisCache = new Map();
 
 const form = document.getElementById('analysis-form');
 const statusText = document.getElementById('status-text');
@@ -649,24 +712,35 @@ function renderAnalysisTabs() {
 }
 
 async function fetchAnalysis(start, end, onSuccess) {
-  statusText.textContent = 'Analyzing...';
+  const cacheKey = `${start}-${end}`;
+  if (statusText) {
+    statusText.textContent = 'Analyzing...';
+  }
   try {
-    const response = await fetch(`/api/analyze?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`);
-    if (!response.ok) {
-      const errorPayload = await response.json();
-      throw new Error(errorPayload.error || 'Request failed.');
+    let analysis = analysisCache.get(cacheKey);
+    if (!analysis) {
+      const response = await fetch(`/api/analyze?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`);
+      if (!response.ok) {
+        const errorPayload = await response.json();
+        throw new Error(errorPayload.error || 'Request failed.');
+      }
+      analysis = await response.json();
+      analysisCache.set(cacheKey, analysis);
     }
-    const analysis = await response.json();
     state.analysis = analysis;
     renderSummary(analysis);
     if (onSuccess) {
       onSuccess(analysis);
     }
     renderAnalysisTabs();
-    statusText.textContent = `Computed ${analysis.twin_pairs.length} twin-prime pairs in ${analysis.start}-${analysis.limit}.`;
+    if (statusText) {
+      statusText.textContent = `Computed ${analysis.twin_pairs.length} twin-prime pairs in ${analysis.start}-${analysis.limit}.`;
+    }
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
-    statusText.textContent = 'Analysis failed.';
+    if (statusText) {
+      statusText.textContent = 'Analysis failed.';
+    }
     if (tabContent) {
       tabContent.innerHTML = `<div class="error">${message}</div>`;
     }
@@ -688,6 +762,16 @@ const filterMin = document.getElementById('filter-min');
 const filterMax = document.getElementById('filter-max');
 const filterReset = document.getElementById('filter-reset');
 const filterStatus = document.getElementById('table-filter-status');
+const visualizationStage = document.getElementById('visualization-stage');
+const visualizationHover = document.getElementById('visualization-hover');
+const visualizationRangeLabel = document.getElementById('visualization-range-label');
+const explorerVisualSummary = document.getElementById('explorer-visual-summary');
+const visualizationModeButtons = Array.from(document.querySelectorAll('[data-visual-mode]'));
+const visualizationModeNote = document.getElementById('visualization-mode-note');
+const startInput = document.getElementById('start-input');
+const endInput = document.getElementById('end-input');
+let explorerRangeTimer = null;
+
 function parseDivisorFilterValues() {
   if (!filterDivisors || !filterDivisors.value.trim()) {
     return [];
@@ -734,7 +818,6 @@ function getFilteredRows(rows) {
   });
 }
 
-
 function getVisibleNumberTableColumns() {
   const selectedColumns = filterColumnOptions.filter((option) => option.checked).map((option) => option.value);
   const columnDefinitions = [
@@ -748,6 +831,239 @@ function getVisibleNumberTableColumns() {
     { label: 'Number', render: (row) => row.number },
     ...columnDefinitions.filter((column) => selectedColumns.includes(column.key)),
   ];
+}
+
+function getVisualizationKind(row) {
+  if (row.is_pair_center) {
+    return 'twin-center';
+  }
+  if (row.prime_role === 'prime_in_twin_pair') {
+    return 'twin-prime';
+  }
+  if (row.number_type === 'prime') {
+    return 'prime';
+  }
+  if (row.number_type === 'unit') {
+    return 'unit';
+  }
+  return 'composite';
+}
+
+function getVisualizationLabel(row) {
+  const labels = {
+    'twin-center': 'Twin center',
+    'twin-prime': 'Twin prime',
+    prime: 'Prime',
+    unit: 'Unit',
+    composite: 'Composite',
+  };
+  return labels[getVisualizationKind(row)] || 'Number';
+}
+
+function buildVisualizationModel(analysis) {
+  const rows = analysis.number_classifications;
+  const isMod6 = state.visualMode === 'mod6';
+  const columns = isMod6 ? 6 : Math.min(28, Math.max(12, Math.ceil(Math.sqrt(rows.length))));
+  const baseNumber = isMod6 ? analysis.start - (analysis.start % 6) : analysis.start;
+  const placements = rows.map((row, index) => {
+    const layoutIndex = isMod6 ? row.number - baseNumber : index;
+    return { row, layoutIndex };
+  });
+  const maxLayoutIndex = placements.length ? Math.max(...placements.map((item) => item.layoutIndex)) : 0;
+  const slotCount = maxLayoutIndex + 1;
+  const rowIndexByNumber = new Map(placements.map((item) => [item.row.number, item.layoutIndex]));
+  const sequences = analysis.twin_pairs.map((pair) => {
+    const [left, right] = pair;
+    const center = (left + right) / 2;
+    const leftIndex = rowIndexByNumber.get(left);
+    const centerIndex = rowIndexByNumber.get(center);
+    const rightIndex = rowIndexByNumber.get(right);
+    const rowBand = leftIndex === undefined ? null : Math.floor(leftIndex / columns);
+    const sameRow = leftIndex !== undefined && centerIndex !== undefined && rightIndex !== undefined
+      && Math.floor(centerIndex / columns) === rowBand
+      && Math.floor(rightIndex / columns) === rowBand;
+    return { pair, center, leftIndex, centerIndex, rightIndex, sameRow };
+  }).filter((item) => item.sameRow);
+  const residueHeaders = isMod6 ? Array.from({ length: 6 }, (_, residue) => residue) : [];
+  return { rows, columns, placements, slotCount, sequences, isMod6, residueHeaders };
+}
+
+function syncVisualizationSelectionStyles() {
+  if (!visualizationStage) {
+    return;
+  }
+  const groups = Array.from(visualizationStage.querySelectorAll('[data-number-cell]'));
+  groups.forEach((group) => {
+    const number = Number(group.getAttribute('data-number-cell'));
+    group.classList.toggle('selected', state.selectedVisualNumber === number);
+  });
+}
+
+function renderVisualizationContext(analysis) {
+  if (!visualizationHover || !explorerVisualSummary) {
+    return;
+  }
+  const byNumber = new Map(analysis.number_classifications.map((row) => [row.number, row]));
+  const focusedNumber = state.selectedVisualNumber ?? state.visualHoverNumber;
+  const focused = focusedNumber ? byNumber.get(focusedNumber) : null;
+  const twinCenterCount = analysis.number_classifications.filter((row) => row.is_pair_center).length;
+
+  explorerVisualSummary.innerHTML = makeDefinitionList([
+    { term: 'Prime count', value: formatValue(analysis.primes.length) },
+    { term: 'Twin primes', value: formatValue(analysis.paired_primes.length) },
+    { term: 'Twin centers', value: formatValue(twinCenterCount) },
+    { term: 'Range size', value: formatValue(analysis.limit - analysis.start + 1) },
+  ]);
+
+  if (!focused) {
+    visualizationHover.innerHTML = `
+      <span class="lab-hover-kicker">Hover or select a number</span>
+      <div class="lab-hover-number">${analysis.start}-${analysis.limit}</div>
+      <p>Prime numbers, twin-prime members, and twin centers are all visible in the field. Hover to browse, or click a number to pin it here.</p>
+    `;
+    return;
+  }
+
+  const divisors = focused.all_divisors?.length ? focused.all_divisors.join(', ') : 'None';
+  const selectionMode = state.selectedVisualNumber === focused.number ? 'Pinned selection' : 'Hover preview';
+  const pairBadge = focused.center_of_pair ? `<div class="lab-hover-pair">Pair ${focused.center_of_pair.join(' - ')}</div>` : '';
+  visualizationHover.innerHTML = `
+    <div class="lab-hover-header">
+      <span class="lab-hover-kicker">${selectionMode}</span>
+      <div class="lab-hover-number">${focused.number}</div>
+      <p>${focused.is_pair_center ? 'This number sits exactly between two twin primes.' : formatPrimeRole(focused)}</p>
+      ${pairBadge}
+    </div>
+    <div class="lab-fact-list">
+      <div class="lab-fact">
+        <span class="lab-fact-label">Number type</span>
+        <div class="lab-fact-value">${formatNumberType(focused)}</div>
+      </div>
+      <div class="lab-fact">
+        <span class="lab-fact-label">Neighborhood</span>
+        <div class="lab-fact-value">${formatAdjacentPrimeRole(focused)}</div>
+      </div>
+      <div class="lab-fact">
+        <span class="lab-fact-label">Prime divisors</span>
+        <div class="lab-fact-value">${formatDivisibility(focused)}</div>
+      </div>
+      <div class="lab-fact">
+        <span class="lab-fact-label">All divisors</span>
+        <div class="lab-fact-value lab-divisor-box">${divisors}</div>
+      </div>
+    </div>
+    ${state.selectedVisualNumber === focused.number ? '<div class="lab-hover-actions"><button id="clear-visual-selection" class="lab-inline-button" type="button">Clear selection</button></div>' : ''}
+  `;
+
+  const clearButton = document.getElementById('clear-visual-selection');
+  clearButton?.addEventListener('click', () => {
+    state.selectedVisualNumber = null;
+    syncVisualizationSelectionStyles();
+    renderVisualizationContext(analysis);
+  });
+}
+
+function renderExplorerVisualization(analysis) {
+  if (!visualizationStage) {
+    return;
+  }
+  const model = buildVisualizationModel(analysis);
+  const slotCount = model.slotCount;
+  const columns = model.columns;
+  const cellSize = model.isMod6 ? 38 : slotCount > 420 ? 24 : slotCount > 240 ? 28 : 34;
+  const gap = model.isMod6 ? 8 : slotCount > 420 ? 4 : 6;
+  const padding = 16;
+  const headerHeight = model.isMod6 ? 26 : 0;
+  const rows = Math.ceil(slotCount / columns);
+  const svgWidth = padding * 2 + columns * cellSize + (columns - 1) * gap;
+  const svgHeight = padding * 2 + headerHeight + rows * cellSize + (rows - 1) * gap;
+
+  function cellPosition(index) {
+    const col = index % columns;
+    const row = Math.floor(index / columns);
+    return {
+      x: padding + col * (cellSize + gap),
+      y: padding + headerHeight + row * (cellSize + gap),
+      row,
+      col,
+    };
+  }
+
+  const headerMarkup = model.residueHeaders.map((residue) => {
+    const x = padding + residue * (cellSize + gap) + cellSize / 2;
+    return `<text class="viz-header-label" x="${x}" y="${padding + 10}">${residue}</text>`;
+  }).join('');
+
+  const bridgeMarkup = model.sequences.map((sequence) => {
+    const left = cellPosition(sequence.leftIndex);
+    return `<rect class="viz-bridge" x="${left.x - 3}" y="${left.y - 4}" width="${cellSize * 3 + gap * 2 + 6}" height="${cellSize + 8}" rx="${Math.floor(cellSize / 2)}"></rect>`;
+  }).join('');
+
+  const cellMarkup = model.placements.map(({ row, layoutIndex }) => {
+    const position = cellPosition(layoutIndex);
+    const kind = getVisualizationKind(row);
+    const labelTone = kind === 'composite' || kind === 'unit' ? 'dark' : 'light';
+    const selectedClass = state.selectedVisualNumber === row.number ? ' selected' : '';
+    const residueClass = model.isMod6 ? ` residue-${row.number % 6}` : '';
+    return `
+      <g class="viz-cell-group${selectedClass}" data-number-cell="${row.number}" role="button" tabindex="0" aria-label="Inspect ${row.number}">
+        <title>${row.number}: ${getVisualizationLabel(row)}</title>
+        <rect class="viz-cell ${kind}${residueClass}" x="${position.x}" y="${position.y}" width="${cellSize}" height="${cellSize}" rx="${Math.max(8, Math.floor(cellSize / 3))}"></rect>
+        <text class="viz-cell-label ${labelTone}" x="${position.x + cellSize / 2}" y="${position.y + cellSize / 2 + 0.5}">${row.number}</text>
+      </g>
+    `;
+  }).join('');
+
+  const svgModeClass = model.isMod6 ? ' mode-mod6' : '';
+  visualizationStage.innerHTML = `
+    <svg class="visualization-svg${svgModeClass}" viewBox="0 0 ${svgWidth} ${svgHeight}" role="img" aria-label="Twin prime visualization for ${analysis.start} to ${analysis.limit}">
+      ${headerMarkup}
+      ${bridgeMarkup}
+      ${cellMarkup}
+    </svg>
+  `;
+
+  const cellGroups = Array.from(visualizationStage.querySelectorAll('[data-number-cell]'));
+  cellGroups.forEach((group) => {
+    const number = Number(group.getAttribute('data-number-cell'));
+    group.addEventListener('mouseenter', () => {
+      state.visualHoverNumber = number;
+      renderVisualizationContext(analysis);
+    });
+    group.addEventListener('click', () => {
+      state.selectedVisualNumber = state.selectedVisualNumber === number ? null : number;
+      syncVisualizationSelectionStyles();
+      renderVisualizationContext(analysis);
+    });
+    group.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        state.selectedVisualNumber = state.selectedVisualNumber === number ? null : number;
+        syncVisualizationSelectionStyles();
+        renderVisualizationContext(analysis);
+      }
+    });
+  });
+  visualizationStage.onmouseleave = () => {
+    state.visualHoverNumber = null;
+    renderVisualizationContext(analysis);
+  };
+
+  syncVisualizationSelectionStyles();
+  if (visualizationRangeLabel) {
+    visualizationRangeLabel.textContent = `Range ${analysis.start}-${analysis.limit}`;
+  }
+  if (visualizationModeNote) {
+    visualizationModeNote.textContent = state.visualMode === 'mod6'
+      ? 'mod 6 view arranges numbers by residue class. Primes greater than 3 land in the 1 and 5 columns, while twin centers fall in the 0 column.'
+      : 'Standard view keeps the field compact so prime, twin-prime, and twin-center clusters are easy to scan.';
+  }
+  visualizationModeButtons.forEach((button) => {
+    const isActive = button.dataset.visualMode === state.visualMode;
+    button.classList.toggle('active', isActive);
+    button.setAttribute('aria-pressed', String(isActive));
+  });
+  renderVisualizationContext(analysis);
 }
 
 function renderNumberTable(analysis) {
@@ -768,17 +1084,58 @@ function renderNumberTable(analysis) {
   }
 }
 
+function renderExplorerSurface(analysis) {
+  renderExplorerVisualization(analysis);
+  renderNumberTable(analysis);
+}
+
 function rerenderExplorerTable() {
   if (state.analysis) {
     renderNumberTable(state.analysis);
   }
 }
 
-if (form && statusText) {
+function tryFetchExplorerRange() {
+  if (!startInput || !endInput) {
+    return;
+  }
+  const startValue = Number(startInput.value);
+  const endValue = Number(endInput.value);
+  if (!Number.isInteger(startValue) || !Number.isInteger(endValue)) {
+    return;
+  }
+  if (startValue < 1 || endValue < 2 || startValue > endValue) {
+    return;
+  }
+  fetchAnalysis(startValue, endValue, renderExplorerSurface);
+}
+
+function scheduleExplorerRangeUpdate() {
+  clearTimeout(explorerRangeTimer);
+  explorerRangeTimer = setTimeout(tryFetchExplorerRange, 140);
+}
+
+if (form) {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const formData = new FormData(form);
-    fetchAnalysis(formData.get('start'), formData.get('end'), renderNumberTable);
+    tryFetchExplorerRange();
+  });
+
+  [startInput, endInput].forEach((control) => {
+    control?.addEventListener('input', scheduleExplorerRangeUpdate);
+    control?.addEventListener('change', tryFetchExplorerRange);
+  });
+
+  visualizationModeButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const nextMode = button.dataset.visualMode || 'standard';
+      if (state.visualMode !== nextMode) {
+        state.visualMode = nextMode;
+        if (state.analysis) {
+          renderExplorerVisualization(state.analysis);
+        }
+      }
+    });
   });
 
   [filterRole, filterDivisors, filterDivisorLogic, filterMin, filterMax, ...filterNeighborhoodOptions, ...filterColumnOptions].forEach((control) => {
@@ -796,7 +1153,7 @@ if (form && statusText) {
     rerenderExplorerTable();
   });
 
-  fetchAnalysis(1, 100, renderNumberTable);
+  tryFetchExplorerRange();
 }
 """
 
@@ -1164,7 +1521,7 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
 <body>
   <div class="page-shell">
     <header class="site-header">
-      <a class="brand-mark" href="/explorer">
+      <a class="brand-mark" href="/lab">
         <span class="brand-kicker">Dual Prime Explorer</span>
         <span class="brand-title">Twin-prime analysis for computation and theory</span>
       </a>
