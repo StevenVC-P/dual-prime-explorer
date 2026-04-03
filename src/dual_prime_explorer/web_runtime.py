@@ -8,6 +8,8 @@ from dataclasses import asdict
 from math import log
 from typing import Any, TypedDict
 
+from .web_limits import MAX_WEB_END, MAX_WEB_RANGE_SIZE
+
 
 class WebRuntime(TypedDict):
     page_by_route: dict[str, Any]
@@ -230,6 +232,10 @@ def build_analysis_payload(
         raise ValueError("end must be at least 2")
     if start > end:
         raise ValueError("start must be less than or equal to end")
+    if end > MAX_WEB_END:
+        raise ValueError(f"end must be less than or equal to {MAX_WEB_END:,} for the web app")
+    if (end - start + 1) > MAX_WEB_RANGE_SIZE:
+        raise ValueError(f"range size must be {MAX_WEB_RANGE_SIZE:,} numbers or fewer")
 
     core_module = _load_core_module(dev_mode)
     raw_payload = asdict(core_module.analyze_primes_up_to(end, density_window=density_window))

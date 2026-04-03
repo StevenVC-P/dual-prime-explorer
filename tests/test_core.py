@@ -6,6 +6,7 @@ from dual_prime_explorer.core import analyze_primes_up_to, primes_up_to, twin_pr
 from dual_prime_explorer.web import build_analysis_payload, load_web_runtime
 from dual_prime_explorer.web_assets import build_page_registry
 from dual_prime_explorer.web_content import THEORY_TABS
+from dual_prime_explorer.web_limits import MAX_WEB_END, MAX_WEB_RANGE_SIZE
 from dual_prime_explorer.web_pages import PAGE_BY_ROUTE
 
 
@@ -194,6 +195,22 @@ def test_web_payload_supports_selected_ranges() -> None:
     assert payload["density_analysis"]["pair_density_stats"][-1]["window_end"] == 30
 
 
+
+def test_web_payload_enforces_range_limits() -> None:
+    try:
+        build_analysis_payload(MAX_WEB_END + 1, start=1)
+    except ValueError as error:
+        assert f"{MAX_WEB_END:,}" in str(error)
+    else:
+        raise AssertionError("expected end cap to be enforced")
+
+    try:
+        build_analysis_payload(MAX_WEB_RANGE_SIZE + 5, start=1)
+    except ValueError as error:
+        assert "range size" in str(error)
+    else:
+        raise AssertionError("expected range size cap to be enforced")
+
 def test_route_registry_is_ready_for_more_pages() -> None:
     assert set(PAGE_BY_ROUTE) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/experiments"}
     rendered_pages = build_page_registry()
@@ -235,6 +252,7 @@ def test_load_web_runtime_supports_dev_mode() -> None:
     assert set(runtime["page_by_route"]) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/experiments"}
     assert "Visualization Lab" in runtime["page_registry"]["/lab"]
     assert "visualization-stage" in runtime["page_registry"]["/lab"]
+    assert "visualization-pagination" in runtime["page_registry"]["/lab"]
     assert "Range Snapshot" in runtime["page_registry"]["/lab"]
     assert "Visualization mode" in runtime["page_registry"]["/lab"]
     assert ">Mod 6<" in runtime["page_registry"]["/lab"]
@@ -246,7 +264,12 @@ def test_load_web_runtime_supports_dev_mode() -> None:
     assert "/glossary#glossary-term-prime-neighborhood" in runtime["page_registry"]["/explorer"]
     assert "/glossary#glossary-term-divisor" in runtime["page_registry"]["/explorer"]
     assert "Range Start" in runtime["page_registry"]["/explorer"]
+    assert f"max=\"{MAX_WEB_END}\"" in runtime["page_registry"]["/lab"]
+    assert f"max=\"{MAX_WEB_END}\"" in runtime["page_registry"]["/explorer"]
     assert "Range End" in runtime["page_registry"]["/explorer"]
+    assert f"{MAX_WEB_RANGE_SIZE:,} numbers" in runtime["page_registry"]["/lab"]
+    assert f"{MAX_WEB_RANGE_SIZE:,} numbers" in runtime["page_registry"]["/explorer"]
+    assert f"{MAX_WEB_RANGE_SIZE:,} numbers" in runtime["page_registry"]["/analysis"]
     assert "Number Table" in runtime["page_registry"]["/explorer"]
     assert "filter-columns" in runtime["page_registry"]["/explorer"]
     assert "filter-divisors" in runtime["page_registry"]["/explorer"]
@@ -269,14 +292,32 @@ def test_load_web_runtime_supports_dev_mode() -> None:
     assert "renderExplorerVisualization" in runtime["explorer_js"]
     assert "buildVisualizationModel" in runtime["explorer_js"]
     assert "state.visualMode" in runtime["explorer_js"]
+    assert "const VISUAL_PAGE_COLUMNS = 24;" in runtime["explorer_js"]
+    assert "const VISUAL_PAGE_ROWS = 25;" in runtime["explorer_js"]
+    assert "const VISUAL_PAGE_SIZE = VISUAL_PAGE_COLUMNS * VISUAL_PAGE_ROWS;" in runtime["explorer_js"]
+    assert "getRangeValidationMessage" in runtime["explorer_js"]
+    assert "Range size must be" in runtime["explorer_js"]
+    assert "maxWebRangeSize" in runtime["explorer_js"]
     assert "mode-mod6" in runtime["explorer_js"]
-    assert "Primes greater than 3 land in the 1 and 5 columns" in runtime["explorer_js"]
+    assert "Page ${model.currentPage + 1} of ${model.pageCount}" in runtime["explorer_js"]
+    assert "data-page-action=\"prev\"" in runtime["explorer_js"]
+    assert "mode-factors" in runtime["explorer_js"]
+    assert "data-visual-mode=\"factors\"" in runtime["page_registry"]["/lab"]
+    assert "Mod 6 view arranges each page into repeating residue blocks" in runtime["explorer_js"]
     assert "Standard is the fastest way to scan the field." in runtime["explorer_js"]
+    assert "Factors reveals divisor-heavy composites." in runtime["explorer_js"]
+    assert "Twin Centers isolates where pairs occur." in runtime["explorer_js"]
+    assert "Highly divisible" in runtime["explorer_js"]
+    assert "factor-dense" in runtime["explorer_js"]
+    assert "mode-centers" in runtime["explorer_js"]
+    assert "kind-${kind}" in runtime["explorer_js"]
     assert "Why this matters" in runtime["explorer_js"]
     assert "Mod 6 makes the residue pattern visible." in runtime["explorer_js"]
+    assert "Twin Centers view pulls the background back so the centers between paired primes become the main landmarks in the field." in runtime["explorer_js"]
     assert "syncVisualizationSelectionStyles" in runtime["explorer_js"]
     assert "clear-visual-selection" in runtime["explorer_js"]
     assert "Pinned selection" in runtime["explorer_js"]
+    assert "Factor view:" in runtime["explorer_js"]
     assert "analysisCache" in runtime["explorer_js"]
     assert "tryFetchExplorerRange();" in runtime["explorer_js"]
     assert "Composite" in runtime["explorer_js"]
@@ -303,7 +344,6 @@ def test_load_web_runtime_supports_dev_mode() -> None:
     assert "Twin Prime History Timeline" in runtime["theory_js"]
     assert "Last reviewed: April 2026" in runtime["page_registry"]["/theory"]
     assert "Glossary links" in runtime["page_registry"]["/theory"]
-    assert "These pills open glossary entries for the theory concepts below." in runtime["page_registry"]["/theory"]
     assert "Open glossary entry: Hardy-Littlewood Conjecture" in runtime["page_registry"]["/theory"]
     assert "What did Yitang Zhang prove?" in runtime["page_registry"]["/theory"]
     assert "Hardy-Littlewood prime pair conjecture" in runtime["page_registry"]["/theory"] or "Hardy-Littlewood" in runtime["page_registry"]["/theory"]

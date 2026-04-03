@@ -8,6 +8,7 @@ import json
 import re
 
 from .web_content import GLOSSARY_SECTIONS, THEORY_TABS
+from .web_limits import MAX_WEB_END, MAX_WEB_RANGE_SIZE
 from .web_pages import PAGE_DEFINITIONS, PageDefinition
 
 APP_CSS = """:root {
@@ -63,6 +64,12 @@ a { color: inherit; }
 .lab-view-button:hover, .lab-view-button:focus-visible { outline: none; border-color: var(--line-strong); color: var(--ink); }
 .lab-view-button.active:hover, .lab-view-button.active:focus-visible { color: white; }
 .lab-mode-note { color: var(--muted); font-size: 0.95rem; }
+.lab-pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255, 255, 255, 0.72); }
+.lab-pagination-status { color: var(--muted); font-size: 0.92rem; }
+.lab-pagination-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.lab-page-button { border: 1px solid var(--line); background: white; color: var(--ink); border-radius: 999px; padding: 8px 12px; cursor: pointer; font: inherit; }
+.lab-page-button:hover, .lab-page-button:focus-visible { outline: none; border-color: var(--line-strong); }
+.lab-page-button:disabled { cursor: default; opacity: 0.45; }
 .visualization-stage { min-height: 420px; border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(248,245,238,0.96) 100%); padding: 12px; overflow: auto; }
 .visualization-empty { padding: 18px; border-radius: 14px; background: rgba(24, 21, 18, 0.03); color: var(--muted); }
 .visualization-svg { display: block; width: 100%; min-width: 520px; height: auto; }
@@ -76,11 +83,25 @@ a { color: inherit; }
 .viz-cell { stroke: rgba(24, 21, 18, 0.08); stroke-width: 1; transition: transform 120ms ease, stroke-width 120ms ease, stroke 120ms ease; }
 .viz-cell.composite { fill: #ebe4d9; }
 .viz-cell.unit { fill: #f2ede5; }
+.viz-cell.factor-simple { fill: #e8dfd3; }
+.viz-cell.factor-moderate { fill: #dcccb8; }
+.viz-cell.factor-rich { fill: #cab08f; }
+.viz-cell.factor-dense { fill: #b08f6d; }
 .viz-cell.prime { fill: #5f8f72; }
 .viz-cell.twin-prime { fill: #14532d; stroke: rgba(20, 83, 45, 0.3); }
 .viz-cell.twin-center { fill: #d97706; stroke: rgba(180, 83, 9, 0.3); }
 .visualization-svg.mode-mod6 .viz-cell.residue-0, .visualization-svg.mode-mod6 .viz-cell.residue-2, .visualization-svg.mode-mod6 .viz-cell.residue-3, .visualization-svg.mode-mod6 .viz-cell.residue-4 { opacity: 0.72; }
 .visualization-svg.mode-mod6 .viz-cell.residue-1, .visualization-svg.mode-mod6 .viz-cell.residue-5 { opacity: 1; }
+.visualization-svg.mode-centers .viz-cell-group { opacity: 0.12; }
+.visualization-svg.mode-centers .viz-cell-group.kind-prime { opacity: 0.32; }
+.visualization-svg.mode-centers .viz-cell-group.kind-twin-prime { opacity: 0.62; }
+.visualization-svg.mode-centers .viz-cell-group.kind-twin-center { opacity: 1; }
+.visualization-svg.mode-centers .viz-cell-group.kind-twin-center .viz-cell { stroke: rgba(180, 83, 9, 0.6); stroke-width: 2.8; filter: drop-shadow(0 0 0 rgba(255,255,255,0)) drop-shadow(0 2px 8px rgba(180, 83, 9, 0.24)); }
+.visualization-svg.mode-centers .viz-cell-label { opacity: 0.12; }
+.visualization-svg.mode-centers .viz-cell-group.kind-prime .viz-cell-label { opacity: 0.38; }
+.visualization-svg.mode-centers .viz-cell-group.kind-twin-prime .viz-cell-label { opacity: 0.76; }
+.visualization-svg.mode-centers .viz-cell-group.kind-twin-center .viz-cell-label { opacity: 1; font-size: 12px; }
+.visualization-svg.mode-centers .viz-bridge { fill: transparent; stroke: rgba(180, 83, 9, 0.24); stroke-width: 1.4; }
 .viz-cell-label { font-family: Georgia, "Times New Roman", serif; font-size: 11px; text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
 .viz-header-label { font-family: Georgia, "Times New Roman", serif; font-size: 11px; text-anchor: middle; fill: var(--muted); }
 .viz-cell-label.light { fill: #fffdf9; }
@@ -373,8 +394,14 @@ COMMON_ANALYSIS_JS = """const state = {
   visualHoverNumber: null,
   selectedVisualNumber: null,
   visualMode: 'standard',
+  visualPage: 0,
 };
 const analysisCache = new Map();
+const maxWebRangeSize = 20000;
+const maxWebEnd = 200000;
+const VISUAL_PAGE_COLUMNS = 24;
+const VISUAL_PAGE_ROWS = 25;
+const VISUAL_PAGE_SIZE = VISUAL_PAGE_COLUMNS * VISUAL_PAGE_ROWS;
 
 const form = document.getElementById('analysis-form');
 const statusText = document.getElementById('status-text');
@@ -811,6 +838,43 @@ function getAnalysisTabExplanation(analysis) {
   return explanations[state.activeTab];
 }
 
+function getRangeValidationMessage(start, end) {
+  if (!Number.isInteger(start) || !Number.isInteger(end)) {
+    return 'Range values must be whole numbers.';
+  }
+  if (start < 1) {
+    return 'Range start must be at least 1.';
+  }
+  if (end < 2) {
+    return 'Range end must be at least 2.';
+  }
+  if (start > end) {
+    return 'Range start must be less than or equal to range end.';
+  }
+  if (end > maxWebEnd) {
+    return `Range end must be ${formatValue(maxWebEnd)} or lower in the web app.`;
+  }
+  if ((end - start + 1) > maxWebRangeSize) {
+    return `Range size must be ${formatValue(maxWebRangeSize)} numbers or fewer.`;
+  }
+  return null;
+}
+
+function showRangeValidationError(message) {
+  if (statusText) {
+    statusText.textContent = 'Range limit reached.';
+  }
+  if (visualizationRangeLabel) {
+    visualizationRangeLabel.textContent = 'Range limit reached.';
+  }
+  if (visualizationStage) {
+    visualizationStage.innerHTML = `<div class="error">${message}</div>`;
+  }
+  if (tabContent) {
+    tabContent.innerHTML = `<div class="error">${message}</div>`;
+  }
+}
+
 function renderAnalysisTabs() {
   if (!tabContent) {
     return;
@@ -884,6 +948,7 @@ const visualizationRangeLabel = document.getElementById('visualization-range-lab
 const explorerVisualSummary = document.getElementById('explorer-visual-summary');
 const visualizationModeButtons = Array.from(document.querySelectorAll('[data-visual-mode]'));
 const visualizationModeNote = document.getElementById('visualization-mode-note');
+const visualizationPagination = document.getElementById('visualization-pagination');
 const startInput = document.getElementById('start-input');
 const endInput = document.getElementById('end-input');
 let explorerRangeTimer = null;
@@ -976,17 +1041,61 @@ function getVisualizationLabel(row) {
   return labels[getVisualizationKind(row)] || 'Number';
 }
 
+function getFactorBand(row) {
+  if (row.number_type !== 'composite') {
+    return null;
+  }
+  const divisorCount = row.divisor_count || 0;
+  if (divisorCount <= 4) {
+    return 'factor-simple';
+  }
+  if (divisorCount <= 6) {
+    return 'factor-moderate';
+  }
+  if (divisorCount <= 9) {
+    return 'factor-rich';
+  }
+  return 'factor-dense';
+}
+
+function getFactorBandLabel(row) {
+  const band = getFactorBand(row);
+  const labels = {
+    'factor-simple': 'Simple composite',
+    'factor-moderate': 'Moderately divisible composite',
+    'factor-rich': 'Divisor-rich composite',
+    'factor-dense': 'Highly divisible composite',
+  };
+  return labels[band] || '';
+}
+
 function buildVisualizationModel(analysis) {
   const rows = analysis.number_classifications;
   const isMod6 = state.visualMode === 'mod6';
-  const columns = isMod6 ? 6 : Math.min(28, Math.max(12, Math.ceil(Math.sqrt(rows.length))));
-  const baseNumber = isMod6 ? analysis.start - (analysis.start % 6) : analysis.start;
-  const placements = rows.map((row, index) => {
-    const layoutIndex = isMod6 ? row.number - baseNumber : index;
-    return { row, layoutIndex };
+  const isFactors = state.visualMode === 'factors';
+  const isCenters = state.visualMode === 'centers';
+  const pageCount = Math.max(1, Math.ceil(rows.length / VISUAL_PAGE_SIZE));
+  const currentPage = Math.min(state.visualPage, pageCount - 1);
+  if (state.visualPage !== currentPage) {
+    state.visualPage = currentPage;
+  }
+  const pageStartIndex = currentPage * VISUAL_PAGE_SIZE;
+  const pageRows = rows.slice(pageStartIndex, pageStartIndex + VISUAL_PAGE_SIZE);
+  const columns = VISUAL_PAGE_COLUMNS;
+  const pageRowCount = Math.max(1, Math.ceil(pageRows.length / VISUAL_PAGE_COLUMNS));
+  const pageSlotCount = pageRowCount * VISUAL_PAGE_COLUMNS;
+
+  const placements = pageRows.map((row, localIndex) => {
+    if (isMod6) {
+      const subgroup = Math.floor((localIndex % VISUAL_PAGE_COLUMNS) / 6);
+      const residue = ((row.number % 6) + 6) % 6;
+      const rowIndex = Math.floor(localIndex / VISUAL_PAGE_COLUMNS);
+      const layoutIndex = rowIndex * VISUAL_PAGE_COLUMNS + subgroup * 6 + residue;
+      return { row, layoutIndex };
+    }
+    return { row, layoutIndex: localIndex };
   });
-  const maxLayoutIndex = placements.length ? Math.max(...placements.map((item) => item.layoutIndex)) : 0;
-  const slotCount = maxLayoutIndex + 1;
+
   const rowIndexByNumber = new Map(placements.map((item) => [item.row.number, item.layoutIndex]));
   const sequences = analysis.twin_pairs.map((pair) => {
     const [left, right] = pair;
@@ -1000,8 +1109,35 @@ function buildVisualizationModel(analysis) {
       && Math.floor(rightIndex / columns) === rowBand;
     return { pair, center, leftIndex, centerIndex, rightIndex, sameRow };
   }).filter((item) => item.sameRow);
-  const residueHeaders = isMod6 ? Array.from({ length: 6 }, (_, residue) => residue) : [];
-  return { rows, columns, placements, slotCount, sequences, isMod6, residueHeaders };
+
+  const residueHeaders = isMod6 ? Array.from({ length: VISUAL_PAGE_COLUMNS }, (_, index) => index % 6) : [];
+  const factorBandCounts = pageRows.reduce((counts, row) => {
+    const band = getFactorBand(row);
+    if (band) {
+      counts[band] = (counts[band] || 0) + 1;
+    }
+    return counts;
+  }, {});
+  const pageStartNumber = pageRows.length ? pageRows[0].number : analysis.start;
+  const pageEndNumber = pageRows.length ? pageRows[pageRows.length - 1].number : analysis.limit;
+
+  return {
+    rows,
+    pageRows,
+    columns,
+    placements,
+    slotCount: pageSlotCount,
+    sequences,
+    isMod6,
+    isFactors,
+    isCenters,
+    residueHeaders,
+    factorBandCounts,
+    currentPage,
+    pageCount,
+    pageStartNumber,
+    pageEndNumber,
+  };
 }
 
 function syncVisualizationSelectionStyles() {
@@ -1023,12 +1159,13 @@ function renderVisualizationContext(analysis) {
   const focusedNumber = state.selectedVisualNumber ?? state.visualHoverNumber;
   const focused = focusedNumber ? byNumber.get(focusedNumber) : null;
   const twinCenterCount = analysis.number_classifications.filter((row) => row.is_pair_center).length;
+  const highlyDivisibleCount = analysis.number_classifications.filter((row) => getFactorBand(row) === 'factor-dense').length;
 
   explorerVisualSummary.innerHTML = makeDefinitionList([
     { term: 'Prime count', value: formatValue(analysis.primes.length) },
     { term: 'Twin primes', value: formatValue(analysis.paired_primes.length) },
     { term: 'Twin centers', value: formatValue(twinCenterCount) },
-    { term: 'Range size', value: formatValue(analysis.limit - analysis.start + 1) },
+    { term: state.visualMode === 'factors' ? 'Highly divisible' : 'Page size', value: formatValue(state.visualMode === 'factors' ? highlyDivisibleCount : Math.min(VISUAL_PAGE_SIZE, analysis.limit - analysis.start + 1)) },
   ]);
 
   const modeExplanation = state.visualMode === 'mod6'
@@ -1044,18 +1181,44 @@ function renderVisualizationContext(analysis) {
           { href: '/glossary#glossary-term-mod-6', label: 'Glossary: Mod 6' },
         ],
       }
-    : {
-        kicker: 'Active mode',
-        title: 'Standard is the fastest way to scan the field.',
-        body: 'This compact layout is best when you want a quick read of where primes, twin primes, and twin centers start to cluster.',
-        points: [
-          'Use this view first when you want a quick visual read of the field.',
-          'Pin a number when you want to stop the hover preview and inspect it in place.',
-        ],
-        links: [
-          { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
-        ],
-      };
+    : state.visualMode === 'factors'
+      ? {
+          kicker: 'Active mode',
+          title: 'Factors reveals divisor-heavy composites.',
+          body: 'This view keeps twin primes and twin centers visible while showing which composite numbers are simple, moderate, rich, or highly divisible.',
+          points: [
+            'Darker composites have more divisors and usually more arithmetic structure packed into them.',
+            'Twin centers stay distinct so you can compare pair structure against composite density at the same time.',
+          ],
+          links: [
+            { href: '/glossary#glossary-term-divisor', label: 'Glossary: Divisor' },
+          ],
+        }
+      : state.visualMode === 'centers'
+        ? {
+            kicker: 'Active mode',
+            title: 'Twin Centers isolates where pairs occur.',
+            body: 'This view pulls the background back so the numbers between twin primes become the main landmarks in the field.',
+            points: [
+              'Use this mode when the main question is where twin primes occur across the range.',
+              'Twin primes remain visible as supporting context around each highlighted center.',
+            ],
+            links: [
+              { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
+            ],
+          }
+        : {
+            kicker: 'Active mode',
+            title: 'Standard is the fastest way to scan the field.',
+            body: 'This compact layout is best when you want a quick read of where primes, twin primes, and twin centers start to cluster.',
+            points: [
+              'Use this view first when you want a quick visual read of the field.',
+              'Pin a number when you want to stop the hover preview and inspect it in place.',
+            ],
+            links: [
+              { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
+            ],
+          };
 
   if (!focused) {
     visualizationHover.innerHTML = `
@@ -1113,6 +1276,7 @@ function renderVisualizationContext(analysis) {
             body: 'Composite numbers and the unit 1 create the background that primes must avoid. Their divisor structure helps shape where prime patterns can appear.',
             points: [
               `Prime neighborhood: ${formatAdjacentPrimeRole(focused)}.`,
+              ...(state.visualMode === 'factors' && getFactorBandLabel(focused) ? [`Factor view: ${getFactorBandLabel(focused)}.`] : []),
             ],
             links: [
               { href: '/glossary#glossary-term-not-prime', label: 'Glossary: Not Prime' },
@@ -1163,10 +1327,10 @@ function renderExplorerVisualization(analysis) {
   const model = buildVisualizationModel(analysis);
   const slotCount = model.slotCount;
   const columns = model.columns;
-  const cellSize = model.isMod6 ? 38 : slotCount > 420 ? 24 : slotCount > 240 ? 28 : 34;
-  const gap = model.isMod6 ? 8 : slotCount > 420 ? 4 : 6;
+  const cellSize = model.isMod6 ? 30 : 30;
+  const gap = model.isMod6 ? 5 : 5;
   const padding = 16;
-  const headerHeight = model.isMod6 ? 26 : 0;
+  const headerHeight = model.isMod6 ? 24 : 0;
   const rows = Math.ceil(slotCount / columns);
   const svgWidth = padding * 2 + columns * cellSize + (columns - 1) * gap;
   const svgHeight = padding * 2 + headerHeight + rows * cellSize + (rows - 1) * gap;
@@ -1182,8 +1346,8 @@ function renderExplorerVisualization(analysis) {
     };
   }
 
-  const headerMarkup = model.residueHeaders.map((residue) => {
-    const x = padding + residue * (cellSize + gap) + cellSize / 2;
+  const headerMarkup = model.residueHeaders.map((residue, index) => {
+    const x = padding + index * (cellSize + gap) + cellSize / 2;
     return `<text class="viz-header-label" x="${x}" y="${padding + 10}">${residue}</text>`;
   }).join('');
 
@@ -1195,26 +1359,49 @@ function renderExplorerVisualization(analysis) {
   const cellMarkup = model.placements.map(({ row, layoutIndex }) => {
     const position = cellPosition(layoutIndex);
     const kind = getVisualizationKind(row);
+    const factorClass = model.isFactors ? getFactorBand(row) : null;
     const labelTone = kind === 'composite' || kind === 'unit' ? 'dark' : 'light';
     const selectedClass = state.selectedVisualNumber === row.number ? ' selected' : '';
     const residueClass = model.isMod6 ? ` residue-${row.number % 6}` : '';
     return `
-      <g class="viz-cell-group${selectedClass}" data-number-cell="${row.number}" role="button" tabindex="0" aria-label="Inspect ${row.number}">
-        <title>${row.number}: ${getVisualizationLabel(row)}</title>
-        <rect class="viz-cell ${kind}${residueClass}" x="${position.x}" y="${position.y}" width="${cellSize}" height="${cellSize}" rx="${Math.max(8, Math.floor(cellSize / 3))}"></rect>
-        <text class="viz-cell-label ${labelTone}" x="${position.x + cellSize / 2}" y="${position.y + cellSize / 2 + 0.5}">${row.number}</text>
+      <g class="viz-cell-group kind-${kind}${selectedClass}" data-number-cell="${row.number}" role="button" tabindex="0" aria-label="Inspect ${row.number}">
+        <title>${row.number}: ${getVisualizationLabel(row)}${factorClass ? `, ${getFactorBandLabel(row)}` : ''}</title>
+        <rect class="viz-cell ${kind}${residueClass}${factorClass ? ` ${factorClass}` : ''}" x="${position.x}" y="${position.y}" width="${cellSize}" height="${cellSize}" rx="${Math.max(8, Math.floor(cellSize / 3))}"></rect>
+        <text class="viz-cell-label ${labelTone} kind-${kind}" x="${position.x + cellSize / 2}" y="${position.y + cellSize / 2 + 0.5}">${row.number}</text>
       </g>
     `;
   }).join('');
 
-  const svgModeClass = model.isMod6 ? ' mode-mod6' : '';
+  const svgModeClass = model.isMod6 ? ' mode-mod6' : model.isFactors ? ' mode-factors' : model.isCenters ? ' mode-centers' : '';
   visualizationStage.innerHTML = `
-    <svg class="visualization-svg${svgModeClass}" viewBox="0 0 ${svgWidth} ${svgHeight}" role="img" aria-label="Twin prime visualization for ${analysis.start} to ${analysis.limit}">
+    <svg class="visualization-svg${svgModeClass}" viewBox="0 0 ${svgWidth} ${svgHeight}" role="img" aria-label="Twin prime visualization for ${model.pageStartNumber} to ${model.pageEndNumber}">
       ${headerMarkup}
       ${bridgeMarkup}
       ${cellMarkup}
     </svg>
   `;
+
+  if (visualizationPagination) {
+    visualizationPagination.innerHTML = `
+      <div class="lab-pagination-status">Page ${model.currentPage + 1} of ${model.pageCount} ? ${model.pageStartNumber}-${model.pageEndNumber}</div>
+      <div class="lab-pagination-actions">
+        <button type="button" class="lab-page-button" data-page-action="prev" ${model.currentPage === 0 ? 'disabled' : ''}>Previous</button>
+        <button type="button" class="lab-page-button" data-page-action="next" ${model.currentPage >= model.pageCount - 1 ? 'disabled' : ''}>Next</button>
+      </div>
+    `;
+    visualizationPagination.querySelector('[data-page-action="prev"]')?.addEventListener('click', () => {
+      if (state.visualPage > 0) {
+        state.visualPage -= 1;
+        renderExplorerVisualization(analysis);
+      }
+    });
+    visualizationPagination.querySelector('[data-page-action="next"]')?.addEventListener('click', () => {
+      if (state.visualPage < model.pageCount - 1) {
+        state.visualPage += 1;
+        renderExplorerVisualization(analysis);
+      }
+    });
+  }
 
   const cellGroups = Array.from(visualizationStage.querySelectorAll('[data-number-cell]'));
   cellGroups.forEach((group) => {
@@ -1244,12 +1431,16 @@ function renderExplorerVisualization(analysis) {
 
   syncVisualizationSelectionStyles();
   if (visualizationRangeLabel) {
-    visualizationRangeLabel.textContent = `Range ${analysis.start}-${analysis.limit}`;
+    visualizationRangeLabel.textContent = `Range ${analysis.start}-${analysis.limit} ? Page ${model.currentPage + 1}/${model.pageCount}`;
   }
   if (visualizationModeNote) {
     visualizationModeNote.textContent = state.visualMode === 'mod6'
-      ? 'Mod 6 view arranges numbers by residue class. Primes greater than 3 land in the 1 and 5 columns, while twin centers fall in the 0 column.'
-      : 'Standard view keeps the field compact so prime, twin-prime, and twin-center clusters are easy to scan.';
+      ? 'Mod 6 view arranges each page into repeating residue blocks so prime structure stays visible across 24 columns.'
+      : state.visualMode === 'factors'
+        ? 'Factors view darkens composites as their divisor counts grow, while twin primes and twin centers stay visually distinct.'
+        : state.visualMode === 'centers'
+          ? 'Twin Centers view pulls the background back so the centers between paired primes become the main landmarks in the field.'
+          : 'Standard view keeps each page to 24 columns by 25 rows so prime, twin-prime, and twin-center clusters are easy to scan.';
   }
   visualizationModeButtons.forEach((button) => {
     const isActive = button.dataset.visualMode === state.visualMode;
@@ -1294,12 +1485,12 @@ function tryFetchExplorerRange() {
   }
   const startValue = Number(startInput.value);
   const endValue = Number(endInput.value);
-  if (!Number.isInteger(startValue) || !Number.isInteger(endValue)) {
+  const validationMessage = getRangeValidationMessage(startValue, endValue);
+  if (validationMessage) {
+    showRangeValidationError(validationMessage);
     return;
   }
-  if (startValue < 1 || endValue < 2 || startValue > endValue) {
-    return;
-  }
+  state.visualPage = 0;
   fetchAnalysis(startValue, endValue, renderExplorerSurface);
 }
 
@@ -1355,7 +1546,14 @@ if (form && statusText) {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(form);
-    fetchAnalysis(formData.get('start'), formData.get('end'));
+    const start = Number(formData.get('start'));
+    const end = Number(formData.get('end'));
+    const validationMessage = getRangeValidationMessage(start, end);
+    if (validationMessage) {
+      showRangeValidationError(validationMessage);
+      return;
+    }
+    fetchAnalysis(start, end);
   });
 
   tabButtons.forEach((button) => {

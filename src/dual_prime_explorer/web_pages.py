@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from .web_limits import MAX_WEB_END, MAX_WEB_RANGE_SIZE
+
 
 @dataclass(frozen=True)
 class PageDefinition:
@@ -45,30 +47,33 @@ LAB_PAGE = PageDefinition(
       </div>
       <label>
         <span>Range Start</span>
-        <input id="start-input" name="start" type="number" min="1" value="1" required>
+        <input id="start-input" name="start" type="number" min="1" max="200000" value="1" required>
       </label>
       <label>
         <span>Range End</span>
-        <input id="end-input" name="end" type="number" min="2" value="500" required>
+        <input id="end-input" name="end" type="number" min="2" max="200000" value="500" required>
       </label>
       <button type="submit">Refresh Range</button>
-      <p class="section-copy">Updates live while you adjust the range.</p>
+      <p class="section-copy">Updates live while you adjust the range. Web ranges are capped at 20,000 numbers and an end value of 200,000.</p>
       <p class="section-copy"><a class="inline-link" href="/explorer">Open the detailed Explorer page</a></p>
     </form>
     <section class="lab-visualization-card" aria-labelledby="visualization-title">
       <div class="lab-card-header">
         <div>
           <h3 id="visualization-title">Prime Field</h3>
-          <p class="section-copy"><a class="inline-link" href="/glossary#glossary-term-twin-center">Twin centers</a> appear as a distinct third structure between paired primes.</p>
+          <p class="section-copy"><a class="inline-link" href="/glossary#glossary-term-twin-center">Twin centers</a> mark where twin primes occur.</p>
         </div>
       </div>
       <div class="lab-visual-tools">
         <div class="lab-view-switch" role="group" aria-label="Visualization mode">
           <button type="button" class="lab-view-button active" data-visual-mode="standard" aria-pressed="true">Standard</button>
           <button type="button" class="lab-view-button" data-visual-mode="mod6" aria-pressed="false">Mod 6</button>
+          <button type="button" class="lab-view-button" data-visual-mode="factors" aria-pressed="false">Factors</button>
+          <button type="button" class="lab-view-button" data-visual-mode="centers" aria-pressed="false">Twin Centers</button>
         </div>
-        <p class="section-copy">Need the idea behind this view? See <a class="inline-link" href="/glossary#glossary-term-mod-6">Mod 6</a> in the glossary.</p>
+        <p class="section-copy">Glossary: <a class="inline-link" href="/glossary#glossary-term-mod-6">Mod 6</a>, <a class="inline-link" href="/glossary#glossary-term-divisor">Divisor</a>, <a class="inline-link" href="/glossary#glossary-term-twin-center">Twin Center</a>.</p>
         <p id="visualization-mode-note" class="lab-mode-note">Standard view keeps the field compact so prime, twin-prime, and twin-center clusters are easy to scan.</p>
+        <div id="visualization-pagination" class="lab-pagination" aria-label="Visualization pages"></div>
       </div>
       <div id="visualization-stage" class="visualization-stage"></div>
       <div class="lab-visual-summary" aria-labelledby="lab-visual-summary-title">
@@ -132,13 +137,14 @@ EXPLORER_PAGE = PageDefinition(
   <form id="analysis-form" class="control-panel">
     <label>
       <span>Range Start</span>
-      <input id="start-input" name="start" type="number" min="1" value="1" required>
+      <input id="start-input" name="start" type="number" min="1" max="200000" value="1" required>
     </label>
     <label>
       <span>Range End</span>
-      <input id="end-input" name="end" type="number" min="2" value="100" required>
+      <input id="end-input" name="end" type="number" min="2" max="200000" value="100" required>
     </label>
     <button type="submit">Analyze Range</button>
+    <p class="section-copy">Web ranges are capped at 20,000 numbers and an end value of 200,000.</p>
     <p class="section-copy"><a class="inline-link" href="/lab">Open the Visualization Lab</a></p>
   </form>
 </section>""",
@@ -285,13 +291,14 @@ ANALYSIS_PAGE = PageDefinition(
   <form id="analysis-form" class="control-panel">
     <label>
       <span>Range Start</span>
-      <input id="start-input" name="start" type="number" min="1" value="1" required>
+      <input id="start-input" name="start" type="number" min="1" max="200000" value="1" required>
     </label>
     <label>
       <span>Range End</span>
-      <input id="end-input" name="end" type="number" min="2" value="100" required>
+      <input id="end-input" name="end" type="number" min="2" max="200000" value="100" required>
     </label>
     <button type="submit">Refresh Analysis</button>
+    <p class="section-copy">Web ranges are capped at 20,000 numbers and an end value of 200,000.</p>
   </form>
 </section>""",
     main_html="""<section class="panel summary-panel">
