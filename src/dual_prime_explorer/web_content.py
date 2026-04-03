@@ -6,107 +6,223 @@ THEORY_TABS = [
     {
         "id": "history",
         "label": "History",
-        "intro": "Twin primes are pairs of primes that differ by 2, such as (3, 5) and (11, 13). The twin prime problem asks whether infinitely many such pairs exist.",
+        "intro": "The history of twin primes begins with the study of prime numbers in ancient mathematics and leads to the twin prime conjecture, one of the most famous unsolved problems in number theory. The central question asks whether there are infinitely many pairs of prime numbers that differ by exactly 2.",
+        "nav_hint": "Twin prime conjecture history, timeline, FAQ, and references.",
+        "updated": "Last reviewed: April 2026",
         "sections": [
             {
-                "title": "Classical Interest",
-                "body": "Prime numbers have been studied since antiquity because they are the basic building blocks of whole numbers. Questions about how often special prime patterns appear, including twin primes, sit naturally inside that tradition.",
+                "title": "History Overview of the Twin Prime Problem",
+                "body": "Twin primes are pairs of prime numbers that differ by 2, such as (3, 5) and (11, 13). The twin prime conjecture, also called the twin prime problem, asks whether infinitely many such pairs exist. Despite centuries of study and major modern breakthroughs, this question remains unsolved.",
             },
             {
-                "title": "Conjectural Framework",
-                "body": "In the twentieth century, Hardy and Littlewood proposed a broad heuristic framework for predicting how often prime constellations should occur. Their ideas strongly suggest that twin primes should continue forever, although the argument is not a proof.",
+                "title": "Early Foundations: Euclid and Prime Numbers",
+                "body": "Around 300 BCE, Euclid proved that there are infinitely many prime numbers. This result, known as the infinitude of primes, established that primes do not stop and provided the foundation for all later work on prime distribution. Although Euclid's proof does not address twin primes directly, it made meaningful questions about patterns in primes, such as gaps between primes, mathematically possible.",
             },
             {
-                "title": "Modern Milestones",
-                "body": "A major modern breakthrough came from work on bounded gaps between primes. Yitang Zhang, James Maynard, and Terence Tao are central figures in this progress, showing that infinitely many primes occur unusually close together even though gap 2 remains unproved.",
+                "title": "From Prime Patterns to the Twin Prime Conjecture",
+                "body": "As number theory developed, mathematicians shifted from studying primes as isolated numbers to studying how primes are distributed. This shift brought prime gaps, the frequency of small gaps, and recurring structures in prime numbers into central focus. Twin primes represent the simplest nontrivial pattern in prime gaps, making them a natural focus of study and leading directly to the twin prime conjecture.",
+            },
+            {
+                "title": "Hardy-Littlewood and the Prime Pair Conjecture",
+                "body": "In the early 20th century, G. H. Hardy and J. E. Littlewood proposed the prime pair conjecture, which gives a quantitative prediction for how often twin primes should occur. Their framework introduced the twin prime constant, a correction factor that accounts for how divisibility constraints affect prime distribution. The Hardy-Littlewood conjecture strongly suggests that infinitely many twin primes exist, but the Hardy-Littlewood conjecture is a heuristic framework rather than a proof.",
+            },
+            {
+                "title": "Modern Progress: Zhang, Polymath, and Maynard-Tao",
+                "body": "A major breakthrough occurred in 2013 when Yitang Zhang proved that bounded gaps between primes occur infinitely often. Zhang showed there exists a fixed number B such that infinitely many pairs of primes differ by at most B, and his original bound was 70 million. The Polymath Project rapidly reduced the bound through collaborative effort, and James Maynard and Terence Tao developed new methods that independently proved bounded gaps and generalized the approach. These results show that primes appear infinitely often within small distances, but they do not prove that gap 2 occurs infinitely often.",
+            },
+            {
+                "title": "Current Status of the Twin Prime Problem",
+                "body": "The modern mathematical picture is clear: Euclid proved that infinitely many primes exist, Zhang-Maynard-Tao style results prove that infinitely many bounded gaps between primes exist, and Hardy-Littlewood heuristics strongly predict infinitely many twin primes. However, the twin prime conjecture remains unproven. Mathematicians have come close, but a proof that infinitely many prime pairs differ by exactly 2 is still unknown.",
+            },
+        ],
+        "timeline": [
+            {
+                "label": "c. 300 BCE",
+                "title": "Euclid proves infinitely many primes",
+                "body": "Establishes the foundation for studying prime distribution and gaps.",
+            },
+            {
+                "label": "19th-20th century",
+                "title": "Prime distribution becomes central",
+                "body": "Focus shifts toward understanding patterns, densities, and gaps between primes.",
+            },
+            {
+                "label": "1923",
+                "title": "Hardy-Littlewood prime pair conjecture",
+                "body": "Introduces a predictive framework for twin primes and the twin prime constant.",
+            },
+            {
+                "label": "2013",
+                "title": "Yitang Zhang proves bounded gaps between primes",
+                "body": "First proof that infinitely many prime pairs occur within a fixed finite distance.",
+            },
+            {
+                "label": "2013-2014",
+                "title": "Polymath Project reduces bounds",
+                "body": "Collaborative work significantly improves Zhang's numerical bound.",
+            },
+            {
+                "label": "2013-2014",
+                "title": "Maynard-Tao refinement",
+                "body": "New techniques provide independent and more flexible bounded-gap results.",
+            },
+            {
+                "label": "Today",
+                "title": "Twin primes remain unproven",
+                "body": "The conjecture remains open despite major progress.",
+            },
+        ],
+        "faq": [
+            {
+                "question": "What are twin primes?",
+                "answer": "Twin primes are pairs of prime numbers that differ by exactly 2, such as (3, 5), (5, 7), and (11, 13).",
+            },
+            {
+                "question": "Has the twin prime conjecture been solved?",
+                "answer": "No. The twin prime conjecture remains unsolved, although modern results show that primes occur infinitely often within small gaps.",
+            },
+            {
+                "question": "What did Yitang Zhang prove?",
+                "answer": "In 2013, Yitang Zhang proved that there exists a fixed bound B such that infinitely many pairs of primes differ by at most B. This was the first proof of bounded gaps between primes.",
+            },
+            {
+                "question": "What is the Hardy-Littlewood conjecture?",
+                "answer": "The Hardy-Littlewood prime pair conjecture is a heuristic formula that predicts how often twin primes occur, incorporating the twin prime constant.",
+            },
+            {
+                "question": "Why is the twin prime problem difficult?",
+                "answer": "The problem requires proving infinitely many exact gap-2 prime pairs, which demands far more precision than proving that some bounded gap occurs infinitely often.",
+            },
+        ],
+        "references": [
+            {
+                "title": "Euclid - Elements, Book IX, Proposition 20",
+                "note": "Classical proof of the infinitude of prime numbers.",
+            },
+            {
+                "title": "Hardy & Littlewood - Prime Pair Conjecture",
+                "note": "Heuristic framework predicting the frequency of twin primes.",
+            },
+            {
+                "title": "Yitang Zhang (2013)",
+                "note": "First proof that bounded gaps between primes occur infinitely often.",
+            },
+            {
+                "title": "Polymath Project",
+                "note": "Collaborative refinement of bounded-gap results.",
+            },
+            {
+                "title": "Maynard & Tao - Small Gaps Between Primes",
+                "note": "Modern techniques expanding the theory of prime gaps.",
             },
         ],
     },
     {
         "id": "approaches",
         "label": "Approaches",
-        "intro": "Mathematicians study twin primes through several overlapping methods. Each captures part of the phenomenon, but none currently closes the final gap to a proof.",
+        "intro": "Mathematicians study the twin prime conjecture using several complementary approaches. Each method captures part of how primes behave, but no single approach has yet overcome the final barrier needed to prove that infinitely many twin primes exist.",
+        "nav_hint": "Sieve methods, analytic number theory, arithmetic progressions, heuristics, and computation.",
         "cards": [
             {
                 "title": "Sieve Methods",
-                "summary": "Sieve methods filter integers by divisibility conditions to isolate likely prime candidates.",
-                "trying": "They try to count or bound how many numbers survive many local divisibility tests at once.",
-                "helps": "They are powerful for showing that primes or almost-primes occur with controlled spacing.",
-                "falls_short": "They struggle with the parity problem, a barrier that blocks sieve arguments from perfectly distinguishing primes from nearby composite lookalikes.",
+                "summary": "Sieve methods filter integers by applying divisibility constraints to isolate numbers that are likely to be prime.",
+                "trying": "Sieve methods attempt to count or bound how many integers remain after removing numbers divisible by small primes. The goal is to detect patterns where primes or numbers very close to primes cluster together.",
+                "helps": "Sieve techniques are highly effective at showing that primes and almost-primes, numbers with few prime factors, occur with controlled spacing. They are central to modern results on bounded gaps between primes.",
+                "falls_short": "Sieve methods are limited by the parity problem, a fundamental barrier that prevents them from reliably distinguishing true primes from composite numbers that closely mimic prime behavior. This limitation blocks sieve-based proofs of twin primes.",
             },
             {
                 "title": "Analytic Number Theory",
-                "summary": "Analytic number theory turns prime questions into questions about functions, sums, and complex-variable behavior.",
-                "trying": "It tries to measure global patterns in the distribution of primes by studying generating functions and asymptotic formulas.",
-                "helps": "It connects prime questions to deep tools that reveal average behavior over huge ranges.",
-                "falls_short": "Average information is often not sharp enough to force a specific gap of exactly 2 infinitely often.",
+                "summary": "Analytic number theory studies primes by translating discrete questions into problems involving functions, infinite series, and complex variables.",
+                "trying": "This approach analyzes the global distribution of primes through tools such as generating functions, asymptotic formulas, and objects like the Riemann zeta function.",
+                "helps": "Analytic methods reveal large-scale patterns in how primes are distributed and provide powerful estimates for how often primes occur within given ranges.",
+                "falls_short": "These techniques typically yield average results over large intervals. That level of control is not yet precise enough to guarantee infinitely many prime pairs with an exact gap of 2.",
             },
             {
                 "title": "Primes in Arithmetic Progressions",
-                "summary": "This approach studies how primes distribute across residue classes such as numbers congruent to 1 or 5 modulo 6.",
-                "trying": "It tries to understand whether primes stay evenly spread among allowed modular patterns.",
-                "helps": "Twin-prime candidates live inside strict modular constraints, so progress here feeds directly into small-gap questions.",
-                "falls_short": "Even strong distribution theorems do not yet provide enough control to isolate infinitely many prime pairs separated by exactly 2.",
+                "summary": "This approach studies how primes are distributed across modular patterns, such as numbers congruent to 1 or 5 modulo 6.",
+                "trying": "It seeks to understand whether primes remain evenly distributed among allowable residue classes and how those distributions interact.",
+                "helps": "Twin primes must satisfy strict modular constraints, so understanding primes in arithmetic progressions directly informs the structure of possible twin prime pairs.",
+                "falls_short": "Even the strongest known results on prime distribution in arithmetic progressions do not provide enough precision to isolate infinitely many prime pairs separated by exactly 2.",
             },
             {
                 "title": "Heuristic and Probabilistic Models",
-                "summary": "Heuristics model primes as if they behave partly like random events, corrected by arithmetic structure.",
-                "trying": "They try to predict counts, densities, and local patterns that a true theorem might later explain.",
-                "helps": "These models give concrete expectations, such as why twin primes should remain common enough to appear infinitely often.",
-                "falls_short": "Heuristics can be persuasive and accurate, but they do not replace rigorous proof.",
+                "summary": "Heuristic models treat primes as partly random, while incorporating known arithmetic constraints.",
+                "trying": "These models aim to predict how often certain prime patterns, such as twin primes, should occur, including estimates for their density.",
+                "helps": "Heuristics like the Hardy-Littlewood conjecture give strong quantitative predictions and explain why twin primes are expected to occur infinitely often.",
+                "falls_short": "Heuristic arguments are not proofs. Even highly accurate predictions cannot establish the existence of infinitely many twin primes without rigorous justification.",
             },
             {
                 "title": "Computational Experimentation",
-                "summary": "Computation searches large ranges, catalogs examples, and tests conjectural patterns.",
-                "trying": "It tries to reveal structure, eliminate bad guesses, and guide what formulas or questions deserve attention.",
-                "helps": "Experiments often expose residue patterns, gap frequencies, and factorization signals that would be hard to spot by inspection alone.",
-                "falls_short": "Checking even enormous ranges can only verify finite evidence; it can never prove infinitude by itself.",
+                "summary": "Computational methods explore primes by searching large numerical ranges and analyzing observed patterns.",
+                "trying": "Computation identifies examples, measures gap frequencies, and tests conjectural formulas against real data.",
+                "helps": "Large-scale experiments reveal structure in prime gaps, highlight repeating residue patterns, and guide the development of new conjectures and techniques.",
+                "falls_short": "No amount of computation can prove infinitude. Even extremely large numerical verification only provides finite evidence and cannot resolve the twin prime conjecture.",
+            },
+        ],
+        "sections": [
+            {
+                "title": "Synthesis: Why the Twin Prime Problem Persists",
+                "body": "Each approach contributes a different kind of insight. Sieve methods control local structure but hit the parity barrier, analytic methods describe global behavior but lack exact local precision, arithmetic progressions constrain where primes can occur, heuristics predict what should happen, and computation shows what does happen in large finite ranges. The twin prime conjecture sits at the intersection of all these methods, requiring both global understanding and exact local control. That combination is what makes the twin prime problem so resistant to a final proof.",
             },
         ],
     },
     {
         "id": "progress",
         "label": "Current Progress",
-        "intro": "The strongest modern progress does not prove twin primes directly, but it shows that primes come close together infinitely often in a rigorous sense.",
+        "intro": "Modern progress on the twin prime conjecture does not yet prove that infinitely many twin primes exist, but it establishes that primes come arbitrarily close together infinitely often in a precise, provable sense.",
+        "nav_hint": "Bounded gaps between primes, proof vs progress, and what remains unsolved.",
         "sections": [
             {
                 "title": "Bounded Gaps Breakthrough",
-                "body": "Mathematicians proved that there exists some fixed bound B such that infinitely many pairs of distinct primes differ by at most B. This was a major shift because it replaced vague hope with a concrete theorem about infinitely many small prime gaps.",
+                "body": "A major breakthrough in 2013 showed that there exists a fixed number B such that infinitely many pairs of distinct prime numbers differ by at most B. This result, first proved by Yitang Zhang, transformed the study of prime gaps by replacing conjectural expectations with a concrete theorem about infinitely many small gaps between primes. Subsequent work by James Maynard and Terence Tao, along with large-scale collaboration through the Polymath Project, significantly improved both the methods and the numerical bounds.",
             },
             {
                 "title": "Why This Matters",
-                "body": "Bounded gaps show that prime clustering is not a rare accident. The methods built by Zhang, Maynard, Tao, and collaborators established that primes can be forced into recurring near-collisions across infinitely many scales.",
+                "body": "Bounded gap results show that prime clustering is not a rare or accidental phenomenon. Instead, they prove that primes repeatedly appear within small distances of each other across infinitely many scales. This establishes a key structural insight: prime numbers are not only infinite, they also exhibit recurring local proximity. This shift from existence to structured behavior is one of the most important advances in modern number theory.",
             },
             {
                 "title": "What Remains Open",
-                "body": "This progress still does not prove gap = 2. A theorem about bounded gaps says some small gap appears infinitely often; the twin prime conjecture specifically requires that the gap 2 itself appears infinitely often.",
+                "body": "Despite this progress, the twin prime conjecture itself remains unresolved. Bounded gap theorems guarantee that some fixed finite gap between primes occurs infinitely often. However, the twin prime conjecture requires a much stronger statement: that the specific gap of exactly 2 occurs infinitely often. Current methods do not yet isolate this exact gap.",
             },
             {
                 "title": "Progress vs Proof",
-                "body": "Progress toward twin primes means proving structural statements that move prime gaps closer to 2 or clarify the mechanisms behind them. A proof of the twin prime conjecture would require a final argument that the exact gap 2 occurs infinitely many times.",
+                "body": "Progress toward the twin prime conjecture involves proving increasingly precise structural results about prime gaps, including reducing upper bounds on prime gaps, improving distribution results for primes, and developing new methods to control local behavior. A full proof would require a final step: demonstrating that the exact gap of 2 occurs infinitely many times. This distinction is critical: progress shows primes come arbitrarily close together, while proof requires showing they come exactly two apart infinitely often.",
+            },
+            {
+                "title": "Synthesis: Where We Stand",
+                "body": "The current state of the twin prime problem can be summarized clearly. Infinitely many primes exist. Infinitely many bounded gaps between primes exist. Strong heuristics predict infinitely many twin primes. But no proof yet guarantees infinitely many gap-2 pairs. The gap between arbitrarily close and exactly 2 remains the final unresolved step.",
             },
         ],
     },
     {
         "id": "why-its-hard",
         "label": "Why It's Hard",
-        "intro": "Twin primes sit at the meeting point of randomness and structure, which is exactly what makes the problem so durable.",
+        "intro": "The twin prime conjecture is difficult because it lies at the intersection of randomness and strict arithmetic structure. Any successful proof must simultaneously control both aspects of how prime numbers behave.",
+        "nav_hint": "Randomness, divisibility constraints, global vs local control, and the limits of computation.",
         "sections": [
             {
                 "title": "Random-Looking but Structured",
-                "body": "Primes often look erratic when listed out, yet they obey strict arithmetic rules. Any serious argument has to respect both the apparent randomness and the hidden modular structure at the same time.",
+                "body": "Prime numbers often appear irregular and unpredictable when listed, yet they obey rigid arithmetic constraints. Any argument about twin primes must reconcile two competing realities: apparent randomness in how primes are spaced and hidden structure imposed by divisibility and modular arithmetic. This tension makes it difficult to predict when primes will align closely enough to form infinitely many gap-2 pairs.",
             },
             {
                 "title": "Local Divisibility Constraints",
-                "body": "A twin-prime pair must dodge divisibility by every small prime in two nearby positions simultaneously. Those local constraints interact in subtle ways, and managing all of them at once is much harder than checking a single candidate pair.",
+                "body": "A twin prime pair (p, p+2) must avoid divisibility by every small prime in both positions at once. If p avoids divisibility by a small prime, p+2 must also avoid it. These constraints stack together across all primes, creating a dense web of conditions that must be satisfied simultaneously. Managing these overlapping restrictions is far more complex than checking whether a single number is prime.",
+            },
+            {
+                "title": "Global vs Local Tension",
+                "body": "Modern methods can describe the global distribution of primes very well, but twin primes require precise local control. Analytic techniques show how primes behave on average, sieve methods control large sets of candidates, and bounded gap results show primes come close together. But none of these tools yet provide the exact precision needed to force gap 2 infinitely often. This gap between average behavior and exact alignment is one of the central obstacles.",
             },
             {
                 "title": "Examples Are Not Enough",
-                "body": "It is easy to verify many twin primes computationally, and there are vast numbers of known examples. But proving infinitude means controlling behavior beyond every finite range, not just collecting more evidence inside larger searches.",
+                "body": "There are many known twin primes, and computation continues to find more at extremely large scales. However, verifying examples is fundamentally different from proving infinitude: computation shows what happens within a finite range, while a proof must control behavior beyond all finite bounds. No amount of observed evidence can guarantee that twin primes continue forever.",
             },
             {
                 "title": "Computation Has Limits",
-                "body": "Computation is invaluable for testing ideas, measuring distributions, and supporting conjectures. It cannot prove an infinite statement simply by extending the search farther, because any computation still stops at a finite boundary.",
+                "body": "Computation plays a crucial role in modern number theory by testing conjectures, measuring prime gap distributions, and guiding new theoretical ideas. But computation cannot resolve the twin prime conjecture on its own. Every computational search ends at a finite limit, while the conjecture concerns behavior across the infinite number line.",
+            },
+            {
+                "title": "Synthesis: The Core Difficulty",
+                "body": "The twin prime problem persists because it requires global understanding of how primes are distributed, local precision to isolate exact gap-2 pairs, and control over infinitely many constraints at once. Each existing method solves part of this puzzle, but no approach yet unifies all three requirements into a single proof.",
             },
         ],
     },
