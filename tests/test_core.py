@@ -195,7 +195,7 @@ def test_web_payload_supports_selected_ranges() -> None:
 
 
 def test_route_registry_is_ready_for_more_pages() -> None:
-    assert set(PAGE_BY_ROUTE) == {"/explorer", "/analysis", "/analysis-guide", "/theory", "/experiments"}
+    assert set(PAGE_BY_ROUTE) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/theory", "/experiments"}
     rendered_pages = build_page_registry()
     assert "/analysis" in rendered_pages
     assert "href=\"/analysis\"" in rendered_pages["/explorer"]
@@ -232,10 +232,18 @@ def test_theory_tab_configuration_is_present() -> None:
 def test_load_web_runtime_supports_dev_mode() -> None:
     runtime = load_web_runtime(dev_mode=True)
 
-    assert set(runtime["page_by_route"]) == {"/explorer", "/analysis", "/analysis-guide", "/theory", "/experiments"}
+    assert set(runtime["page_by_route"]) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/theory", "/experiments"}
+    assert "Visualization Lab" in runtime["page_registry"]["/lab"]
+    assert "visualization-stage" in runtime["page_registry"]["/lab"]
+    assert "Range Snapshot" in runtime["page_registry"]["/lab"]
+    assert "Visualization mode" in runtime["page_registry"]["/lab"]
+    assert ">mod 6<" in runtime["page_registry"]["/lab"]
+    assert "Twin center" in runtime["page_registry"]["/lab"]
+    assert "This panel is ready for future theory and analysis callouts tied to the active view." not in runtime["page_registry"]["/lab"]
     assert "Filters" in runtime["page_registry"]["/explorer"]
     assert "Range Start" in runtime["page_registry"]["/explorer"]
     assert "Range End" in runtime["page_registry"]["/explorer"]
+    assert "Number Table" in runtime["page_registry"]["/explorer"]
     assert "filter-columns" in runtime["page_registry"]["/explorer"]
     assert "filter-divisors" in runtime["page_registry"]["/explorer"]
     assert "filter-divisor-logic" in runtime["page_registry"]["/explorer"]
@@ -254,6 +262,16 @@ def test_load_web_runtime_supports_dev_mode() -> None:
     assert "prime_divisors" in runtime["explorer_js"]
     assert "All divisors" in runtime["explorer_js"]
     assert "filterColumnOptions" in runtime["explorer_js"]
+    assert "renderExplorerVisualization" in runtime["explorer_js"]
+    assert "buildVisualizationModel" in runtime["explorer_js"]
+    assert "state.visualMode" in runtime["explorer_js"]
+    assert "mode-mod6" in runtime["explorer_js"]
+    assert "Primes greater than 3 land in the 1 and 5 columns" in runtime["explorer_js"]
+    assert "syncVisualizationSelectionStyles" in runtime["explorer_js"]
+    assert "clear-visual-selection" in runtime["explorer_js"]
+    assert "Pinned selection" in runtime["explorer_js"]
+    assert "analysisCache" in runtime["explorer_js"]
+    assert "tryFetchExplorerRange();" in runtime["explorer_js"]
     assert "Composite" in runtime["explorer_js"]
     assert "How To Read The Analysis Page" in runtime["page_registry"]["/analysis"]
     assert "Start with Gaps for spacing" in runtime["page_registry"]["/analysis"]

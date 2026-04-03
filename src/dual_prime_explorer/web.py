@@ -56,7 +56,7 @@ class DualPrimeRequestHandler(BaseHTTPRequestHandler):
         runtime = load_web_runtime(self._is_dev_mode())
 
         if parsed.path == "/":
-            self._redirect("/explorer")
+            self._redirect("/lab")
             return
         if parsed.path in runtime["page_by_route"]:
             self._send_response(runtime["page_registry"][parsed.path], content_type="text/html; charset=utf-8")
@@ -135,7 +135,7 @@ def run_server(host: str = "127.0.0.1", port: int = 8000, dev_mode: bool = False
     server = DualPrimeThreadingHTTPServer((host, port), DualPrimeRequestHandler)
     server.dev_mode = dev_mode
     mode_label = " with live UI reloads" if dev_mode else ""
-    print(f"Dual Prime Explorer web app running at http://{host}:{port}/explorer{mode_label}")
+    print(f"Dual Prime Explorer web app running at http://{host}:{port}/lab{mode_label}")
     try:
         server.serve_forever()
     except KeyboardInterrupt:

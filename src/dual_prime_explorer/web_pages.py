@@ -17,13 +17,157 @@ class PageDefinition:
     include_in_nav: bool = True
 
 
+LAB_PAGE = PageDefinition(
+    route="/lab",
+    title="Twin Prime Exploration Lab | Lab",
+    nav_label="Lab",
+    active_route="lab",
+    hero_html="""<section class="hero-block">
+  <div class="hero-copy">
+    <p class="eyebrow">Lab</p>
+    <h1>See twin-prime structure as a visual field.</h1>
+    <p class="hero-text">This is the hands-on layer of the lab. Adjust the range, watch primes and twin centers light up, and use the rest of the product when you want exact inspection, deeper analysis, or theory context.</p>
+  </div>
+</section>""",
+    main_html="""<section class="panel explorer-lab-panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Visualization Lab</h2>
+      <p>Explore primes, twin primes, and twin centers as a single visual pattern field.</p>
+    </div>
+    <p id="visualization-range-label">Loading range...</p>
+  </div>
+  <div class="lab-layout">
+    <form id="analysis-form" class="control-panel explorer-lab-controls">
+      <div class="lab-card-copy">
+        <h3>Range Controls</h3>
+        <p>Pick a span of integers and the lab updates in place.</p>
+      </div>
+      <label>
+        <span>Range Start</span>
+        <input id="start-input" name="start" type="number" min="1" value="1" required>
+      </label>
+      <label>
+        <span>Range End</span>
+        <input id="end-input" name="end" type="number" min="2" value="500" required>
+      </label>
+      <button type="submit">Refresh Range</button>
+      <p class="section-copy">Updates live while you adjust the range.</p>
+      <p class="section-copy"><a class="inline-link" href="/explorer">Open the detailed Explorer page</a></p>
+    </form>
+    <section class="lab-visualization-card" aria-labelledby="visualization-title">
+      <div class="lab-card-header">
+        <div>
+          <h3 id="visualization-title">Prime Field</h3>
+          <p class="section-copy">Twin centers appear as a distinct third structure between paired primes.</p>
+        </div>
+      </div>
+      <div class="lab-visual-tools">
+        <div class="lab-view-switch" role="group" aria-label="Visualization mode">
+          <button type="button" class="lab-view-button active" data-visual-mode="standard" aria-pressed="true">Standard</button>
+          <button type="button" class="lab-view-button" data-visual-mode="mod6" aria-pressed="false">mod 6</button>
+        </div>
+        <p id="visualization-mode-note" class="lab-mode-note">Standard view keeps the field compact so prime, twin-prime, and twin-center clusters are easy to scan.</p>
+      </div>
+      <div id="visualization-stage" class="visualization-stage"></div>
+      <div class="lab-visual-summary" aria-labelledby="lab-visual-summary-title">
+        <h4 id="lab-visual-summary-title">Range Snapshot</h4>
+        <div id="explorer-visual-summary"></div>
+      </div>
+    </section>
+    <aside class="lab-context-card" aria-labelledby="context-title">
+      <div class="lab-card-header">
+        <div>
+          <h3 id="context-title">Context</h3>
+          <p class="section-copy">Hover any number to inspect its role in the range.</p>
+        </div>
+      </div>
+      <div id="visualization-hover" class="lab-hover-card"></div>
+      <div class="lab-legend">
+        <div class="lab-legend-item"><span class="lab-swatch composite"></span><span>Composite / neutral</span></div>
+        <div class="lab-legend-item"><span class="lab-swatch prime"></span><span>Prime</span></div>
+        <div class="lab-legend-item"><span class="lab-swatch twin-prime"></span><span>Twin prime</span></div>
+        <div class="lab-legend-item"><span class="lab-swatch twin-center"></span><span>Twin center</span></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>What To Do Next</h2>
+      <p>Move from seeing the pattern to inspecting or interpreting it.</p>
+    </div>
+  </div>
+  <div class="metric-grid">
+    <article class="metric-box">
+      <h3>Need exact numbers?</h3>
+      <p>Use Explorer for row-by-row inspection, divisibility filters, and number-level detail.</p>
+      <p><a class="inline-link" href="/explorer">Open Explorer</a></p>
+    </article>
+    <article class="metric-box">
+      <h3>Need structured interpretation?</h3>
+      <p>Use Analysis for modular patterns, gaps, factor signals, density, and heuristic comparisons.</p>
+      <p><a class="inline-link" href="/analysis">Open Analysis</a></p>
+    </article>
+  </div>
+</section>""",
+    script_name="explorer.js",
+)
+
 EXPLORER_PAGE = PageDefinition(
     route="/explorer",
-    title="Dual Prime Explorer | Explorer",
+    title="Twin Prime Exploration Lab | Explorer",
     nav_label="Explorer",
     active_route="explorer",
-    hero_html="""<section class=\"hero-block hero-grid\">\n  <div class=\"hero-copy\">\n    <p class=\"eyebrow\">Explorer</p>\n    <h1>Computation-first twin-prime exploration.</h1>\n    <p class=\"hero-text\">Generate a range, inspect the number-level classification, and move into the dedicated analysis page when you want modular, gap, factor, density, and heuristic views.</p>\n  </div>\n  <form id=\"analysis-form\" class=\"control-panel\">\n    <label>\n      <span>Range Start</span>\n      <input id=\"start-input\" name=\"start\" type=\"number\" min=\"1\" value=\"1\" required>\n    </label>\n    <label>\n      <span>Range End</span>\n      <input id=\"end-input\" name=\"end\" type=\"number\" min=\"2\" value=\"100\" required>\n    </label>\n    <button type=\"submit\">Analyze Range</button>\n  </form>\n</section>""",
-    main_html="""<section class=\"panel summary-panel\">\n  <div class=\"panel-heading\">\n    <div>\n      <h2>Summary</h2>\n      <p>Core counts and quick signals from the current range.</p>\n    </div>\n    <p id=\"status-text\">Ready to analyze.</p>\n  </div>\n  <div id=\"summary-cards\" class=\"summary-cards\"></div>\n</section>\n\n<section class=\"panel table-panel\">\n  <div class=\"panel-heading\">\n    <div>\n      <h2>Number Table</h2>\n      <p>Prime membership, neighborhood structure, and divisibility for each number.</p>\n    </div>\n    <p id=\"table-filter-status\">Showing all rows.</p>\n  </div>\n  <section class=\"filter-panel\" aria-labelledby=\"filter-panel-title\">\n    <div class=\"filter-panel-header\">\n      <div>\n        <h3 id=\"filter-panel-title\">Filters</h3>\n        <p>Refine the number table by prime role, neighborhood, divisors, or numeric range.</p>\n      </div>\n      <button id=\"filter-reset\" class=\"filter-reset-button\" type=\"button\">Reset Filters</button>\n    </div>\n    <form id="table-filter-form" class="filter-layout">
+    hero_html="""<section class="hero-block hero-grid">
+  <div class="hero-copy">
+    <p class="eyebrow">Explorer</p>
+    <h1>Inspect the range one number at a time.</h1>
+    <p class="hero-text">Use Explorer when you want exact rows, divisor filters, and number-level classifications that complement the visualization-first Lab.</p>
+  </div>
+  <form id="analysis-form" class="control-panel">
+    <label>
+      <span>Range Start</span>
+      <input id="start-input" name="start" type="number" min="1" value="1" required>
+    </label>
+    <label>
+      <span>Range End</span>
+      <input id="end-input" name="end" type="number" min="2" value="100" required>
+    </label>
+    <button type="submit">Analyze Range</button>
+    <p class="section-copy"><a class="inline-link" href="/lab">Open the Visualization Lab</a></p>
+  </form>
+</section>""",
+    main_html="""<section class="panel summary-panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Summary</h2>
+      <p>Core counts and quick signals from the current range.</p>
+    </div>
+    <p id="status-text">Ready to analyze.</p>
+  </div>
+  <div id="summary-cards" class="summary-cards"></div>
+</section>
+
+<section class="panel table-panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Number Table</h2>
+      <p>Prime membership, neighborhood structure, and divisibility for each number.</p>
+    </div>
+    <p id="table-filter-status">Showing all rows.</p>
+  </div>
+  <section class="filter-panel" aria-labelledby="filter-panel-title">
+    <div class="filter-panel-header">
+      <div>
+        <h3 id="filter-panel-title">Filters</h3>
+        <p>Refine the number table by prime role, neighborhood, divisors, or numeric range.</p>
+      </div>
+      <button id="filter-reset" class="filter-reset-button" type="button">Reset Filters</button>
+    </div>
+    <form id="table-filter-form" class="filter-layout">
       <div class="filter-column">
         <fieldset class="filter-group">
           <legend>Prime filters</legend>
@@ -104,7 +248,24 @@ EXPLORER_PAGE = PageDefinition(
       <label class="checkbox-pill"><input type="checkbox" value="all_divisors" checked> <span>All divisors</span></label>
     </div>
   </section>
-  <div id=\"number-table\" class=\"scroll-region\"></div>\n</section>\n\n<section class=\"panel\">\n  <div class=\"panel-heading\">\n    <div>\n      <h2>Analysis Page</h2>\n      <p>Detailed modular, gap, factor, density, and expected-count views now live on their own page.</p>\n    </div>\n  </div>\n  <div class=\"metric-grid\">\n    <article class=\"metric-box\">\n      <h3>Go Deeper</h3>\n      <p>Open the dedicated Analysis page for the structured breakdowns that used to sit at the bottom of Explorer.</p>\n      <p><a class=\"inline-link\" href=\"/analysis\">Open Analysis page</a></p>\n    </article>\n  </div>\n</section>""",
+  <div id="number-table" class="scroll-region"></div>
+</section>
+
+<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Analysis Page</h2>
+      <p>Detailed modular, gap, factor, density, and expected-count views now live on their own page.</p>
+    </div>
+  </div>
+  <div class="metric-grid">
+    <article class="metric-box">
+      <h3>Go Deeper</h3>
+      <p>Open the dedicated Analysis page for the structured breakdowns that used to sit at the bottom of Explorer.</p>
+      <p><a class="inline-link" href="/analysis">Open Analysis page</a></p>
+    </article>
+  </div>
+</section>""",
     script_name="explorer.js",
 )
 
@@ -271,6 +432,6 @@ EXPERIMENTS_PAGE = PageDefinition(
     script_name="theory.js",
 )
 
-PAGE_DEFINITIONS = [EXPLORER_PAGE, ANALYSIS_PAGE, ANALYSIS_GUIDE_PAGE, THEORY_PAGE, EXPERIMENTS_PAGE]
+PAGE_DEFINITIONS = [LAB_PAGE, EXPLORER_PAGE, ANALYSIS_PAGE, ANALYSIS_GUIDE_PAGE, THEORY_PAGE, EXPERIMENTS_PAGE]
 PAGE_BY_ROUTE = {page.route: page for page in PAGE_DEFINITIONS}
 PAGE_BY_ACTIVE_ROUTE = {page.active_route: page for page in PAGE_DEFINITIONS}
