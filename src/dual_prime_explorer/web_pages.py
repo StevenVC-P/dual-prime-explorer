@@ -14,6 +14,7 @@ class PageDefinition:
     hero_html: str
     main_html: str
     script_name: str
+    include_in_nav: bool = True
 
 
 EXPLORER_PAGE = PageDefinition(
@@ -112,9 +113,142 @@ ANALYSIS_PAGE = PageDefinition(
     title="Dual Prime Explorer | Analysis",
     nav_label="Analysis",
     active_route="analysis",
-    hero_html="""<section class=\"hero-block hero-grid\">\n  <div class=\"hero-copy\">\n    <p class=\"eyebrow\">Analysis</p>\n    <h1>Structured views for twin-prime patterns.</h1>\n    <p class=\"hero-text\">Use this page for the deeper mathematical breakdowns: modular structure, pair gaps, factorization signals, density windows, and expected-versus-observed counts.</p>\n  </div>\n  <form id=\"analysis-form\" class=\"control-panel\">\n    <label>\n      <span>Range Start</span>\n      <input id=\"start-input\" name=\"start\" type=\"number\" min=\"1\" value=\"1\" required>\n    </label>\n    <label>\n      <span>Range End</span>\n      <input id=\"end-input\" name=\"end\" type=\"number\" min=\"2\" value=\"100\" required>\n    </label>\n    <button type=\"submit\">Refresh Analysis</button>\n  </form>\n</section>""",
-    main_html="""<section class=\"panel summary-panel\">\n  <div class=\"panel-heading\">\n    <div>\n      <h2>Analysis Summary</h2>\n      <p>Quick context for the current range before diving into the detailed views.</p>\n    </div>\n    <p id=\"status-text\">Ready to analyze.</p>\n  </div>\n  <div id=\"summary-cards\" class=\"summary-cards\"></div>\n</section>\n\n<section class=\"panel analysis-panel\">\n  <div class=\"panel-heading\">\n    <div>\n      <h2>Analysis Views</h2>\n      <p>Switch between modular structure, gaps, factors, density, and expected counts.</p>\n    </div>\n  </div>\n  <div class=\"tab-row\" id=\"tab-row\">\n    <button class=\"tab-button active\" data-tab=\"modular\">Modular</button>\n    <button class=\"tab-button\" data-tab=\"gaps\">Gaps</button>\n    <button class=\"tab-button\" data-tab=\"factors\">Factors</button>\n    <button class=\"tab-button\" data-tab=\"density\">Density</button>\n    <button class=\"tab-button\" data-tab=\"expected\">Expected</button>\n  </div>\n  <div id=\"tab-content\" class=\"scroll-region\"></div>\n</section>""",
+    hero_html="""<section class="hero-block hero-grid">
+  <div class="hero-copy">
+    <p class="eyebrow">Analysis</p>
+    <h1>Structured views for twin-prime patterns.</h1>
+    <p class="hero-text">Use this page for the deeper mathematical breakdowns: modular structure, pair gaps, factorization signals, density windows, and expected-versus-observed counts.</p>
+  </div>
+  <form id="analysis-form" class="control-panel">
+    <label>
+      <span>Range Start</span>
+      <input id="start-input" name="start" type="number" min="1" value="1" required>
+    </label>
+    <label>
+      <span>Range End</span>
+      <input id="end-input" name="end" type="number" min="2" value="100" required>
+    </label>
+    <button type="submit">Refresh Analysis</button>
+  </form>
+</section>""",
+    main_html="""<section class="panel summary-panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Analysis Summary</h2>
+      <p>Quick context for the current range before diving into the detailed views.</p>
+    </div>
+    <p id="status-text">Ready to analyze.</p>
+  </div>
+  <div id="summary-cards" class="summary-cards"></div>
+</section>
+
+<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>How To Read The Analysis Page</h2>
+      <p>A quick orientation before you move through the tabbed views.</p>
+    </div>
+  </div>
+  <div class="metric-grid">
+    <article class="metric-box">
+      <h3>What this page does</h3>
+      <p>The Analysis page turns one selected number range into several mathematical views. Each tab is looking at the same twin-prime data from a different angle: structure, spacing, factorization, local clustering, or heuristic comparison.</p>
+    </article>
+    <article class="metric-box">
+      <h3>How to use the tabs</h3>
+      <p>Start with Modular or Gaps if you want pattern recognition, then move to Factors, Density, and Expected when you want comparison metrics and broader interpretation.</p>
+      <p><a class="inline-link" href="/analysis-guide" target="_blank" rel="noopener noreferrer">Open the full analysis guide in a new tab</a></p>
+    </article>
+  </div>
+  <div class="insight-strip" aria-label="Recommended tab starting points">
+    <button class="insight-pill insight-pill-button" type="button" data-analysis-target="modular">Start with Modular for structure</button>
+    <button class="insight-pill insight-pill-button" type="button" data-analysis-target="gaps">Start with Gaps for spacing</button>
+    <button class="insight-pill insight-pill-button" type="button" data-analysis-target="factors">Start with Factors for centers</button>
+    <button class="insight-pill insight-pill-button" type="button" data-analysis-target="density">Start with Density for clustering</button>
+    <button class="insight-pill insight-pill-button" type="button" data-analysis-target="expected">Start with Expected for heuristic comparison</button>
+  </div>
+</section>
+
+<section class="panel analysis-panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Analysis Views</h2>
+      <p>Switch between modular structure, gaps, factors, density, and expected counts.</p>
+    </div>
+  </div>
+  <div class="tab-row" id="tab-row">
+    <button class="tab-button active" data-tab="modular">Modular</button>
+    <button class="tab-button" data-tab="gaps">Gaps</button>
+    <button class="tab-button" data-tab="factors">Factors</button>
+    <button class="tab-button" data-tab="density">Density</button>
+    <button class="tab-button" data-tab="expected">Expected</button>
+  </div>
+  <div id="tab-content" class="scroll-region"></div>
+</section>""",
     script_name="analysis.js",
+)
+
+ANALYSIS_GUIDE_PAGE = PageDefinition(
+    route="/analysis-guide",
+    title="Dual Prime Explorer | Analysis Guide",
+    nav_label="Analysis Guide",
+    active_route="analysis",
+    hero_html="""<section class="hero-block theory-hero">
+  <div class="hero-copy theory-copy">
+    <p class="eyebrow">Analysis Guide</p>
+    <h1>How to understand the analysis views.</h1>
+    <p class="hero-text">Use this guide when you want a fuller explanation of what each analysis tab is measuring, what question it answers, and how to interpret the results together.</p>
+  </div>
+</section>""",
+    main_html="""<section class="panel theory-panel">
+  <div class="panel-heading theory-heading">
+    <div>
+      <h2>Analysis Guide</h2>
+      <p>A practical reference for reading the Analysis page with more confidence.</p>
+    </div>
+  </div>
+  <div class="section-stack">
+    <article class="theory-section">
+      <h3>How the Analysis page is organized</h3>
+      <p>The Analysis page takes one selected range and reuses the same twin-prime dataset across multiple views. That means the tabs are not separate calculations with separate inputs. They are coordinated interpretations of the same analyzed range.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Which tab should you open first?</h3>
+      <p>Start with the question you are asking. If you want structural rules, begin with Modular. If you want spacing behavior, begin with Gaps. If you want to compare centers against other numbers, begin with Factors. If you want local clustering, begin with Density. If you want a rough heuristic benchmark, begin with Expected.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Modular view</h3>
+      <p>Open Modular first when your question is, what structural pattern do twin-prime pairs seem to follow? The Modular tab shows residue patterns for twin-prime pairs and their centers, and it is the fastest way to inspect whether the usual 6k minus 1 and 6k plus 1 structure is appearing clearly in the selected range.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Gap view</h3>
+      <p>Open Gaps first when your question is, how are twin-prime pairs spaced? The Gaps tab measures spacing between consecutive twin-prime pairs and between their centers. Use it when you want to see whether pairs appear tightly clustered, widely separated, or distributed in repeating gap sizes.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Factors view</h3>
+      <p>Open Factors first when your question is, do twin-prime centers look arithmetically unusual? The Factors tab compares twin-prime centers against other even numbers. It helps answer whether centers show unusually simple or distinctive factorization behavior relative to a nearby baseline.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Density view</h3>
+      <p>Open Density first when your question is, do twin primes live in locally richer prime neighborhoods? The Density tab measures how many primes and twin-prime pairs appear in local windows around each pair. This view is best when you want to compare local clustering against the global average for the same range.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Expected view</h3>
+      <p>Open Expected first when your question is, how does the observed count compare with a common heuristic? The Expected tab compares observed twin-prime counts to the heuristic N divided by log squared N. It does not prove anything by itself, but it helps you judge whether the observed range behaves roughly in line with a common asymptotic expectation.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Recommended reading order</h3>
+      <p>If you are exploring a new range for the first time, start with Modular, then Gaps, then Factors. Move to Density when you want to test whether the local environment around pairs looks special, and use Expected last when you want a coarse benchmark instead of a structural explanation.</p>
+    </article>
+    <article class="theory-section">
+      <h3>How to read the tabs together</h3>
+      <p>A useful pattern is to move from structural questions to comparative questions. Start with Modular and Gaps to see visible patterns, then move to Factors, Density, and Expected to test whether those patterns also show up in aggregate measurements and heuristic comparisons.</p>
+      <p><a class="inline-link" href="/analysis">Return to the Analysis page</a></p>
+    </article>
+  </div>
+</section>""",
+    script_name="theory.js",
+    include_in_nav=False,
 )
 
 THEORY_PAGE = PageDefinition(
@@ -137,6 +271,6 @@ EXPERIMENTS_PAGE = PageDefinition(
     script_name="theory.js",
 )
 
-PAGE_DEFINITIONS = [EXPLORER_PAGE, ANALYSIS_PAGE, THEORY_PAGE, EXPERIMENTS_PAGE]
+PAGE_DEFINITIONS = [EXPLORER_PAGE, ANALYSIS_PAGE, ANALYSIS_GUIDE_PAGE, THEORY_PAGE, EXPERIMENTS_PAGE]
 PAGE_BY_ROUTE = {page.route: page for page in PAGE_DEFINITIONS}
 PAGE_BY_ACTIVE_ROUTE = {page.active_route: page for page in PAGE_DEFINITIONS}

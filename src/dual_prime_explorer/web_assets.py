@@ -213,6 +213,8 @@ p { margin: 0; line-height: 1.65; }
 .histogram-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #14532d 0%, #2f7a4a 100%); }
 .insight-strip { display: flex; flex-wrap: wrap; gap: 10px; }
 .insight-pill { padding: 9px 12px; border-radius: 999px; background: var(--accent-faint); color: var(--accent); border: 1px solid rgba(20, 83, 45, 0.12); font-size: 0.92rem; }
+.insight-pill-button { font: inherit; cursor: pointer; transition: border-color 120ms ease, background 120ms ease, color 120ms ease, transform 120ms ease; }
+.insight-pill-button:hover, .insight-pill-button:focus-visible { outline: none; border-color: rgba(20, 83, 45, 0.28); background: rgba(20, 83, 45, 0.12); color: #0f3f22; transform: translateY(-1px); }
 .definition-list { display: grid; gap: 10px; margin: 0; }
 .definition-row { display: grid; grid-template-columns: minmax(110px, 160px) minmax(0, 1fr); gap: 12px; align-items: start; padding: 10px 0; border-top: 1px solid rgba(24, 21, 18, 0.08); }
 .definition-row:first-child { border-top: 0; padding-top: 0; }
@@ -286,6 +288,7 @@ const statusText = document.getElementById('status-text');
 const summaryCards = document.getElementById('summary-cards');
 const tabContent = document.getElementById('tab-content');
 const tabButtons = Array.from(document.querySelectorAll('.tab-button'));
+const tabShortcutButtons = Array.from(document.querySelectorAll('[data-analysis-target]'));
 
 function formatValue(value, digits = 6) {
   if (typeof value === 'number') {
@@ -812,6 +815,13 @@ if (form && statusText) {
     });
   });
 
+  tabShortcutButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      state.activeTab = button.dataset.analysisTarget;
+      renderAnalysisTabs();
+    });
+  });
+
   fetchAnalysis(1, 100);
 }
 """
@@ -1137,6 +1147,7 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
     nav_html = "".join(
         f'<a class="nav-link{" active" if item.active_route == page.active_route else ""}" href="{item.route}">{item.nav_label}</a>'
         for item in PAGE_DEFINITIONS
+        if item.include_in_nav
     )
     if page.active_route == "theory":
         main_html = _render_theory_main_html(page.main_html)
