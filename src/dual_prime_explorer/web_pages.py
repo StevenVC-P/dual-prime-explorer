@@ -331,7 +331,7 @@ ANALYSIS_PAGE = PageDefinition(
   <div class="panel-heading">
     <div>
       <h2>How To Read The Analysis Page</h2>
-      <p>A quick orientation before you move through the tabbed views.</p>
+      <p>Choose the question you want answered, then let the active tab guide the read.</p>
     </div>
   </div>
   <div class="glossary-jump-shell">
@@ -348,11 +348,11 @@ ANALYSIS_PAGE = PageDefinition(
   <div class="metric-grid">
     <article class="metric-box">
       <h3>What this page does</h3>
-      <p>The Analysis page turns one selected number range into several mathematical views. Each tab is looking at the same twin-prime data from a different angle: structure, spacing, factorization, local clustering, or heuristic comparison.</p>
+      <p>The Analysis page turns one selected range into several coordinated reads of the same twin-prime data. Each tab changes the interpretation lens, not the underlying numbers.</p>
     </article>
     <article class="metric-box">
       <h3>How to use the tabs</h3>
-      <p>Start with Modular or Gaps if you want pattern recognition, then move to Factors, Density, and Expected when you want comparison metrics and broader interpretation.</p>
+      <p>Start with Modular or Gaps if you want pattern recognition, then move to Factors, Density, and Expected when you want explanation, comparison, and broader interpretation. Each tab opens with a short guide to the exact question that view is answering.</p>
       <p><a class="inline-link" href="/analysis-guide" target="_blank" rel="noopener noreferrer">Open the full analysis guide in a new tab</a></p>
     </article>
   </div>

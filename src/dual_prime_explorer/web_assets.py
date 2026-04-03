@@ -140,6 +140,10 @@ a { color: inherit; }
 .explanation-kicker { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.76rem; color: var(--accent); }
 .explanation-card h3 { font-size: 0.98rem; }
 .explanation-card p { color: var(--muted); }
+.explanation-detail-grid { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.explanation-detail { padding: 10px 12px; border: 1px solid rgba(20, 83, 45, 0.12); border-radius: 12px; background: rgba(255, 255, 255, 0.76); }
+.explanation-detail-label { display: block; margin-bottom: 4px; font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.explanation-detail-value { color: var(--ink); line-height: 1.55; }
 .explanation-points { display: grid; gap: 6px; margin: 0; padding-left: 18px; color: var(--muted); }
 .explanation-points li { line-height: 1.55; }
 .explanation-links { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -429,6 +433,7 @@ COMMON_ANALYSIS_JS = """const state = {
 };
 const analysisCache = new Map();
 const maxWebRangeSize = 20000;
+const ANALYSIS_TABS = ['modular', 'gaps', 'factors', 'density', 'expected'];
 const maxWebEnd = 200000;
 const VISUAL_PAGE_COLUMNS = 24;
 const VISUAL_PAGE_ROWS = 25;
@@ -488,6 +493,22 @@ function makeDefinitionList(items) {
 }
 
 function makeExplanationCard(config, extraClass = '') {
+  const detailItems = [];
+  if (config.question) {
+    detailItems.push({ label: 'This view answers', value: config.question });
+  }
+  if (config.lookFor) {
+    detailItems.push({ label: 'What to look for', value: config.lookFor });
+  }
+  if (config.nextStep) {
+    detailItems.push({ label: 'Best next step', value: config.nextStep });
+  }
+  const details = detailItems.length ? `<div class="explanation-detail-grid">${detailItems.map((item) => `
+    <div class="explanation-detail">
+      <span class="explanation-detail-label">${item.label}</span>
+      <div class="explanation-detail-value">${item.value}</div>
+    </div>
+  `).join('')}</div>` : '';
   const points = (config.points || []).length ? `<ul class="explanation-points">${config.points.map((point) => `<li>${point}</li>`).join('')}</ul>` : '';
   const links = (config.links || []).length ? `<div class="explanation-links">${config.links.map((link) => `<a class="inline-link" href="${link.href}">${link.label}</a>`).join('')}</div>` : '';
   return `
@@ -495,6 +516,7 @@ function makeExplanationCard(config, extraClass = '') {
       <span class="explanation-kicker">${config.kicker}</span>
       <h3>${config.title}</h3>
       <p>${config.body}</p>
+      ${details}
       ${points}
       ${links}
     </article>
@@ -803,35 +825,64 @@ function getAnalysisTabExplanation(analysis) {
   const centerAverageDivisors = analysis.factorization_analysis.center_aggregate.average_divisor_count;
   const density = analysis.density_analysis;
   const lastExpected = analysis.expected_vs_observed[analysis.expected_vs_observed.length - 1];
+  const centerMod6Zero = Number(analysis.center_mod6_counts['0'] ?? analysis.center_mod6_counts[0] ?? 0);
+  const structuresAfterFirst = analysis.pair_structures.filter((row) => row.pair[0] > 5);
+  const sixKPatternCount = structuresAfterFirst.filter((row) => row.pair_mod6[0] === 5 && row.pair_mod6[1] === 1).length;
+  const densityRatios = density.pair_density_stats.map((row) => row.local_to_global_ratio).filter((value) => typeof value === 'number');
+  const averageDensityRatio = densityRatios.length ? densityRatios.reduce((total, value) => total + value, 0) / densityRatios.length : null;
+  const centerRecords = analysis.factorization_analysis.center_records;
   const explanations = {
     modular: {
       kicker: 'Read this view',
-      title: 'Start here for structural patterns.',
-      body: 'Use Modular when you want to see whether twin-prime pairs and their centers are following the residue patterns you expect.',
+      title: structuresAfterFirst.length ? 'Start here for structural patterns.' : 'This range is still in the early structural cases.',
+      body: structuresAfterFirst.length
+        ? 'Use Modular when you want to see whether twin-prime pairs and their centers are following the residue patterns you expect.'
+        : 'Use Modular to read the bootstrap cases first. Small ranges still show the first few exceptions before the usual residue pattern fully takes over.',
+      question: 'Are the pairs in this range following the usual modular structure of later twin primes?',
+      lookFor: structuresAfterFirst.length
+        ? `${formatValue(sixKPatternCount)} of ${formatValue(structuresAfterFirst.length)} later pairs currently match the 6k +/- 1 pattern, and ${formatValue(centerMod6Zero)} centers land at 0 mod 6.`
+        : 'In very small ranges, treat the first few pairs as setup cases and watch for the later 6k +/- 1 rhythm to emerge as the range grows.',
+      nextStep: 'If the residue structure looks clean here, follow it into Theory or compare the same range in the Lab Mod 6 mode.',
       points: [
         'Most later pairs should line up with the 6k +/- 1 pattern.',
         'Later twin centers should collect in the 0 class modulo 6.',
       ],
       links: [
         { href: '/glossary#glossary-term-mod-6', label: 'Glossary: Mod 6' },
+        { href: '/analysis-guide', label: 'Open Analysis Guide' },
       ],
     },
     gaps: {
       kicker: 'Read this view',
-      title: 'Start here for spacing.',
-      body: 'Use Gaps when you want to see how far apart twin-prime events are appearing in the current range.',
+      title: gapData.pair_start_gaps.length ? 'Start here for spacing.' : 'This range has too few twin-prime events for a spacing pattern.',
+      body: gapData.pair_start_gaps.length
+        ? 'Use Gaps when you want to see how far apart twin-prime events are appearing in the current range.'
+        : 'Use Gaps once the range contains several twin-prime events. Right now the range is better for spotting individual pairs than measuring repeated spacing.',
+      question: 'How much space is opening up between one twin-prime event and the next?',
+      lookFor: gapData.pair_start_gaps.length
+        ? `This range currently tracks ${formatValue(gapData.pair_start_gaps.length)} pair-start gaps. Repeated gap sizes matter more than the raw average.`
+        : 'A stronger spacing story appears once you have several pair-start gaps to compare, not just one isolated jump.',
+      nextStep: 'If repeated gap sizes start standing out, compare them with the Lab first, then use Theory when you want the bounded-gap context.',
       points: [
         `Current pair-start gaps tracked: ${formatValue(gapData.pair_start_gaps.length)}.`,
         'Look for repeated gap sizes before focusing on the averages.',
       ],
       links: [
         { href: '/glossary#glossary-term-prime-gap', label: 'Glossary: Prime Gap' },
+        { href: '/lab#visualization-title', label: 'Open Lab' },
       ],
     },
     factors: {
       kicker: 'Read this view',
-      title: 'Start here for center arithmetic.',
-      body: 'Use Factors when you want to compare twin centers against the broader even-number baseline.',
+      title: centerRecords.length ? 'Start here for center arithmetic.' : 'This range does not yet have twin centers to compare.',
+      body: centerRecords.length
+        ? 'Use Factors when you want to compare twin centers against the broader even-number baseline.'
+        : 'Use Factors once the range contains twin centers. Without them, the comparison is mostly a baseline for what the broader even field looks like.',
+      question: 'Do twin centers look arithmetically different from other even numbers in the same range?',
+      lookFor: centerRecords.length
+        ? `Twin centers in this range average ${formatValue(centerAverageDivisors)} divisors. Compare that to the non-center even baseline before deciding whether the centers feel unusual.`
+        : 'Expand the range until twin centers appear, then compare divisor count and squarefree frequency instead of reading this as a standalone factor table.',
+      nextStep: 'Use this view after the Lab makes twin centers visually obvious and you want to test whether their arithmetic looks unusual.',
       points: [
         `Current average divisor count for centers: ${formatValue(centerAverageDivisors)}.`,
         'Squarefree frequency is often more useful than raw factor count alone.',
@@ -843,30 +894,82 @@ function getAnalysisTabExplanation(analysis) {
     },
     density: {
       kicker: 'Read this view',
-      title: 'Start here for clustering.',
-      body: 'Use Density when you want to compare each local twin-prime neighborhood with the overall range baseline.',
+      title: density.pair_density_stats.length ? 'Start here for clustering.' : 'This range needs more pair neighborhoods before density says much.',
+      body: density.pair_density_stats.length
+        ? 'Use Density when you want to compare each local twin-prime neighborhood with the overall range baseline.'
+        : 'Use Density once the range contains enough twin-prime neighborhoods to compare locally against the global baseline.',
+      question: 'Are twin-prime events appearing in locally denser prime neighborhoods than the full range would suggest?',
+      lookFor: density.pair_density_stats.length
+        ? `The current average local-to-global density ratio is ${averageDensityRatio !== null ? formatValue(averageDensityRatio) : 'N/A'}. Ratios above 1 signal locally denser neighborhoods.`
+        : 'This view becomes more informative once multiple pair neighborhoods can be compared across the same window size.',
+      nextStep: 'Use Density after you already recognize the pair locations and want to know whether those neighborhoods are actually richer than the full range.',
       points: [
         `Current window radius: +/-${density.window_radius}.`,
         'A ratio above 1 means the local window is denser than the global baseline.',
       ],
       links: [
         { href: '/glossary#glossary-term-bounded-gaps-between-primes', label: 'Glossary: Bounded Gaps Between Primes' },
+        { href: '/theory', label: 'Open Theory' },
       ],
     },
     expected: {
       kicker: 'Read this view',
       title: 'Start here for heuristic comparison.',
       body: 'Use Expected when you want a benchmark, not a proof. It compares the observed count with a common heuristic estimate.',
+      question: 'How does the observed twin-prime count compare with a rough heuristic baseline at this range?',
+      lookFor: `At the largest checkpoint, the actual / expected ratio is ${lastExpected && lastExpected.ratio !== null ? formatValue(lastExpected.ratio) : 'N/A'}. Read this as a rough calibration, not as evidence that a structural pattern has been explained.`,
+      nextStep: 'Use this last, after you already understand the structure and spacing, so the heuristic stays in the right supporting role.',
       points: [
         `Final actual / expected ratio: ${lastExpected && lastExpected.ratio !== null ? formatValue(lastExpected.ratio) : 'N/A'}.`,
         'Treat this as a benchmark, not as structural evidence on its own.',
       ],
       links: [
         { href: '/analysis-guide', label: 'Open Analysis Guide' },
+        { href: '/theory', label: 'Open Theory' },
       ],
     },
   };
   return explanations[state.activeTab];
+}
+
+function getRequestedAnalysisTab() {
+  const params = new URLSearchParams(window.location.search);
+  const requested = params.get('view');
+  return ANALYSIS_TABS.includes(requested) ? requested : null;
+}
+
+function getRequestedAnalysisRange() {
+  const params = new URLSearchParams(window.location.search);
+  const start = Number(params.get('start'));
+  const end = Number(params.get('end'));
+  return Number.isInteger(start) && Number.isInteger(end) ? { start, end } : null;
+}
+
+function getAnalysisViewHref(view, analysis = state.analysis) {
+  const url = new URL('/analysis', window.location.origin);
+  url.searchParams.set('view', view);
+  if (analysis) {
+    url.searchParams.set('start', analysis.start);
+    url.searchParams.set('end', analysis.limit);
+  }
+  url.hash = 'analysis-views-title';
+  return `${url.pathname}${url.search}${url.hash}`;
+}
+
+function syncAnalysisUrlState() {
+  if (window.location.pathname !== '/analysis') {
+    return;
+  }
+  const url = new URL(window.location.href);
+  url.searchParams.set('view', state.activeTab);
+  if (state.analysis) {
+    url.searchParams.set('start', state.analysis.start);
+    url.searchParams.set('end', state.analysis.limit);
+  }
+  if (!url.hash) {
+    url.hash = 'analysis-views-title';
+  }
+  window.history.replaceState({}, '', url.toString());
 }
 
 function getRangeValidationMessage(start, end) {
@@ -920,6 +1023,7 @@ function renderAnalysisTabs() {
   tabButtons.forEach((button) => {
     button.classList.toggle('active', button.dataset.tab === state.activeTab);
   });
+  syncAnalysisUrlState();
 }
 
 async function fetchAnalysis(start, end, onSuccess) {
@@ -1276,6 +1380,7 @@ function renderVisualizationContext(analysis) {
         ],
         links: [
           { href: '/glossary#glossary-term-mod-6', label: 'Glossary: Mod 6' },
+          { href: getAnalysisViewHref('modular', analysis), label: 'Open Modular in Analysis' },
         ],
       }
     : state.visualMode === 'factors'
@@ -1289,6 +1394,7 @@ function renderVisualizationContext(analysis) {
           ],
           links: [
             { href: '/glossary#glossary-term-divisor', label: 'Glossary: Divisor' },
+            { href: getAnalysisViewHref('factors', analysis), label: 'Open Factors in Analysis' },
           ],
         }
       : state.visualMode === 'centers'
@@ -1302,6 +1408,7 @@ function renderVisualizationContext(analysis) {
             ],
             links: [
               { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
+              { href: getAnalysisViewHref('factors', analysis), label: 'Open Factors in Analysis' },
             ],
           }
         : {
@@ -1314,6 +1421,7 @@ function renderVisualizationContext(analysis) {
             ],
             links: [
               { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
+              { href: getAnalysisViewHref('modular', analysis), label: 'Open Modular in Analysis' },
             ],
           };
 
@@ -1324,7 +1432,10 @@ function renderVisualizationContext(analysis) {
     points: [
       'Matching numbers stay prominent while non-matching numbers recede into the background.',
     ],
-    links: [{ href: '/glossary#glossary-term-residue-class', label: 'Glossary: Residue Class' }],
+    links: [
+      { href: '/glossary#glossary-term-residue-class', label: 'Glossary: Residue Class' },
+      { href: getAnalysisViewHref('modular', analysis), label: 'Open Modular in Analysis' },
+    ],
   }) : '';
 
   if (!focused) {
@@ -1352,6 +1463,7 @@ function renderVisualizationContext(analysis) {
         ],
         links: [
           { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
+          { href: getAnalysisViewHref('factors', analysis), label: 'Analyze centers in Factors' },
         ],
       }
     : focused.prime_role === 'prime_in_twin_pair'
@@ -1364,6 +1476,7 @@ function renderVisualizationContext(analysis) {
           ],
           links: [
             { href: '/glossary#glossary-term-twin-prime', label: 'Glossary: Twin Prime' },
+            { href: getAnalysisViewHref('gaps', analysis), label: 'Trace spacing in Gaps' },
           ],
         }
       : focused.number_type === 'prime'
@@ -1376,6 +1489,7 @@ function renderVisualizationContext(analysis) {
             ],
             links: [
               { href: '/glossary#glossary-term-single-prime', label: 'Glossary: Single Prime' },
+              { href: getAnalysisViewHref('density', analysis), label: 'Compare with Density' },
             ],
           }
         : {
@@ -1389,6 +1503,7 @@ function renderVisualizationContext(analysis) {
             links: [
               { href: '/glossary#glossary-term-not-prime', label: 'Glossary: Not Prime' },
               { href: '/glossary#glossary-term-divisor', label: 'Glossary: Divisor' },
+              { href: getAnalysisViewHref('factors', analysis), label: 'Compare in Factors' },
             ],
           };
   visualizationHover.innerHTML = `
@@ -1688,6 +1803,12 @@ if (form && statusText) {
     fetchAnalysis(start, end);
   });
 
+  const requestedAnalysisTab = getRequestedAnalysisTab();
+  if (requestedAnalysisTab) {
+    state.activeTab = requestedAnalysisTab;
+  }
+  const requestedAnalysisRange = getRequestedAnalysisRange();
+
   tabButtons.forEach((button) => {
     button.addEventListener('click', () => {
       state.activeTab = button.dataset.tab;
@@ -1702,7 +1823,20 @@ if (form && statusText) {
     });
   });
 
-  fetchAnalysis(1, 100);
+  const initialStart = requestedAnalysisRange ? requestedAnalysisRange.start : 1;
+  const initialEnd = requestedAnalysisRange ? requestedAnalysisRange.end : 100;
+  const validationMessage = getRangeValidationMessage(initialStart, initialEnd);
+  if (validationMessage) {
+    showRangeValidationError(validationMessage);
+  } else {
+    if (startInput) {
+      startInput.value = initialStart;
+    }
+    if (endInput) {
+      endInput.value = initialEnd;
+    }
+    fetchAnalysis(initialStart, initialEnd);
+  }
 }
 """
 
