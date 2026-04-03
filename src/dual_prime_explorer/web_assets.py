@@ -113,6 +113,24 @@ a { color: inherit; }
 .lab-hover-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .lab-inline-button { border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; background: transparent; color: var(--ink); font: inherit; cursor: pointer; }
 .lab-inline-button:hover, .lab-inline-button:focus-visible { outline: none; border-color: var(--line-strong); background: rgba(24, 21, 18, 0.03); }
+.lab-experiment-panel { margin: 0; padding: 14px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255, 255, 255, 0.68); display: grid; gap: 10px; }
+.lab-experiment-panel legend { padding: 0 6px; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.filter-label { display: block; margin-bottom: 8px; font-size: 0.85rem; color: var(--muted); }
+.mod-residue-options { display: grid; grid-template-columns: repeat(4, minmax(42px, 42px)); gap: 8px; width: 100%; max-width: 192px; }
+.mod-residue-options .section-copy { grid-column: 1 / -1; max-width: 24ch; }
+.mod-residue-pill { position: relative; display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 12px; background: white; color: var(--ink); cursor: pointer; transition: border-color 120ms ease, box-shadow 120ms ease, background 120ms ease, color 120ms ease; }
+.mod-residue-pill:hover { border-color: var(--line-strong); }
+.mod-residue-pill:focus-within { border-color: rgba(20, 83, 45, 0.35); box-shadow: 0 0 0 3px rgba(20, 83, 45, 0.12); }
+.mod-residue-pill input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.mod-residue-pill span { font-size: 0.92rem; line-height: 1; }
+.mod-residue-pill.active { background: var(--accent-soft); border-color: rgba(20, 83, 45, 0.24); color: var(--accent); font-weight: 600; }
+.lab-experiment-summary { padding: 10px 12px; border: 1px solid rgba(20, 83, 45, 0.12); border-radius: 12px; background: rgba(236, 246, 238, 0.58); color: var(--muted); font-size: 0.92rem; }
+.lab-experiment-summary.active { color: var(--ink); border-color: rgba(20, 83, 45, 0.18); background: rgba(236, 246, 238, 0.82); }
+.lab-inline-button:disabled { opacity: 0.45; cursor: default; }
+.visualization-svg.mod-filter-active .viz-cell-group.mod-muted { opacity: 0.22; }
+.visualization-svg.mod-filter-active .viz-cell-group.mod-match .viz-cell { stroke: rgba(20, 83, 45, 0.42); stroke-width: 2.1; }
+.visualization-svg.mod-filter-active.mode-centers .viz-cell-group.mod-muted { opacity: 0.08; }
+.visualization-svg.mod-filter-active.mode-centers .viz-cell-group.kind-twin-center.mod-match { opacity: 1; }
 .lab-hover-card { display: grid; gap: 12px; padding: 16px; border-radius: 16px; background: rgba(255, 255, 255, 0.78); border: 1px solid var(--line); margin-bottom: 14px; }
 .lab-hover-header { display: grid; gap: 6px; }
 .lab-hover-number { font-size: 2rem; line-height: 1; }
@@ -406,6 +424,8 @@ COMMON_ANALYSIS_JS = """const state = {
   selectedVisualNumber: null,
   visualMode: 'standard',
   visualPage: 0,
+  modBase: null,
+  modResidues: [],
 };
 const analysisCache = new Map();
 const maxWebRangeSize = 20000;
@@ -962,7 +982,73 @@ const visualizationModeNote = document.getElementById('visualization-mode-note')
 const visualizationPagination = document.getElementById('visualization-pagination');
 const startInput = document.getElementById('start-input');
 const endInput = document.getElementById('end-input');
+const modBaseInput = document.getElementById('mod-base-input');
+const modResidueOptions = document.getElementById('mod-residue-options');
+const clearModFilterButton = document.getElementById('clear-mod-filter');
+const modFilterSummary = document.getElementById('mod-filter-summary');
 let explorerRangeTimer = null;
+
+function getNormalizedResidue(number, modulus) {
+  return ((number % modulus) + modulus) % modulus;
+}
+
+function hasActiveModFilter() {
+  return Number.isInteger(state.modBase) && state.modBase >= 2 && state.modResidues.length > 0;
+}
+
+function getResidueFilterLabel() {
+  if (!hasActiveModFilter()) {
+    return 'No mod filter';
+  }
+  return `mod ${state.modBase}: ${state.modResidues.join(', ')}`;
+}
+
+function renderModResidueOptions() {
+  if (!modResidueOptions) {
+    return;
+  }
+  const modulus = Number(modBaseInput?.value);
+  if (!Number.isInteger(modulus) || modulus < 2 || modulus > 60) {
+    modResidueOptions.innerHTML = '<p class="section-copy">Enter a modulus to generate residues.</p>';
+    state.modBase = null;
+    state.modResidues = [];
+    renderModFilterSummary();
+    return;
+  }
+  state.modBase = modulus;
+  state.modResidues = state.modResidues.filter((value) => value < modulus);
+  modResidueOptions.innerHTML = Array.from({ length: modulus }, (_, residue) => `
+    <label class="mod-residue-pill${state.modResidues.includes(residue) ? ' active' : ''}"><input type="checkbox" value="${residue}" ${state.modResidues.includes(residue) ? 'checked' : ''} aria-label="Residue ${residue}"> <span>${residue}</span></label>
+  `).join('');
+  renderModFilterSummary();
+  Array.from(modResidueOptions.querySelectorAll('input[type="checkbox"]')).forEach((input) => {
+    input.addEventListener('change', () => {
+      state.modResidues = Array.from(modResidueOptions.querySelectorAll('input[type="checkbox"]:checked')).map((item) => Number(item.value)).sort((left, right) => left - right);
+      Array.from(modResidueOptions.querySelectorAll('.mod-residue-pill')).forEach((pill) => {
+        const checkbox = pill.querySelector('input');
+        pill.classList.toggle('active', Boolean(checkbox?.checked));
+      });
+      renderModFilterSummary();
+      if (state.analysis) {
+        renderExplorerVisualization(state.analysis);
+      }
+    });
+  });
+}
+
+function renderModFilterSummary() {
+  if (!modFilterSummary) {
+    return;
+  }
+  const active = hasActiveModFilter();
+  modFilterSummary.classList.toggle('active', active);
+  modFilterSummary.textContent = active
+    ? `Active filter: ${getResidueFilterLabel()}`
+    : 'No mod filter active.';
+  if (clearModFilterButton) {
+    clearModFilterButton.disabled = !active && !(modBaseInput && modBaseInput.value);
+  }
+}
 
 function parseDivisorFilterValues() {
   if (!filterDivisors || !filterDivisors.value.trim()) {
@@ -1176,7 +1262,7 @@ function renderVisualizationContext(analysis) {
     { term: 'Prime count', value: formatValue(analysis.primes.length) },
     { term: 'Twin primes', value: formatValue(analysis.paired_primes.length) },
     { term: 'Twin centers', value: formatValue(twinCenterCount) },
-    { term: state.visualMode === 'factors' ? 'Highly divisible' : 'Page size', value: formatValue(state.visualMode === 'factors' ? highlyDivisibleCount : Math.min(VISUAL_PAGE_SIZE, analysis.limit - analysis.start + 1)) },
+    { term: hasActiveModFilter() ? 'Residue matches' : state.visualMode === 'factors' ? 'Highly divisible' : 'Page size', value: formatValue(hasActiveModFilter() ? analysis.number_classifications.filter((row) => state.modResidues.includes(getNormalizedResidue(row.number, state.modBase))).length : state.visualMode === 'factors' ? highlyDivisibleCount : Math.min(VISUAL_PAGE_SIZE, analysis.limit - analysis.start + 1)) },
   ]);
 
   const modeExplanation = state.visualMode === 'mod6'
@@ -1231,8 +1317,19 @@ function renderVisualizationContext(analysis) {
             ],
           };
 
+  const modFilterNote = hasActiveModFilter() ? makeExplanationCard({
+    kicker: 'Active experiment',
+    title: `Watching ${getResidueFilterLabel()}.`,
+    body: 'The field is currently emphasizing one modular slice so you can test whether a residue pattern lines up with prime or twin-center structure.',
+    points: [
+      'Matching numbers stay prominent while non-matching numbers recede into the background.',
+    ],
+    links: [{ href: '/glossary#glossary-term-residue-class', label: 'Glossary: Residue Class' }],
+  }) : '';
+
   if (!focused) {
     visualizationHover.innerHTML = `
+      ${modFilterNote}
       ${makeExplanationCard(modeExplanation)}
       <span class="lab-hover-kicker">Hover or select a number</span>
       <div class="lab-hover-number">${analysis.start}-${analysis.limit}</div>
@@ -1295,6 +1392,7 @@ function renderVisualizationContext(analysis) {
             ],
           };
   visualizationHover.innerHTML = `
+    ${modFilterNote}
     ${makeExplanationCard(selectionExplanation)}
     <div class="lab-hover-header">
       <span class="lab-hover-kicker">${selectionMode}</span>
@@ -1374,8 +1472,9 @@ function renderExplorerVisualization(analysis) {
     const labelTone = kind === 'composite' || kind === 'unit' ? 'dark' : 'light';
     const selectedClass = state.selectedVisualNumber === row.number ? ' selected' : '';
     const residueClass = model.isMod6 ? ` residue-${row.number % 6}` : '';
+    const modClass = hasActiveModFilter() && state.modBase ? (state.modResidues.includes(getNormalizedResidue(row.number, state.modBase)) ? ' mod-match' : ' mod-muted') : '';
     return `
-      <g class="viz-cell-group kind-${kind}${selectedClass}" data-number-cell="${row.number}" role="button" tabindex="0" aria-label="Inspect ${row.number}">
+      <g class="viz-cell-group kind-${kind}${selectedClass}${modClass}" data-number-cell="${row.number}" role="button" tabindex="0" aria-label="Inspect ${row.number}">
         <title>${row.number}: ${getVisualizationLabel(row)}${factorClass ? `, ${getFactorBandLabel(row)}` : ''}</title>
         <rect class="viz-cell ${kind}${residueClass}${factorClass ? ` ${factorClass}` : ''}" x="${position.x}" y="${position.y}" width="${cellSize}" height="${cellSize}" rx="${Math.max(8, Math.floor(cellSize / 3))}"></rect>
         <text class="viz-cell-label ${labelTone} kind-${kind}" x="${position.x + cellSize / 2}" y="${position.y + cellSize / 2 + 0.5}">${row.number}</text>
@@ -1383,7 +1482,7 @@ function renderExplorerVisualization(analysis) {
     `;
   }).join('');
 
-  const svgModeClass = model.isMod6 ? ' mode-mod6' : model.isFactors ? ' mode-factors' : model.isCenters ? ' mode-centers' : '';
+  const svgModeClass = `${model.isMod6 ? ' mode-mod6' : model.isFactors ? ' mode-factors' : model.isCenters ? ' mode-centers' : ''}${hasActiveModFilter() ? ' mod-filter-active' : ''}`;
   visualizationStage.innerHTML = `
     <svg class="visualization-svg${svgModeClass}" viewBox="0 0 ${svgWidth} ${svgHeight}" role="img" aria-label="Twin prime visualization for ${model.pageStartNumber} to ${model.pageEndNumber}">
       ${headerMarkup}
@@ -1394,7 +1493,7 @@ function renderExplorerVisualization(analysis) {
 
   if (visualizationPagination) {
     visualizationPagination.innerHTML = `
-      <div class="lab-pagination-status">Page ${model.currentPage + 1} of ${model.pageCount} ? ${model.pageStartNumber}-${model.pageEndNumber}</div>
+      <div class="lab-pagination-status">Page ${model.currentPage + 1} of ${model.pageCount} | ${model.pageStartNumber}-${model.pageEndNumber}</div>
       <div class="lab-pagination-actions">
         <button type="button" class="lab-page-button" data-page-action="prev" ${model.currentPage === 0 ? 'disabled' : ''}>Previous</button>
         <button type="button" class="lab-page-button" data-page-action="next" ${model.currentPage >= model.pageCount - 1 ? 'disabled' : ''}>Next</button>
@@ -1442,16 +1541,17 @@ function renderExplorerVisualization(analysis) {
 
   syncVisualizationSelectionStyles();
   if (visualizationRangeLabel) {
-    visualizationRangeLabel.textContent = `Range ${analysis.start}-${analysis.limit} ? Page ${model.currentPage + 1}/${model.pageCount}`;
+    visualizationRangeLabel.textContent = `Range ${analysis.start}-${analysis.limit} | Page ${model.currentPage + 1}/${model.pageCount}`;
   }
   if (visualizationModeNote) {
-    visualizationModeNote.textContent = state.visualMode === 'mod6'
+    const baseNote = state.visualMode === 'mod6'
       ? 'Mod 6 view arranges each page into repeating residue blocks so prime structure stays visible across 24 columns.'
       : state.visualMode === 'factors'
         ? 'Factors view darkens composites as their divisor counts grow, while twin primes and twin centers stay visually distinct.'
         : state.visualMode === 'centers'
           ? 'Twin Centers view pulls the background back so the centers between paired primes become the main landmarks in the field.'
           : 'Standard view keeps each page to 24 columns by 25 rows so prime, twin-prime, and twin-center clusters are easy to scan.';
+    visualizationModeNote.textContent = hasActiveModFilter() ? `${baseNote} Active filter: ${getResidueFilterLabel()}.` : baseNote;
   }
   visualizationModeButtons.forEach((button) => {
     const isActive = button.dataset.visualMode === state.visualMode;
@@ -1520,6 +1620,27 @@ if (form) {
     control?.addEventListener('input', scheduleExplorerRangeUpdate);
     control?.addEventListener('change', tryFetchExplorerRange);
   });
+
+  modBaseInput?.addEventListener('input', () => {
+    renderModResidueOptions();
+    if (state.analysis) {
+      renderExplorerVisualization(state.analysis);
+    }
+  });
+  clearModFilterButton?.addEventListener('click', () => {
+    if (modBaseInput) {
+      modBaseInput.value = '';
+    }
+    state.modBase = null;
+    state.modResidues = [];
+    renderModResidueOptions();
+    renderModFilterSummary();
+    if (state.analysis) {
+      renderExplorerVisualization(state.analysis);
+    }
+  });
+  renderModResidueOptions();
+  renderModFilterSummary();
 
   visualizationModeButtons.forEach((button) => {
     button.addEventListener('click', () => {

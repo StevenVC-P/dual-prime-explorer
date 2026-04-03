@@ -54,6 +54,21 @@ LAB_PAGE = PageDefinition(
         <input id="end-input" name="end" type="number" min="2" max="200000" value="500" required>
       </label>
       <button type="submit">Refresh Range</button>
+      <fieldset class="lab-experiment-panel">
+        <legend>Mod Experiment</legend>
+        <label>
+          <span>Modulus</span>
+          <input id="mod-base-input" type="number" min="2" max="60" placeholder="6">
+        </label>
+        <p class="section-copy">Choose a modulus from 2 to 60, then select one or more residues.</p>
+        <div>
+          <span class="filter-label">Residues</span>
+          <div id="mod-residue-options" class="mod-residue-options"></div>
+        </div>
+        <div id="mod-filter-summary" class="lab-experiment-summary">No mod filter active.</div>
+        <button id="clear-mod-filter" class="lab-inline-button" type="button">Clear Mod Filter</button>
+        <p class="section-copy">Highlight numbers by residue class to test modular ideas inside the live field.</p>
+      </fieldset>
       <p class="section-copy">Updates live while you adjust the range. Web ranges are capped at 20,000 numbers and an end value of 200,000.</p>
       <p class="section-copy"><a class="inline-link" href="/explorer">Open the detailed Explorer page</a></p>
     </form>
