@@ -195,7 +195,7 @@ def test_web_payload_supports_selected_ranges() -> None:
 
 
 def test_route_registry_is_ready_for_more_pages() -> None:
-    assert set(PAGE_BY_ROUTE) == {"/explorer", "/analysis", "/theory", "/experiments"}
+    assert set(PAGE_BY_ROUTE) == {"/explorer", "/analysis", "/analysis-guide", "/theory", "/experiments"}
     rendered_pages = build_page_registry()
     assert "/analysis" in rendered_pages
     assert "href=\"/analysis\"" in rendered_pages["/explorer"]
@@ -232,7 +232,7 @@ def test_theory_tab_configuration_is_present() -> None:
 def test_load_web_runtime_supports_dev_mode() -> None:
     runtime = load_web_runtime(dev_mode=True)
 
-    assert set(runtime["page_by_route"]) == {"/explorer", "/analysis", "/theory", "/experiments"}
+    assert set(runtime["page_by_route"]) == {"/explorer", "/analysis", "/analysis-guide", "/theory", "/experiments"}
     assert "Filters" in runtime["page_registry"]["/explorer"]
     assert "Range Start" in runtime["page_registry"]["/explorer"]
     assert "Range End" in runtime["page_registry"]["/explorer"]
@@ -255,6 +255,15 @@ def test_load_web_runtime_supports_dev_mode() -> None:
     assert "All divisors" in runtime["explorer_js"]
     assert "filterColumnOptions" in runtime["explorer_js"]
     assert "Composite" in runtime["explorer_js"]
+    assert "How To Read The Analysis Page" in runtime["page_registry"]["/analysis"]
+    assert "Start with Gaps for spacing" in runtime["page_registry"]["/analysis"]
+    assert "Open the full analysis guide in a new tab" in runtime["page_registry"]["/analysis"]
+    assert "data-analysis-target" in runtime["analysis_js"]
+    assert "tabShortcutButtons" in runtime["analysis_js"]
+    assert "Analysis Guide" in runtime["page_registry"]["/analysis-guide"]
+    assert "Which tab should you open first?" in runtime["page_registry"]["/analysis-guide"]
+    assert "Recommended reading order" in runtime["page_registry"]["/analysis-guide"]
+    assert "Modular view" in runtime["page_registry"]["/analysis-guide"]
     assert "theoryTabs" in runtime["theory_js"]
     assert "Twin Prime History Timeline" in runtime["theory_js"]
     assert "Last reviewed: April 2026" in runtime["page_registry"]["/theory"]
