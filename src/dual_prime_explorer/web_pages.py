@@ -100,6 +100,7 @@ LAB_PAGE = PageDefinition(
       <h2>What To Do Next</h2>
       <p>Move from seeing the pattern to inspecting or interpreting it.</p>
     </div>
+    </div>
   </div>
   <div class="metric-grid">
     <article class="metric-box">
@@ -311,11 +312,16 @@ ANALYSIS_PAGE = PageDefinition(
       <p>A quick orientation before you move through the tabbed views.</p>
     </div>
   </div>
-  <div class="glossary-jump-strip" aria-label="Analysis glossary links">
-    <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-mod-6">Mod 6</a>
-    <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-prime-gap">Prime Gap</a>
-    <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-twin-center">Twin Center</a>
-    <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-bounded-gaps-between-primes">Bounded Gaps Between Primes</a>
+  <div class="glossary-jump-shell">
+    <div class="glossary-strip-header">
+      <p class="section-copy glossary-strip-label">Glossary links</p>
+    </div>
+    <div class="glossary-jump-strip" aria-label="Analysis glossary links">
+      <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-mod-6" title="Open glossary entry: Mod 6">Mod 6</a>
+      <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-prime-gap" title="Open glossary entry: Prime Gap">Prime Gap</a>
+      <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-twin-center" title="Open glossary entry: Twin Center">Twin Center</a>
+      <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-bounded-gaps-between-primes" title="Open glossary entry: Bounded Gaps Between Primes">Bounded Gaps Between Primes</a>
+    </div>
   </div>
   <div class="metric-grid">
     <article class="metric-box">
@@ -469,10 +475,16 @@ THEORY_PAGE = PageDefinition(
       <p>A concise guide to the twin prime problem, organized as product-style reference notes rather than a long article.</p>
     </div>
   </div>
-  <div class="glossary-jump-strip" aria-label="Related glossary links">
-    <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-twin-prime-conjecture">Twin Prime Conjecture</a>
-    <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-bounded-gaps-between-primes">Bounded Gaps Between Primes</a>
-    <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-hardy-littlewood-conjecture">Hardy-Littlewood Conjecture</a>
+  <div class="glossary-jump-shell">
+    <div class="glossary-strip-header">
+      <p class="section-copy glossary-strip-label">Glossary links</p>
+      <p class="glossary-strip-copy">These pills open glossary entries for the theory concepts below.</p>
+    </div>
+    <div class="glossary-jump-strip" aria-label="Related glossary links">
+      <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-twin-prime-conjecture" title="Open glossary entry: Twin Prime Conjecture">Twin Prime Conjecture</a>
+      <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-bounded-gaps-between-primes" title="Open glossary entry: Bounded Gaps Between Primes">Bounded Gaps Between Primes</a>
+      <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-hardy-littlewood-conjecture" title="Open glossary entry: Hardy-Littlewood Conjecture">Hardy-Littlewood Conjecture</a>
+    </div>
   </div>
   <div class="theory-layout">
     <div class="theory-tabs-shell">

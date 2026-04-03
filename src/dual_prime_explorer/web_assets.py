@@ -96,6 +96,14 @@ a { color: inherit; }
 .lab-hover-number { font-size: 2rem; line-height: 1; }
 .lab-hover-kicker { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.76rem; color: var(--muted); }
 .lab-hover-pair { display: inline-flex; align-items: center; gap: 6px; width: fit-content; padding: 6px 10px; border-radius: 999px; background: rgba(20, 83, 45, 0.08); color: var(--accent); border: 1px solid rgba(20, 83, 45, 0.12); font-size: 0.88rem; }
+.explanation-card { display: grid; gap: 8px; padding: 12px 14px; border-radius: 16px; background: linear-gradient(180deg, rgba(236,246,238,0.68) 0%, rgba(255,255,255,0.82) 100%); border: 1px solid rgba(20, 83, 45, 0.12); }
+.explanation-kicker { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.76rem; color: var(--accent); }
+.explanation-card h3 { font-size: 0.98rem; }
+.explanation-card p { color: var(--muted); }
+.explanation-points { display: grid; gap: 6px; margin: 0; padding-left: 18px; color: var(--muted); }
+.explanation-points li { line-height: 1.55; }
+.explanation-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.analysis-intro-card { margin-bottom: 16px; }
 .lab-fact-list { display: grid; gap: 10px; }
 .lab-fact { display: grid; gap: 5px; padding-top: 10px; border-top: 1px solid rgba(24, 21, 18, 0.08); }
 .lab-fact:first-child { border-top: 0; padding-top: 0; }
@@ -317,7 +325,11 @@ p { margin: 0; line-height: 1.65; }
 .glossary-term-card h3 { margin-bottom: 8px; }
 .glossary-inline-link { color: var(--accent); font-weight: 600; text-decoration: none; }
 .glossary-inline-link:hover, .glossary-inline-link:focus-visible { text-decoration: underline; outline: none; }
-.glossary-jump-strip { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.glossary-jump-shell { display: grid; gap: 10px; margin-top: 12px; padding: 12px 14px; border: 1px solid rgba(24, 21, 18, 0.08); border-radius: 16px; background: rgba(255,255,255,0.5); }
+.glossary-strip-header { display: grid; gap: 4px; }
+.glossary-strip-label { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.glossary-strip-copy { color: var(--muted); font-size: 0.94rem; line-height: 1.5; }
+.glossary-jump-strip { display: flex; flex-wrap: wrap; gap: 10px; }
 .glossary-toolbar { display: grid; gap: 14px; margin-bottom: 18px; }
 .glossary-search-control { display: grid; gap: 8px; max-width: 420px; }
 .glossary-search-control span { color: var(--muted); font-size: 0.9rem; }
@@ -415,6 +427,20 @@ function makeDefinitionList(items) {
       <div class=\"definition-value\">${item.value}</div>
     </div>
   `).join('')}</div>`;
+}
+
+function makeExplanationCard(config, extraClass = '') {
+  const points = (config.points || []).length ? `<ul class="explanation-points">${config.points.map((point) => `<li>${point}</li>`).join('')}</ul>` : '';
+  const links = (config.links || []).length ? `<div class="explanation-links">${config.links.map((link) => `<a class="inline-link" href="${link.href}">${link.label}</a>`).join('')}</div>` : '';
+  return `
+    <article class="explanation-card ${extraClass}">
+      <span class="explanation-kicker">${config.kicker}</span>
+      <h3>${config.title}</h3>
+      <p>${config.body}</p>
+      ${points}
+      ${links}
+    </article>
+  `;
 }
 
 function makeHistogramCard(title, subtitle, histogram, formatter = (key) => key) {
@@ -714,6 +740,77 @@ function renderExpected(analysis) {
   `;
 }
 
+function getAnalysisTabExplanation(analysis) {
+  const gapData = analysis.gap_analysis;
+  const centerAverageDivisors = analysis.factorization_analysis.center_aggregate.average_divisor_count;
+  const density = analysis.density_analysis;
+  const lastExpected = analysis.expected_vs_observed[analysis.expected_vs_observed.length - 1];
+  const explanations = {
+    modular: {
+      kicker: 'Read this view',
+      title: 'Start here for structural patterns.',
+      body: 'Use Modular when you want to see whether twin-prime pairs and their centers are following the residue patterns you expect.',
+      points: [
+        'Most later pairs should line up with the 6k +/- 1 pattern.',
+        'Later twin centers should collect in the 0 class modulo 6.',
+      ],
+      links: [
+        { href: '/glossary#glossary-term-mod-6', label: 'Glossary: Mod 6' },
+      ],
+    },
+    gaps: {
+      kicker: 'Read this view',
+      title: 'Start here for spacing.',
+      body: 'Use Gaps when you want to see how far apart twin-prime events are appearing in the current range.',
+      points: [
+        `Current pair-start gaps tracked: ${formatValue(gapData.pair_start_gaps.length)}.`,
+        'Look for repeated gap sizes before focusing on the averages.',
+      ],
+      links: [
+        { href: '/glossary#glossary-term-prime-gap', label: 'Glossary: Prime Gap' },
+      ],
+    },
+    factors: {
+      kicker: 'Read this view',
+      title: 'Start here for center arithmetic.',
+      body: 'Use Factors when you want to compare twin centers against the broader even-number baseline.',
+      points: [
+        `Current average divisor count for centers: ${formatValue(centerAverageDivisors)}.`,
+        'Squarefree frequency is often more useful than raw factor count alone.',
+      ],
+      links: [
+        { href: '/glossary#glossary-term-divisor', label: 'Glossary: Divisor' },
+        { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
+      ],
+    },
+    density: {
+      kicker: 'Read this view',
+      title: 'Start here for clustering.',
+      body: 'Use Density when you want to compare each local twin-prime neighborhood with the overall range baseline.',
+      points: [
+        `Current window radius: +/-${density.window_radius}.`,
+        'A ratio above 1 means the local window is denser than the global baseline.',
+      ],
+      links: [
+        { href: '/glossary#glossary-term-bounded-gaps-between-primes', label: 'Glossary: Bounded Gaps Between Primes' },
+      ],
+    },
+    expected: {
+      kicker: 'Read this view',
+      title: 'Start here for heuristic comparison.',
+      body: 'Use Expected when you want a benchmark, not a proof. It compares the observed count with a common heuristic estimate.',
+      points: [
+        `Final actual / expected ratio: ${lastExpected && lastExpected.ratio !== null ? formatValue(lastExpected.ratio) : 'N/A'}.`,
+        'Treat this as a benchmark, not as structural evidence on its own.',
+      ],
+      links: [
+        { href: '/analysis-guide', label: 'Open Analysis Guide' },
+      ],
+    },
+  };
+  return explanations[state.activeTab];
+}
+
 function renderAnalysisTabs() {
   if (!tabContent) {
     return;
@@ -723,7 +820,8 @@ function renderAnalysisTabs() {
     return;
   }
   const renderers = { modular: renderModular, gaps: renderGaps, factors: renderFactors, density: renderDensity, expected: renderExpected };
-  tabContent.innerHTML = renderers[state.activeTab](state.analysis);
+  const explanation = getAnalysisTabExplanation(state.analysis);
+  tabContent.innerHTML = makeExplanationCard(explanation, 'analysis-intro-card') + renderers[state.activeTab](state.analysis);
   tabButtons.forEach((button) => {
     button.classList.toggle('active', button.dataset.tab === state.activeTab);
   });
@@ -933,8 +1031,35 @@ function renderVisualizationContext(analysis) {
     { term: 'Range size', value: formatValue(analysis.limit - analysis.start + 1) },
   ]);
 
+  const modeExplanation = state.visualMode === 'mod6'
+    ? {
+        kicker: 'Active mode',
+        title: 'Mod 6 makes the residue pattern visible.',
+        body: 'Primes greater than 3 must land in the 1 or 5 columns, while twin centers fall in the 0 column. That makes the structure easier to read quickly.',
+        points: [
+          'Use this mode when structure matters more than exact row-by-row reading.',
+          'The first pair region is still exceptional, so treat early values with care.',
+        ],
+        links: [
+          { href: '/glossary#glossary-term-mod-6', label: 'Glossary: Mod 6' },
+        ],
+      }
+    : {
+        kicker: 'Active mode',
+        title: 'Standard is the fastest way to scan the field.',
+        body: 'This compact layout is best when you want a quick read of where primes, twin primes, and twin centers start to cluster.',
+        points: [
+          'Use this view first when you want a quick visual read of the field.',
+          'Pin a number when you want to stop the hover preview and inspect it in place.',
+        ],
+        links: [
+          { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
+        ],
+      };
+
   if (!focused) {
     visualizationHover.innerHTML = `
+      ${makeExplanationCard(modeExplanation)}
       <span class="lab-hover-kicker">Hover or select a number</span>
       <div class="lab-hover-number">${analysis.start}-${analysis.limit}</div>
       <p>Prime numbers, twin-prime members, and twin centers are all visible in the field. Hover to browse, or click a number to pin it here.</p>
@@ -945,7 +1070,57 @@ function renderVisualizationContext(analysis) {
   const divisors = focused.all_divisors?.length ? focused.all_divisors.join(', ') : 'None';
   const selectionMode = state.selectedVisualNumber === focused.number ? 'Pinned selection' : 'Hover preview';
   const pairBadge = focused.center_of_pair ? `<div class="lab-hover-pair">Pair ${focused.center_of_pair.join(' - ')}</div>` : '';
+  const selectionExplanation = focused.is_pair_center
+    ? {
+        kicker: 'Why this matters',
+        title: `${focused.number} is the center of a twin-prime pair.`,
+        body: 'Twin centers sit exactly between twin primes, so they often make local pair structure easier to spot than the primes alone.',
+        points: [
+          `Current pair: ${focused.center_of_pair.join(' - ')}.`,
+          'In Mod 6, twin centers usually collect in the 0 column after the early exceptions.',
+        ],
+        links: [
+          { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
+        ],
+      }
+    : focused.prime_role === 'prime_in_twin_pair'
+      ? {
+          kicker: 'Why this matters',
+          title: `${focused.number} belongs to a twin-prime pair.`,
+          body: 'Twin primes are the main structural event in the Lab. This number is one side of a prime pair separated by exactly 2.',
+          points: [
+            'Compare it with the center between the pair to see the surrounding local structure.',
+          ],
+          links: [
+            { href: '/glossary#glossary-term-twin-prime', label: 'Glossary: Twin Prime' },
+          ],
+        }
+      : focused.number_type === 'prime'
+        ? {
+            kicker: 'Why this matters',
+            title: `${focused.number} is a single prime here.`,
+            body: 'Single primes show where primes appear without forming a twin-prime event in the current selection.',
+            points: [
+              'They provide the baseline against which twin-prime structure becomes visually meaningful.',
+            ],
+            links: [
+              { href: '/glossary#glossary-term-single-prime', label: 'Glossary: Single Prime' },
+            ],
+          }
+        : {
+            kicker: 'Why this matters',
+            title: `${focused.number} is not prime in this view.`,
+            body: 'Composite numbers and the unit 1 create the background that primes must avoid. Their divisor structure helps shape where prime patterns can appear.',
+            points: [
+              `Prime neighborhood: ${formatAdjacentPrimeRole(focused)}.`,
+            ],
+            links: [
+              { href: '/glossary#glossary-term-not-prime', label: 'Glossary: Not Prime' },
+              { href: '/glossary#glossary-term-divisor', label: 'Glossary: Divisor' },
+            ],
+          };
   visualizationHover.innerHTML = `
+    ${makeExplanationCard(selectionExplanation)}
     <div class="lab-hover-header">
       <span class="lab-hover-kicker">${selectionMode}</span>
       <div class="lab-hover-number">${focused.number}</div>
