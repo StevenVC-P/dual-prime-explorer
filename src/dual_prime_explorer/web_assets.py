@@ -50,8 +50,9 @@ a { color: inherit; }
 .hero-block, .panel, .control-panel { background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow); }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.82fr); gap: 18px; }
 .hero-block { border-radius: 24px; padding: 22px; margin-bottom: 22px; }
-.hero-copy { max-width: 68ch; }
+.hero-copy { max-width: 68ch; display: grid; gap: 12px; }
 .theory-copy { max-width: 76ch; }
+.theory-hero { margin-bottom: 30px; }
 .lab-layout { display: grid; grid-template-columns: minmax(220px, 260px) minmax(0, 1fr) minmax(220px, 280px); gap: 16px; align-items: start; }
 .explorer-lab-controls { position: sticky; top: 18px; }
 .lab-visualization-card, .lab-context-card { border: 1px solid var(--line); border-radius: 20px; background: var(--panel-soft); padding: 16px; min-width: 0; }
@@ -310,33 +311,42 @@ p { margin: 0; line-height: 1.65; }
 .definition-value { font-variant-numeric: tabular-nums; }
 .empty-note { padding: 14px 16px; border-radius: 16px; background: var(--panel-subtle); border: 1px dashed var(--line); color: var(--muted); }
 .error { color: #8a1c1c; border: 1px solid rgba(138, 28, 28, 0.18); background: rgba(249, 115, 115, 0.08); padding: 14px; border-radius: 16px; }
-.theory-layout { display: grid; grid-template-columns: minmax(220px, 260px) minmax(0, 1fr); gap: 18px; }
+.theory-layout { display: grid; grid-template-columns: minmax(250px, 300px) minmax(0, 1fr); gap: 22px; align-items: start; }
 .theory-tabs-shell { align-self: start; }
 .theory-tabs { display: grid; gap: 10px; }
-.theory-tab { text-align: left; border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; background: transparent; color: var(--muted); cursor: pointer; }
+.theory-tab { text-align: left; border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; background: transparent; color: var(--muted); cursor: pointer; }
 .theory-tab:hover, .theory-tab:focus-visible { outline: none; border-color: var(--line-strong); color: var(--ink); }
 .theory-tab.active { background: var(--accent-soft); border-color: rgba(20, 83, 45, 0.24); color: var(--ink); }
 .theory-tab.active .theory-tab-label { color: var(--accent); }
 .theory-tab-label { display: block; font-weight: 600; margin-bottom: 4px; }
-.theory-tab-hint { display: block; font-size: 0.92rem; }
+.theory-tab-hint { display: block; font-size: 0.92rem; line-height: 1.45; }
 .theory-content-shell { min-width: 0; }
 .theory-tabpanel { display: grid; gap: 16px; outline: none; }
 .theory-intro-block { display: grid; gap: 8px; padding-bottom: 4px; }
 .theory-intro { max-width: 70ch; }
-.theory-sections, .theory-approaches, .theory-timeline, .theory-faq-grid, .theory-reference-list, .glossary-sections, .glossary-terms { display: grid; gap: 14px; }
-.theory-section, .theory-approach, .theory-timeline-card, .theory-faq-card, .theory-reference-card, .glossary-section, .glossary-term-card { padding: 18px; }
+.theory-sections, .theory-approaches, .theory-timeline, .theory-faq-grid, .theory-reference-list, .theory-action-grid, .glossary-sections, .glossary-terms { display: grid; gap: 14px; }
+.theory-section, .theory-approach, .theory-timeline-card, .theory-faq-card, .theory-reference-card, .theory-action-card, .glossary-section, .glossary-term-card { padding: 18px; }
 .theory-approach dl { display: grid; gap: 8px; margin: 0; }
 .theory-approach dt { font-weight: 600; }
 .theory-approach dd { margin: 0; color: var(--muted); }
 .theory-meta-strip { display: flex; flex-wrap: wrap; gap: 10px; }
 .theory-meta-pill { padding: 8px 12px; border-radius: 999px; background: var(--accent-faint); color: var(--accent); border: 1px solid rgba(20, 83, 45, 0.12); font-size: 0.9rem; }
-.theory-block { display: grid; gap: 12px; }
+.theory-block { display: grid; gap: 12px; margin-bottom: 10px; }
 .theory-block h3 { font-size: 1.02rem; }
 .theory-timeline-card { border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(248,245,238,0.92) 100%); }
 .theory-timeline-label { display: inline-block; margin-bottom: 8px; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
 .theory-faq-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 .theory-faq-card h4, .theory-reference-card h4 { margin: 0 0 8px; font-size: 0.98rem; }
-.theory-reference-note, .theory-faq-card p, .theory-timeline-card p { color: var(--muted); }
+.theory-reference-note, .theory-faq-card p, .theory-timeline-card p, .theory-action-card p { color: var(--muted); }
+.theory-action-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.theory-action-card { border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,0.82); display: grid; gap: 10px; }
+.theory-path-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.theory-path-card { border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,0.72); }
+.theory-action-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.theory-action-kicker { display: inline-block; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.theory-destination-badge { display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(20, 83, 45, 0.12); background: var(--accent-faint); color: var(--accent); font-size: 0.82rem; font-weight: 600; }
+.theory-action-card h4 { margin: 0 0 8px; font-size: 1rem; }
+.theory-action-card .inline-link { font-weight: 600; }
 .theory-reference-list { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 .glossary-sections { gap: 18px; }
 .glossary-section { border: 1px solid var(--line); border-radius: 18px; background: var(--panel-soft); }
@@ -359,6 +369,7 @@ p { margin: 0; line-height: 1.65; }
 .glossary-term-card.is-hidden, .glossary-section.is-hidden { display: none; }
 .glossary-term-summary { color: var(--ink); font-weight: 600; line-height: 1.55; margin-bottom: 8px; }
 .glossary-term-detail { color: var(--muted); }
+.glossary-term-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
 @media (max-width: 1024px) {
   .filter-layout { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .filter-group-grid-wide { grid-template-columns: 1fr; }
@@ -1687,8 +1698,31 @@ def _render_theory_tab_panel_html(tab: dict[str, object]) -> str:
             for item in reference_items
         )
         references = '<section class="theory-block"><h3>Further Reading and References</h3><div class="theory-reference-list">{}</div></section>'.format(reference_rows)
+    explore_items = tab.get("explore_next", [])
+    explore = ""
+    if explore_items:
+        explore_rows = "".join(
+            """<article class="theory-action-card">
+      <div class="theory-action-header">
+        <span class="theory-action-kicker">Explore this next</span>
+        <span class="theory-destination-badge">{destination}</span>
+      </div>
+      <h4>{title}</h4>
+      <p>{body}</p>
+      <p><a class="inline-link" href="{href}">{link_label}</a></p>
+    </article>""".format(
+                destination=html.escape(item.get("destination", "Next")),
+                title=html.escape(item["title"]),
+                body=html.escape(item["body"]),
+                href=html.escape(item["href"], quote=True),
+                link_label=html.escape(item["link_label"]),
+            )
+            for item in explore_items
+        )
+        explore = '<section class="theory-block"><h3>Take this into the product</h3><div class="theory-action-grid">{}</div></section>'.format(explore_rows)
     return (
         '<div class="theory-intro-block"><h2>{}</h2><p class="theory-intro">{}</p>{}</div>'.format(label, intro, meta)
+        + explore
         + ('<div class="theory-sections">{}</div>'.format(sections) if sections else '')
         + ('<div class="theory-approaches">{}</div>'.format(cards) if cards else '')
         + timeline
@@ -1723,13 +1757,21 @@ def _render_glossary_main_html(main_html: str) -> str:
         term_cards = []
         for item in section["terms"]:
             term_id = _glossary_term_id(item["term"])
+            theory_link = item.get("theory_link")
+            theory_link_html = ""
+            if theory_link:
+                theory_link_html = '<div class="glossary-term-links"><a class="inline-link" href="{href}">{label}</a></div>'.format(
+                    href=html.escape(theory_link["href"], quote=True),
+                    label=html.escape(theory_link["label"]),
+                )
             term_cards.append(
-                '<article id="{term_id}" class="glossary-term-card" data-glossary-term data-term-label="{label}"><h3>{term}</h3><p class="glossary-term-summary">{summary}</p><p class="glossary-term-detail">{detail}</p></article>'.format(
+                '<article id="{term_id}" class="glossary-term-card" data-glossary-term data-term-label="{label}"><h3>{term}</h3><p class="glossary-term-summary">{summary}</p><p class="glossary-term-detail">{detail}</p>{links}</article>'.format(
                     term_id=html.escape(term_id),
                     label=html.escape(item["term"].lower()),
                     term=html.escape(item["term"]),
                     summary=html.escape(item["summary"]),
                     detail=html.escape(item["detail"]),
+                    links=theory_link_html,
                 )
             )
         sections_html.append(
@@ -1843,6 +1885,24 @@ function renderTheoryTabPanel() {
       </div>
     </section>
   ` : '';
+  const explore = (tab.explore_next || []).length ? `
+    <section class="theory-block">
+      <h3>Take this into the product</h3>
+      <div class="theory-action-grid">
+        ${(tab.explore_next || []).map((item) => `
+          <article class="theory-action-card">
+            <div class="theory-action-header">
+              <span class="theory-action-kicker">Explore this next</span>
+              <span class="theory-destination-badge">${item.destination || 'Next'}</span>
+            </div>
+            <h4>${item.title}</h4>
+            <p>${item.body}</p>
+            <p><a class="inline-link" href="${item.href}">${item.link_label}</a></p>
+          </article>
+        `).join('')}
+      </div>
+    </section>
+  ` : '';
   tabPanel.setAttribute('aria-labelledby', `theory-tab-${tab.id}`);
   tabPanel.innerHTML = `
     <div class="theory-intro-block">
@@ -1850,6 +1910,7 @@ function renderTheoryTabPanel() {
       <p class="theory-intro">${tab.intro}</p>
       ${meta}
     </div>
+    ${explore}
     ${sections ? `<div class="theory-sections">${sections}</div>` : ''}
     ${cards ? `<div class="theory-approaches">${cards}</div>` : ''}
     ${timeline}

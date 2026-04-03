@@ -28,7 +28,7 @@ LAB_PAGE = PageDefinition(
   <div class="hero-copy">
     <p class="eyebrow">Lab</p>
     <h1>See twin-prime structure as a visual field.</h1>
-    <p class="hero-text">This is the hands-on layer of the lab. Adjust the range, watch primes and <a class="inline-link" href="/glossary#glossary-term-twin-center">twin centers</a> light up, and use the rest of the product when you want exact inspection, deeper analysis, or theory context.</p>
+    <p class="hero-text">Adjust the range, watch primes and <a class="inline-link" href="/glossary#glossary-term-twin-center">twin centers</a> light up, and move into exact inspection, deeper analysis, or theory context when you want more structure.</p>
   </div>
 </section>""",
     main_html="""<section class="panel explorer-lab-panel">
@@ -132,7 +132,7 @@ EXPLORER_PAGE = PageDefinition(
   <div class="hero-copy">
     <p class="eyebrow">Explorer</p>
     <h1>Inspect the range one number at a time.</h1>
-    <p class="hero-text">Use Explorer when you want exact rows, <a class="inline-link" href="/glossary#glossary-term-divisor">divisor</a> filters, and number-level classifications that complement the visualization-first Lab.</p>
+    <p class="hero-text">Exact rows, <a class="inline-link" href="/glossary#glossary-term-divisor">divisor</a> filters, and number-level classifications that complement the visualization-first Lab.</p>
   </div>
   <form id="analysis-form" class="control-panel">
     <label>
@@ -162,7 +162,7 @@ EXPLORER_PAGE = PageDefinition(
 <section class="panel table-panel">
   <div class="panel-heading">
     <div>
-      <h2>Number Table</h2>
+      <h2 id="number-table-title">Number Table</h2>
       <p>Prime membership, <a class="inline-link" href="/glossary#glossary-term-prime-neighborhood">prime neighborhood</a> structure, and <a class="inline-link" href="/glossary#glossary-term-divisor">divisibility</a> for each number.</p>
     </div>
     <p id="table-filter-status">Showing all rows.</p>
@@ -286,7 +286,7 @@ ANALYSIS_PAGE = PageDefinition(
   <div class="hero-copy">
     <p class="eyebrow">Analysis</p>
     <h1>Structured views for twin-prime patterns.</h1>
-    <p class="hero-text">Use this page for the deeper mathematical breakdowns: <a class="inline-link" href="/glossary#glossary-term-mod-6">modular structure</a>, <a class="inline-link" href="/glossary#glossary-term-prime-gap">prime gaps</a>, factorization signals, density windows, and expected-versus-observed counts.</p>
+    <p class="hero-text">Deeper mathematical breakdowns for <a class="inline-link" href="/glossary#glossary-term-mod-6">modular structure</a>, <a class="inline-link" href="/glossary#glossary-term-prime-gap">prime gaps</a>, factorization signals, density windows, and expected-versus-observed counts.</p>
   </div>
   <form id="analysis-form" class="control-panel">
     <label>
@@ -353,7 +353,7 @@ ANALYSIS_PAGE = PageDefinition(
 <section class="panel analysis-panel">
   <div class="panel-heading">
     <div>
-      <h2>Analysis Views</h2>
+      <h2 id="analysis-views-title">Analysis Views</h2>
       <p>Switch between modular structure, gaps, factors, density, and expected counts.</p>
     </div>
   </div>
@@ -378,7 +378,7 @@ ANALYSIS_GUIDE_PAGE = PageDefinition(
   <div class="hero-copy theory-copy">
     <p class="eyebrow">Analysis Guide</p>
     <h1>How to understand the analysis views.</h1>
-    <p class="hero-text">Use this guide when you want a fuller explanation of what each analysis tab is measuring, what question it answers, and how to interpret the results together.</p>
+    <p class="hero-text">A fuller explanation of what each analysis tab is measuring, what question it answers, and how to interpret the results together.</p>
   </div>
 </section>""",
     main_html="""<section class="panel theory-panel">
@@ -442,7 +442,7 @@ GLOSSARY_PAGE = PageDefinition(
   <div class="hero-copy theory-copy">
     <p class="eyebrow">Glossary</p>
     <h1>A shared vocabulary for exploring twin primes.</h1>
-    <p class="hero-text">Use this page when you want quick, reliable definitions for the mathematical and product terms that appear across the Lab, Explorer, Analysis, and Theory pages.</p>
+    <p class="hero-text">Quick, reliable definitions for the mathematical and product terms that appear across the Lab, Explorer, Analysis, and Theory pages.</p>
   </div>
 </section>""",
     main_html="""<section class="panel glossary-panel">
@@ -472,7 +472,7 @@ THEORY_PAGE = PageDefinition(
   <div class="hero-copy theory-copy">
     <p class="eyebrow">Theory</p>
     <h1>The mathematical context behind twin-prime exploration.</h1>
-    <p class="hero-text">Use this page as the conceptual companion to the explorer. It focuses on the problem statement, the main research ideas, what modern breakthroughs actually proved, and why a proof remains difficult.</p>
+    <p class="hero-text">The conceptual companion to the explorer, focused on the problem statement, the main research ideas, what modern breakthroughs actually proved, and why a proof remains difficult.</p>
   </div>
 </section>""",
     main_html="""<section class="panel theory-panel">
@@ -493,6 +493,26 @@ THEORY_PAGE = PageDefinition(
       <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-hardy-littlewood-conjecture" title="Open glossary entry: Hardy-Littlewood Conjecture">Hardy-Littlewood Conjecture</a>
     </div>
   </div>
+  <section class="theory-block">
+    <h3>Choose your next product surface</h3>
+    <div class="metric-grid theory-path-grid">
+      <article class="metric-box theory-path-card">
+        <h4>Lab</h4>
+        <p>The fastest route from a theory concept to a visible pattern.</p>
+        <p><a class="inline-link" href="/lab#visualization-title">Open the Lab</a></p>
+      </article>
+      <article class="metric-box theory-path-card">
+        <h4>Explorer</h4>
+        <p>Exact rows, divisors, and number-by-number inspection tied to the current theory topic.</p>
+        <p><a class="inline-link" href="/explorer#number-table-title">Open Explorer</a></p>
+      </article>
+      <article class="metric-box theory-path-card">
+        <h4>Analysis</h4>
+        <p>The same range interpreted through modular structure, gaps, density, and heuristics.</p>
+        <p><a class="inline-link" href="/analysis#analysis-views-title">Open Analysis</a></p>
+      </article>
+    </div>
+  </section>
   <div class="theory-layout">
     <div class="theory-tabs-shell">
       <div class="theory-tabs" role="tablist" aria-label="Theory topics" id="theory-tablist"></div>
