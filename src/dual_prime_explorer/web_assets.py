@@ -5,8 +5,9 @@ from __future__ import annotations
 import hashlib
 import html
 import json
+import re
 
-from .web_content import THEORY_TABS
+from .web_content import GLOSSARY_SECTIONS, THEORY_TABS
 from .web_pages import PAGE_DEFINITIONS, PageDefinition
 
 APP_CSS = """:root {
@@ -293,8 +294,8 @@ p { margin: 0; line-height: 1.65; }
 .theory-tabpanel { display: grid; gap: 16px; outline: none; }
 .theory-intro-block { display: grid; gap: 8px; padding-bottom: 4px; }
 .theory-intro { max-width: 70ch; }
-.theory-sections, .theory-approaches, .theory-timeline, .theory-faq-grid, .theory-reference-list { display: grid; gap: 14px; }
-.theory-section, .theory-approach, .theory-timeline-card, .theory-faq-card, .theory-reference-card { padding: 18px; }
+.theory-sections, .theory-approaches, .theory-timeline, .theory-faq-grid, .theory-reference-list, .glossary-sections, .glossary-terms { display: grid; gap: 14px; }
+.theory-section, .theory-approach, .theory-timeline-card, .theory-faq-card, .theory-reference-card, .glossary-section, .glossary-term-card { padding: 18px; }
 .theory-approach dl { display: grid; gap: 8px; margin: 0; }
 .theory-approach dt { font-weight: 600; }
 .theory-approach dd { margin: 0; color: var(--muted); }
@@ -308,6 +309,23 @@ p { margin: 0; line-height: 1.65; }
 .theory-faq-card h4, .theory-reference-card h4 { margin: 0 0 8px; font-size: 0.98rem; }
 .theory-reference-note, .theory-faq-card p, .theory-timeline-card p { color: var(--muted); }
 .theory-reference-list { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.glossary-sections { gap: 18px; }
+.glossary-section { border: 1px solid var(--line); border-radius: 18px; background: var(--panel-soft); }
+.glossary-section-header { display: grid; gap: 8px; margin-bottom: 14px; }
+.glossary-terms { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.glossary-term-card { border: 1px solid rgba(24, 21, 18, 0.08); border-radius: 16px; background: rgba(255,255,255,0.72); }
+.glossary-term-card h3 { margin-bottom: 8px; }
+.glossary-inline-link { color: var(--accent); font-weight: 600; text-decoration: none; }
+.glossary-inline-link:hover, .glossary-inline-link:focus-visible { text-decoration: underline; outline: none; }
+.glossary-jump-strip { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.glossary-toolbar { display: grid; gap: 14px; margin-bottom: 18px; }
+.glossary-search-control { display: grid; gap: 8px; max-width: 420px; }
+.glossary-search-control span { color: var(--muted); font-size: 0.9rem; }
+.glossary-search-control input { width: 100%; min-height: 46px; border: 1px solid var(--line); border-radius: 12px; padding: 11px 13px; font: inherit; background: white; color: var(--ink); }
+.glossary-search-control input:focus-visible { outline: none; border-color: rgba(20, 83, 45, 0.35); box-shadow: 0 0 0 3px rgba(20, 83, 45, 0.12); }
+.glossary-term-card.is-hidden, .glossary-section.is-hidden { display: none; }
+.glossary-term-summary { color: var(--ink); font-weight: 600; line-height: 1.55; margin-bottom: 8px; }
+.glossary-term-detail { color: var(--muted); }
 @media (max-width: 1024px) {
   .filter-layout { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .filter-group-grid-wide { grid-template-columns: 1fr; }
@@ -1055,7 +1073,7 @@ function renderExplorerVisualization(analysis) {
   }
   if (visualizationModeNote) {
     visualizationModeNote.textContent = state.visualMode === 'mod6'
-      ? 'mod 6 view arranges numbers by residue class. Primes greater than 3 land in the 1 and 5 columns, while twin centers fall in the 0 column.'
+      ? 'Mod 6 view arranges numbers by residue class. Primes greater than 3 land in the 1 and 5 columns, while twin centers fall in the 0 column.'
       : 'Standard view keeps the field compact so prime, twin-prime, and twin-center clusters are easy to scan.';
   }
   visualizationModeButtons.forEach((button) => {
@@ -1321,6 +1339,39 @@ def _render_theory_main_html(main_html: str) -> str:
     )
 
 
+def _glossary_term_id(term: str) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "-", term.lower()).strip("-")
+    return f"glossary-term-{slug}"
+
+
+def _render_glossary_main_html(main_html: str) -> str:
+    sections_html = []
+    for section in GLOSSARY_SECTIONS:
+        term_cards = []
+        for item in section["terms"]:
+            term_id = _glossary_term_id(item["term"])
+            term_cards.append(
+                '<article id="{term_id}" class="glossary-term-card" data-glossary-term data-term-label="{label}"><h3>{term}</h3><p class="glossary-term-summary">{summary}</p><p class="glossary-term-detail">{detail}</p></article>'.format(
+                    term_id=html.escape(term_id),
+                    label=html.escape(item["term"].lower()),
+                    term=html.escape(item["term"]),
+                    summary=html.escape(item["summary"]),
+                    detail=html.escape(item["detail"]),
+                )
+            )
+        sections_html.append(
+            '<section class="glossary-section" data-glossary-section><div class="glossary-section-header"><h3>{title}</h3><p>{intro}</p></div><div class="glossary-terms">{terms}</div></section>'.format(
+                title=html.escape(section["title"]),
+                intro=html.escape(section["intro"]),
+                terms="".join(term_cards),
+            )
+        )
+    return main_html.replace(
+        '<div id="glossary-sections"></div>',
+        '<div id="glossary-sections" class="glossary-sections">{}</div>'.format("".join(sections_html)),
+    )
+
+
 def build_theory_js() -> str:
     return (
         "const theoryTabs = " + json.dumps(THEORY_TABS) + ";\n\n"
@@ -1490,6 +1541,32 @@ window.addEventListener('hashchange', () => {
 if (tabList && tabPanel) {
   setActiveTheoryTab(activeTheoryTab, { focus: false, updateHash: false });
 }
+
+const glossarySearch = document.getElementById('glossary-search');
+const glossarySections = Array.from(document.querySelectorAll('[data-glossary-section]'));
+const glossaryTermCards = Array.from(document.querySelectorAll('[data-glossary-term]'));
+
+function applyGlossaryFilter() {
+  if (!glossarySearch || !glossaryTermCards.length) {
+    return;
+  }
+  const query = glossarySearch.value.trim().toLowerCase();
+  glossaryTermCards.forEach((card) => {
+    const text = card.textContent.toLowerCase();
+    const label = card.dataset.termLabel || '';
+    const visible = !query || text.includes(query) || label.includes(query);
+    card.classList.toggle('is-hidden', !visible);
+  });
+  glossarySections.forEach((section) => {
+    const visibleCards = section.querySelectorAll('[data-glossary-term]:not(.is-hidden)').length;
+    section.classList.toggle('is-hidden', visibleCards === 0);
+  });
+}
+
+if (glossarySearch && glossaryTermCards.length) {
+  glossarySearch.addEventListener('input', applyGlossaryFilter);
+  applyGlossaryFilter();
+}
 """
     )
 
@@ -1508,6 +1585,8 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
     )
     if page.active_route == "theory":
         main_html = _render_theory_main_html(page.main_html)
+    elif page.active_route == "glossary":
+        main_html = _render_glossary_main_html(page.main_html)
     else:
         main_html = page.main_html
     return f"""<!DOCTYPE html>

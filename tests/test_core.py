@@ -195,7 +195,7 @@ def test_web_payload_supports_selected_ranges() -> None:
 
 
 def test_route_registry_is_ready_for_more_pages() -> None:
-    assert set(PAGE_BY_ROUTE) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/theory", "/experiments"}
+    assert set(PAGE_BY_ROUTE) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/experiments"}
     rendered_pages = build_page_registry()
     assert "/analysis" in rendered_pages
     assert "href=\"/analysis\"" in rendered_pages["/explorer"]
@@ -232,15 +232,19 @@ def test_theory_tab_configuration_is_present() -> None:
 def test_load_web_runtime_supports_dev_mode() -> None:
     runtime = load_web_runtime(dev_mode=True)
 
-    assert set(runtime["page_by_route"]) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/theory", "/experiments"}
+    assert set(runtime["page_by_route"]) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/experiments"}
     assert "Visualization Lab" in runtime["page_registry"]["/lab"]
     assert "visualization-stage" in runtime["page_registry"]["/lab"]
     assert "Range Snapshot" in runtime["page_registry"]["/lab"]
     assert "Visualization mode" in runtime["page_registry"]["/lab"]
-    assert ">mod 6<" in runtime["page_registry"]["/lab"]
+    assert ">Mod 6<" in runtime["page_registry"]["/lab"]
+    assert "/glossary#glossary-term-mod-6" in runtime["page_registry"]["/lab"]
+    assert "/glossary#glossary-term-twin-center" in runtime["page_registry"]["/lab"]
     assert "Twin center" in runtime["page_registry"]["/lab"]
     assert "This panel is ready for future theory and analysis callouts tied to the active view." not in runtime["page_registry"]["/lab"]
     assert "Filters" in runtime["page_registry"]["/explorer"]
+    assert "/glossary#glossary-term-prime-neighborhood" in runtime["page_registry"]["/explorer"]
+    assert "/glossary#glossary-term-divisor" in runtime["page_registry"]["/explorer"]
     assert "Range Start" in runtime["page_registry"]["/explorer"]
     assert "Range End" in runtime["page_registry"]["/explorer"]
     assert "Number Table" in runtime["page_registry"]["/explorer"]
@@ -274,10 +278,16 @@ def test_load_web_runtime_supports_dev_mode() -> None:
     assert "tryFetchExplorerRange();" in runtime["explorer_js"]
     assert "Composite" in runtime["explorer_js"]
     assert "How To Read The Analysis Page" in runtime["page_registry"]["/analysis"]
+    assert "/glossary#glossary-term-prime-gap" in runtime["page_registry"]["/analysis"]
+    assert "/glossary#glossary-term-bounded-gaps-between-primes" in runtime["page_registry"]["/analysis"]
     assert "Start with Gaps for spacing" in runtime["page_registry"]["/analysis"]
     assert "Open the full analysis guide in a new tab" in runtime["page_registry"]["/analysis"]
     assert "data-analysis-target" in runtime["analysis_js"]
     assert "tabShortcutButtons" in runtime["analysis_js"]
+    assert "Glossary" in runtime["page_registry"]["/glossary"]
+    assert "id=\"glossary-term-mod-6\"" in runtime["page_registry"]["/glossary"]
+    assert "Twin Center" in runtime["page_registry"]["/glossary"]
+    assert "Hardy-Littlewood Conjecture" in runtime["page_registry"]["/glossary"]
     assert "Analysis Guide" in runtime["page_registry"]["/analysis-guide"]
     assert "Which tab should you open first?" in runtime["page_registry"]["/analysis-guide"]
     assert "Recommended reading order" in runtime["page_registry"]["/analysis-guide"]
@@ -287,6 +297,9 @@ def test_load_web_runtime_supports_dev_mode() -> None:
     assert "Last reviewed: April 2026" in runtime["page_registry"]["/theory"]
     assert "What did Yitang Zhang prove?" in runtime["page_registry"]["/theory"]
     assert "Hardy-Littlewood prime pair conjecture" in runtime["page_registry"]["/theory"] or "Hardy-Littlewood" in runtime["page_registry"]["/theory"]
+    assert "/glossary#glossary-term-bounded-gaps-between-primes" in runtime["page_registry"]["/theory"]
+    assert "glossarySearch" in runtime["theory_js"]
+    assert "applyGlossaryFilter" in runtime["theory_js"]
 
 
 def test_parser_supports_dev_flag() -> None:

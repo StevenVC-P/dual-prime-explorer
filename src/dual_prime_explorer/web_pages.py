@@ -26,14 +26,14 @@ LAB_PAGE = PageDefinition(
   <div class="hero-copy">
     <p class="eyebrow">Lab</p>
     <h1>See twin-prime structure as a visual field.</h1>
-    <p class="hero-text">This is the hands-on layer of the lab. Adjust the range, watch primes and twin centers light up, and use the rest of the product when you want exact inspection, deeper analysis, or theory context.</p>
+    <p class="hero-text">This is the hands-on layer of the lab. Adjust the range, watch primes and <a class="inline-link" href="/glossary#glossary-term-twin-center">twin centers</a> light up, and use the rest of the product when you want exact inspection, deeper analysis, or theory context.</p>
   </div>
 </section>""",
     main_html="""<section class="panel explorer-lab-panel">
   <div class="panel-heading">
     <div>
       <h2>Visualization Lab</h2>
-      <p>Explore primes, twin primes, and twin centers as a single visual pattern field.</p>
+      <p>Explore primes, twin primes, and <a class="inline-link" href="/glossary#glossary-term-twin-center">twin centers</a> as a single visual pattern field.</p>
     </div>
     <p id="visualization-range-label">Loading range...</p>
   </div>
@@ -59,14 +59,15 @@ LAB_PAGE = PageDefinition(
       <div class="lab-card-header">
         <div>
           <h3 id="visualization-title">Prime Field</h3>
-          <p class="section-copy">Twin centers appear as a distinct third structure between paired primes.</p>
+          <p class="section-copy"><a class="inline-link" href="/glossary#glossary-term-twin-center">Twin centers</a> appear as a distinct third structure between paired primes.</p>
         </div>
       </div>
       <div class="lab-visual-tools">
         <div class="lab-view-switch" role="group" aria-label="Visualization mode">
           <button type="button" class="lab-view-button active" data-visual-mode="standard" aria-pressed="true">Standard</button>
-          <button type="button" class="lab-view-button" data-visual-mode="mod6" aria-pressed="false">mod 6</button>
+          <button type="button" class="lab-view-button" data-visual-mode="mod6" aria-pressed="false">Mod 6</button>
         </div>
+        <p class="section-copy">Need the idea behind this view? See <a class="inline-link" href="/glossary#glossary-term-mod-6">Mod 6</a> in the glossary.</p>
         <p id="visualization-mode-note" class="lab-mode-note">Standard view keeps the field compact so prime, twin-prime, and twin-center clusters are easy to scan.</p>
       </div>
       <div id="visualization-stage" class="visualization-stage"></div>
@@ -125,7 +126,7 @@ EXPLORER_PAGE = PageDefinition(
   <div class="hero-copy">
     <p class="eyebrow">Explorer</p>
     <h1>Inspect the range one number at a time.</h1>
-    <p class="hero-text">Use Explorer when you want exact rows, divisor filters, and number-level classifications that complement the visualization-first Lab.</p>
+    <p class="hero-text">Use Explorer when you want exact rows, <a class="inline-link" href="/glossary#glossary-term-divisor">divisor</a> filters, and number-level classifications that complement the visualization-first Lab.</p>
   </div>
   <form id="analysis-form" class="control-panel">
     <label>
@@ -155,7 +156,7 @@ EXPLORER_PAGE = PageDefinition(
   <div class="panel-heading">
     <div>
       <h2>Number Table</h2>
-      <p>Prime membership, neighborhood structure, and divisibility for each number.</p>
+      <p>Prime membership, <a class="inline-link" href="/glossary#glossary-term-prime-neighborhood">prime neighborhood</a> structure, and <a class="inline-link" href="/glossary#glossary-term-divisor">divisibility</a> for each number.</p>
     </div>
     <p id="table-filter-status">Showing all rows.</p>
   </div>
@@ -163,7 +164,7 @@ EXPLORER_PAGE = PageDefinition(
     <div class="filter-panel-header">
       <div>
         <h3 id="filter-panel-title">Filters</h3>
-        <p>Refine the number table by prime role, neighborhood, divisors, or numeric range.</p>
+        <p>Refine the number table by <a class="inline-link" href="/glossary#glossary-term-single-prime">prime role</a>, <a class="inline-link" href="/glossary#glossary-term-prime-neighborhood">neighborhood</a>, <a class="inline-link" href="/glossary#glossary-term-divisor">divisors</a>, or numeric range.</p>
       </div>
       <button id="filter-reset" class="filter-reset-button" type="button">Reset Filters</button>
     </div>
@@ -237,7 +238,7 @@ EXPLORER_PAGE = PageDefinition(
     <div class="column-panel-header">
       <div>
         <h3 id="column-panel-title">Columns</h3>
-        <p>Choose which details appear in the number classification table.</p>
+        <p>Choose which details appear in the number classification table, including <a class="inline-link" href="/glossary#glossary-term-prime-neighborhood">prime neighborhood</a> and divisor views.</p>
       </div>
     </div>
     <div id="filter-columns" class="column-toggle-row" role="group" aria-label="Table Columns">
@@ -278,7 +279,7 @@ ANALYSIS_PAGE = PageDefinition(
   <div class="hero-copy">
     <p class="eyebrow">Analysis</p>
     <h1>Structured views for twin-prime patterns.</h1>
-    <p class="hero-text">Use this page for the deeper mathematical breakdowns: modular structure, pair gaps, factorization signals, density windows, and expected-versus-observed counts.</p>
+    <p class="hero-text">Use this page for the deeper mathematical breakdowns: <a class="inline-link" href="/glossary#glossary-term-mod-6">modular structure</a>, <a class="inline-link" href="/glossary#glossary-term-prime-gap">prime gaps</a>, factorization signals, density windows, and expected-versus-observed counts.</p>
   </div>
   <form id="analysis-form" class="control-panel">
     <label>
@@ -309,6 +310,12 @@ ANALYSIS_PAGE = PageDefinition(
       <h2>How To Read The Analysis Page</h2>
       <p>A quick orientation before you move through the tabbed views.</p>
     </div>
+  </div>
+  <div class="glossary-jump-strip" aria-label="Analysis glossary links">
+    <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-mod-6">Mod 6</a>
+    <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-prime-gap">Prime Gap</a>
+    <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-twin-center">Twin Center</a>
+    <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-bounded-gaps-between-primes">Bounded Gaps Between Primes</a>
   </div>
   <div class="metric-grid">
     <article class="metric-box">
@@ -412,13 +419,70 @@ ANALYSIS_GUIDE_PAGE = PageDefinition(
     include_in_nav=False,
 )
 
+
+GLOSSARY_PAGE = PageDefinition(
+    route="/glossary",
+    title="Twin Prime Exploration Lab | Glossary",
+    nav_label="Glossary",
+    active_route="glossary",
+    hero_html="""<section class="hero-block theory-hero">
+  <div class="hero-copy theory-copy">
+    <p class="eyebrow">Glossary</p>
+    <h1>A shared vocabulary for exploring twin primes.</h1>
+    <p class="hero-text">Use this page when you want quick, reliable definitions for the mathematical and product terms that appear across the Lab, Explorer, Analysis, and Theory pages.</p>
+  </div>
+</section>""",
+    main_html="""<section class="panel glossary-panel">
+  <div class="panel-heading theory-heading">
+    <div>
+      <h2>Glossary</h2>
+      <p>A concise reference for core terms used throughout the Twin Prime Exploration Lab.</p>
+    </div>
+  </div>
+  <div class="glossary-toolbar" aria-label="Glossary tools">
+    <label class="glossary-search-control">
+      <span>Search terms</span>
+      <input id="glossary-search" type="search" placeholder="Search prime, twin center, mod 6...">
+    </label>
+  </div>
+  <div id="glossary-sections"></div>
+</section>""",
+    script_name="theory.js",
+)
+
 THEORY_PAGE = PageDefinition(
     route="/theory",
     title="Dual Prime Explorer | Theory",
     nav_label="Theory",
     active_route="theory",
-    hero_html="""<section class=\"hero-block theory-hero\">\n  <div class=\"hero-copy theory-copy\">\n    <p class=\"eyebrow\">Theory</p>\n    <h1>The mathematical context behind twin-prime exploration.</h1>\n    <p class=\"hero-text\">Use this page as the conceptual companion to the explorer. It focuses on the problem statement, the main research ideas, what modern breakthroughs actually proved, and why a proof remains difficult.</p>\n  </div>\n</section>""",
-    main_html="""<section class=\"panel theory-panel\">\n  <div class=\"panel-heading theory-heading\">\n    <div>\n      <h2>Theory</h2>\n      <p>A concise guide to the twin prime problem, organized as product-style reference notes rather than a long article.</p>\n    </div>\n  </div>\n  <div class=\"theory-layout\">\n    <div class=\"theory-tabs-shell\">\n      <div class=\"theory-tabs\" role=\"tablist\" aria-label=\"Theory topics\" id=\"theory-tablist\"></div>\n    </div>\n    <div class=\"theory-content-shell\">\n      <div id=\"theory-tabpanel\" class=\"theory-tabpanel\" role=\"tabpanel\" tabindex=\"0\"></div>\n    </div>\n  </div>\n</section>""",
+    hero_html="""<section class="hero-block theory-hero">
+  <div class="hero-copy theory-copy">
+    <p class="eyebrow">Theory</p>
+    <h1>The mathematical context behind twin-prime exploration.</h1>
+    <p class="hero-text">Use this page as the conceptual companion to the explorer. It focuses on the problem statement, the main research ideas, what modern breakthroughs actually proved, and why a proof remains difficult.</p>
+  </div>
+</section>""",
+    main_html="""<section class="panel theory-panel">
+  <div class="panel-heading theory-heading">
+    <div>
+      <h2>Theory</h2>
+      <p>A concise guide to the twin prime problem, organized as product-style reference notes rather than a long article.</p>
+    </div>
+  </div>
+  <div class="glossary-jump-strip" aria-label="Related glossary links">
+    <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-twin-prime-conjecture">Twin Prime Conjecture</a>
+    <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-bounded-gaps-between-primes">Bounded Gaps Between Primes</a>
+    <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-hardy-littlewood-conjecture">Hardy-Littlewood Conjecture</a>
+  </div>
+  <div class="theory-layout">
+    <div class="theory-tabs-shell">
+      <div class="theory-tabs" role="tablist" aria-label="Theory topics" id="theory-tablist"></div>
+    </div>
+    <div class="theory-content-shell">
+      <div id="theory-tabpanel" class="theory-tabpanel" role="tabpanel" tabindex="0"></div>
+    </div>
+  </div>
+</section>""",
     script_name="theory.js",
 )
 
@@ -432,6 +496,6 @@ EXPERIMENTS_PAGE = PageDefinition(
     script_name="theory.js",
 )
 
-PAGE_DEFINITIONS = [LAB_PAGE, EXPLORER_PAGE, ANALYSIS_PAGE, ANALYSIS_GUIDE_PAGE, THEORY_PAGE, EXPERIMENTS_PAGE]
+PAGE_DEFINITIONS = [LAB_PAGE, EXPLORER_PAGE, ANALYSIS_PAGE, ANALYSIS_GUIDE_PAGE, GLOSSARY_PAGE, THEORY_PAGE, EXPERIMENTS_PAGE]
 PAGE_BY_ROUTE = {page.route: page for page in PAGE_DEFINITIONS}
 PAGE_BY_ACTIVE_ROUTE = {page.active_route: page for page in PAGE_DEFINITIONS}

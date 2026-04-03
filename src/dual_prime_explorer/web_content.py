@@ -227,3 +227,116 @@ THEORY_TABS = [
         ],
     },
 ]
+
+
+GLOSSARY_SECTIONS = [
+    {
+        "title": "Core Number Types",
+        "intro": "These terms describe the basic kinds of numbers users see throughout the Lab and Explorer.",
+        "terms": [
+            {
+                "term": "Prime",
+                "summary": "A prime number is a whole number greater than 1 with exactly two positive divisors: 1 and itself.",
+                "detail": "Examples include 2, 3, 5, 7, and 11. Prime numbers are the main building blocks of the Twin Prime Exploration Lab.",
+            },
+            {
+                "term": "Composite",
+                "summary": "A composite number is a whole number greater than 1 with more than two positive divisors.",
+                "detail": "Examples include 4, 6, 8, 9, and 12. Composite numbers matter because their divisor structure helps explain why primes become rarer.",
+            },
+            {
+                "term": "Unit",
+                "summary": "In this project, the number 1 is treated as a unit rather than a prime or a composite number.",
+                "detail": "The number 1 has only one positive divisor, so it sits outside the prime-versus-composite split. Keeping 1 separate makes the number classification model clearer.",
+            },
+            {
+                "term": "Divisor",
+                "summary": "A divisor of a number is a whole number that divides it evenly with no remainder.",
+                "detail": "For example, the divisors of 12 are 1, 2, 3, 4, 6, and 12. Divisor views help users inspect how composite structure differs from prime structure.",
+            },
+        ],
+    },
+    {
+        "title": "Twin Prime Structure",
+        "intro": "These terms describe the main pattern entities the product highlights visually and analytically.",
+        "terms": [
+            {
+                "term": "Twin Prime",
+                "summary": "Twin primes are pairs of prime numbers that differ by exactly 2.",
+                "detail": "Examples include (3, 5), (5, 7), and (11, 13). Twin primes are the central object of study in the Twin Prime Exploration Lab.",
+            },
+            {
+                "term": "Twin Center",
+                "summary": "A twin center is the number exactly between two twin primes.",
+                "detail": "For example, 12 is the twin center between 11 and 13. The Lab treats twin centers as a first-class structure because they often make pair behavior easier to see.",
+            },
+            {
+                "term": "Single Prime",
+                "summary": "A single prime is a prime that is not part of a twin-prime pair within the selected range.",
+                "detail": "This is a product-facing label used in Explorer. It helps separate primes that participate in twin-prime structure from primes that do not.",
+            },
+            {
+                "term": "Not Prime",
+                "summary": "Not Prime is the Explorer label for numbers that are not prime in the current classification view.",
+                "detail": "This label includes the unit 1 and composite numbers. It is a product-facing grouping that keeps filtering simple while preserving the deeper number-type detail in the table.",
+            },
+            {
+                "term": "Prime Neighborhood",
+                "summary": "Prime neighborhood describes the local role a number plays relative to nearby primes.",
+                "detail": "Examples in the product include Prime, Twin Center, Next to one prime, No adjacent primes, and Prime edge case. This field helps users inspect local structure instead of only global classification.",
+            },
+        ],
+    },
+    {
+        "title": "Patterns and Residues",
+        "intro": "These terms help users understand the structural views shown on the Lab and Analysis pages.",
+        "terms": [
+            {
+                "term": "Prime Gap",
+                "summary": "A prime gap is the difference between one prime number and the next prime number.",
+                "detail": "Twin primes are the special case where the prime gap is exactly 2. Gap analysis helps users see spacing patterns and clustering behavior.",
+            },
+            {
+                "term": "Mod 6",
+                "summary": "Mod 6 refers to looking at numbers by their remainder after division by 6.",
+                "detail": "Primes greater than 3 must fall into the 1 or 5 residue classes modulo 6. That is why the Mod 6 view is useful for seeing twin-prime structure quickly.",
+            },
+            {
+                "term": "Residue Class",
+                "summary": "A residue class groups numbers that leave the same remainder after division by a fixed modulus.",
+                "detail": "For example, modulo 6, the numbers 1, 7, 13, and 19 all belong to the same residue class. Residue classes are important because primes must avoid many classes for divisibility reasons.",
+            },
+            {
+                "term": "Arithmetic Progression",
+                "summary": "An arithmetic progression is a sequence of numbers with a constant step size between consecutive terms.",
+                "detail": "Examples include 1, 7, 13, 19 and 5, 11, 17, 23. Studying primes inside arithmetic progressions helps explain why certain modular structures matter for twin primes.",
+            },
+        ],
+    },
+    {
+        "title": "Theory and Research Terms",
+        "intro": "These terms connect the interactive product to the major ideas that appear in the Theory page.",
+        "terms": [
+            {
+                "term": "Twin Prime Conjecture",
+                "summary": "The twin prime conjecture is the claim that infinitely many twin-prime pairs exist.",
+                "detail": "This remains one of the most famous unsolved problems in number theory. The project explores structure related to the conjecture without claiming a proof.",
+            },
+            {
+                "term": "Bounded Gaps Between Primes",
+                "summary": "Bounded gaps between primes means there exists some fixed number B such that infinitely many prime pairs differ by at most B.",
+                "detail": "This was first proved by Yitang Zhang in 2013. It is a major breakthrough toward the twin prime conjecture, but it does not prove gap 2 occurs infinitely often.",
+            },
+            {
+                "term": "Hardy-Littlewood Conjecture",
+                "summary": "The Hardy-Littlewood prime pair conjecture is a heuristic framework for predicting how often twin primes should occur.",
+                "detail": "It gives a quantitative expectation for twin-prime frequency and is one of the main reasons mathematicians expect infinitely many twin primes to exist.",
+            },
+            {
+                "term": "Twin Prime Constant",
+                "summary": "The twin prime constant is a numerical factor that appears in heuristic estimates for how often twin primes occur.",
+                "detail": "It adjusts naive probability-style estimates to account for divisibility constraints. The constant belongs to the Hardy-Littlewood heuristic framework, not to a proof.",
+            },
+        ],
+    },
+]
