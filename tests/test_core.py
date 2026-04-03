@@ -205,8 +205,27 @@ def test_route_registry_is_ready_for_more_pages() -> None:
 def test_theory_tab_configuration_is_present() -> None:
     tab_ids = [tab["id"] for tab in THEORY_TABS]
     assert tab_ids == ["history", "approaches", "progress", "why-its-hard"]
-    assert any("Hardy and Littlewood" in section["body"] for section in THEORY_TABS[0]["sections"])
+    history_tab = THEORY_TABS[0]
+    assert history_tab["updated"] == "Last reviewed: April 2026"
+    assert any("twin prime conjecture" in section["body"].lower() for section in history_tab["sections"])
+    assert any("Hardy-Littlewood" in section["title"] or "Hardy-Littlewood" in section["body"] for section in history_tab["sections"])
+    assert any("twin prime constant" in section["body"].lower() for section in history_tab["sections"])
+    assert any(item["title"] == "Yitang Zhang proves bounded gaps between primes" for item in history_tab["timeline"])
+    assert any(item["question"] == "What did Yitang Zhang prove?" for item in history_tab["faq"])
+    assert any("Hardy & Littlewood" in item["title"] for item in history_tab["references"])
     assert any(card["title"] == "Sieve Methods" for card in THEORY_TABS[1]["cards"])
+    assert THEORY_TABS[1]["intro"].startswith("Mathematicians study the twin prime conjecture")
+    assert any("bounded gaps between primes" in card["helps"].lower() for card in THEORY_TABS[1]["cards"])
+    assert any("parity problem" in card["falls_short"].lower() for card in THEORY_TABS[1]["cards"])
+    assert any(section["title"] == "Synthesis: Why the Twin Prime Problem Persists" for section in THEORY_TABS[1]["sections"])
+    assert THEORY_TABS[2]["intro"].startswith("Modern progress on the twin prime conjecture")
+    assert any(section["title"] == "Bounded Gaps Breakthrough" for section in THEORY_TABS[2]["sections"])
+    assert any("Yitang Zhang" in section["body"] for section in THEORY_TABS[2]["sections"])
+    assert any(section["title"] == "Synthesis: Where We Stand" for section in THEORY_TABS[2]["sections"])
+    assert THEORY_TABS[3]["intro"].startswith("The twin prime conjecture is difficult because it lies at the intersection")
+    assert any(section["title"] == "Global vs Local Tension" for section in THEORY_TABS[3]["sections"])
+    assert any("gap 2" in section["body"].lower() for section in THEORY_TABS[3]["sections"])
+    assert any(section["title"] == "Synthesis: The Core Difficulty" for section in THEORY_TABS[3]["sections"])
     assert "DualPrimeRequestHandler" in dir(web)
 
 
@@ -237,6 +256,10 @@ def test_load_web_runtime_supports_dev_mode() -> None:
     assert "filterColumnOptions" in runtime["explorer_js"]
     assert "Composite" in runtime["explorer_js"]
     assert "theoryTabs" in runtime["theory_js"]
+    assert "Twin Prime History Timeline" in runtime["theory_js"]
+    assert "Last reviewed: April 2026" in runtime["page_registry"]["/theory"]
+    assert "What did Yitang Zhang prove?" in runtime["page_registry"]["/theory"]
+    assert "Hardy-Littlewood prime pair conjecture" in runtime["page_registry"]["/theory"] or "Hardy-Littlewood" in runtime["page_registry"]["/theory"]
 
 
 def test_parser_supports_dev_flag() -> None:

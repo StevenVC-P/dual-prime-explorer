@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import html
 import json
 
 from .web_content import THEORY_TABS
@@ -232,11 +233,21 @@ p { margin: 0; line-height: 1.65; }
 .theory-tabpanel { display: grid; gap: 16px; outline: none; }
 .theory-intro-block { display: grid; gap: 8px; padding-bottom: 4px; }
 .theory-intro { max-width: 70ch; }
-.theory-sections, .theory-approaches { display: grid; gap: 14px; }
-.theory-section, .theory-approach { padding: 18px; }
+.theory-sections, .theory-approaches, .theory-timeline, .theory-faq-grid, .theory-reference-list { display: grid; gap: 14px; }
+.theory-section, .theory-approach, .theory-timeline-card, .theory-faq-card, .theory-reference-card { padding: 18px; }
 .theory-approach dl { display: grid; gap: 8px; margin: 0; }
 .theory-approach dt { font-weight: 600; }
 .theory-approach dd { margin: 0; color: var(--muted); }
+.theory-meta-strip { display: flex; flex-wrap: wrap; gap: 10px; }
+.theory-meta-pill { padding: 8px 12px; border-radius: 999px; background: var(--accent-faint); color: var(--accent); border: 1px solid rgba(20, 83, 45, 0.12); font-size: 0.9rem; }
+.theory-block { display: grid; gap: 12px; }
+.theory-block h3 { font-size: 1.02rem; }
+.theory-timeline-card { border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(248,245,238,0.92) 100%); }
+.theory-timeline-label { display: inline-block; margin-bottom: 8px; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.theory-faq-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.theory-faq-card h4, .theory-reference-card h4 { margin: 0 0 8px; font-size: 0.98rem; }
+.theory-reference-note, .theory-faq-card p, .theory-timeline-card p { color: var(--muted); }
+.theory-reference-list { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 @media (max-width: 1024px) {
   .filter-layout { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .filter-group-grid-wide { grid-template-columns: 1fr; }
@@ -806,6 +817,143 @@ if (form && statusText) {
 """
 
 
+def _render_theory_tab_buttons_html(active_tab_id: str) -> str:
+    buttons = []
+    for index, tab in enumerate(THEORY_TABS):
+        is_active = tab["id"] == active_tab_id
+        buttons.append(
+            """<button
+      id=\"theory-tab-{id}\"
+      class=\"theory-tab{active}\"
+      role=\"tab\"
+      type=\"button\"
+      aria-selected=\"{selected}\"
+      aria-controls=\"theory-tabpanel\"
+      tabindex=\"{tabindex}\"
+      data-tab-id=\"{id}\"
+      data-index=\"{index}\"
+    >
+      <span class=\"theory-tab-label\">{label}</span>
+      <span class=\"theory-tab-hint\">{hint}</span>
+    </button>""".format(
+                id=html.escape(tab["id"]),
+                active=" active" if is_active else "",
+                selected="true" if is_active else "false",
+                tabindex="0" if is_active else "-1",
+                index=index,
+                label=html.escape(tab["label"]),
+                hint=html.escape(tab.get("nav_hint", tab["intro"])),
+            )
+        )
+    return "".join(buttons)
+
+
+def _render_theory_tab_panel_html(tab: dict[str, object]) -> str:
+    intro = html.escape(str(tab["intro"]))
+    label = html.escape(str(tab["label"]))
+    updated = tab.get("updated")
+    meta = (
+        '<div class="theory-meta-strip"><span class="theory-meta-pill">{}</span></div>'.format(html.escape(str(updated)))
+        if updated
+        else ""
+    )
+    sections = "".join(
+        '<article class="theory-section"><h3>{}</h3><p>{}</p></article>'.format(
+            html.escape(section["title"]),
+            html.escape(section["body"]),
+        )
+        for section in tab.get("sections", [])
+    )
+    cards = "".join(
+        """<article class=\"theory-approach\">
+      <h3>{title}</h3>
+      <p>{summary}</p>
+      <dl>
+        <dt>What it is trying to do</dt>
+        <dd>{trying}</dd>
+        <dt>Why it helps</dt>
+        <dd>{helps}</dd>
+        <dt>Why it still falls short</dt>
+        <dd>{falls_short}</dd>
+      </dl>
+    </article>""".format(
+            title=html.escape(card["title"]),
+            summary=html.escape(card["summary"]),
+            trying=html.escape(card["trying"]),
+            helps=html.escape(card["helps"]),
+            falls_short=html.escape(card["falls_short"]),
+        )
+        for card in tab.get("cards", [])
+    )
+    timeline_items = tab.get("timeline", [])
+    timeline = ""
+    if timeline_items:
+        timeline_rows = "".join(
+            """<article class=\"theory-timeline-card\">
+      <span class=\"theory-timeline-label\">{label}</span>
+      <h4>{title}</h4>
+      <p>{body}</p>
+    </article>""".format(
+                label=html.escape(item["label"]),
+                title=html.escape(item["title"]),
+                body=html.escape(item["body"]),
+            )
+            for item in timeline_items
+        )
+        timeline = '<section class="theory-block"><h3>Twin Prime History Timeline</h3><div class="theory-timeline">{}</div></section>'.format(timeline_rows)
+    faq_items = tab.get("faq", [])
+    faq = ""
+    if faq_items:
+        faq_rows = "".join(
+            """<article class=\"theory-faq-card\">
+      <h4>{question}</h4>
+      <p>{answer}</p>
+    </article>""".format(
+                question=html.escape(item["question"]),
+                answer=html.escape(item["answer"]),
+            )
+            for item in faq_items
+        )
+        faq = '<section class="theory-block"><h3>Twin Prime FAQ</h3><div class="theory-faq-grid">{}</div></section>'.format(faq_rows)
+    reference_items = tab.get("references", [])
+    references = ""
+    if reference_items:
+        reference_rows = "".join(
+            """<article class=\"theory-reference-card\">
+      <h4>{title}</h4>
+      <p class=\"theory-reference-note\">{note}</p>
+    </article>""".format(
+                title=html.escape(item["title"]),
+                note=html.escape(item["note"]),
+            )
+            for item in reference_items
+        )
+        references = '<section class="theory-block"><h3>Further Reading and References</h3><div class="theory-reference-list">{}</div></section>'.format(reference_rows)
+    return (
+        '<div class="theory-intro-block"><h2>{}</h2><p class="theory-intro">{}</p>{}</div>'.format(label, intro, meta)
+        + ('<div class="theory-sections">{}</div>'.format(sections) if sections else '')
+        + ('<div class="theory-approaches">{}</div>'.format(cards) if cards else '')
+        + timeline
+        + faq
+        + references
+    )
+
+
+def _render_theory_main_html(main_html: str) -> str:
+    active_tab = THEORY_TABS[0]
+    main_html = main_html.replace(
+        '<div class="theory-tabs" role="tablist" aria-label="Theory topics" id="theory-tablist"></div>',
+        '<div class="theory-tabs" role="tablist" aria-label="Theory topics" id="theory-tablist">{}</div>'.format(_render_theory_tab_buttons_html(active_tab["id"])),
+    )
+    return main_html.replace(
+        '<div id="theory-tabpanel" class="theory-tabpanel" role="tabpanel" tabindex="0"></div>',
+        '<div id="theory-tabpanel" class="theory-tabpanel" role="tabpanel" tabindex="0" aria-labelledby="theory-tab-{id}">{content}</div>'.format(
+            id=html.escape(active_tab["id"]),
+            content=_render_theory_tab_panel_html(active_tab),
+        ),
+    )
+
+
 def build_theory_js() -> str:
     return (
         "const theoryTabs = " + json.dumps(THEORY_TABS) + ";\n\n"
@@ -836,7 +984,7 @@ function renderTheoryTabButtons() {
       data-index="${index}"
     >
       <span class="theory-tab-label">${tab.label}</span>
-      <span class="theory-tab-hint">${tab.intro}</span>
+      <span class="theory-tab-hint">${tab.nav_hint || tab.intro}</span>
     </button>
   `).join('');
 }
@@ -863,14 +1011,59 @@ function renderTheoryTabPanel() {
       </dl>
     </article>
   `).join('');
+  const meta = tab.updated ? `<div class="theory-meta-strip"><span class="theory-meta-pill">${tab.updated}</span></div>` : '';
+  const timeline = (tab.timeline || []).length ? `
+    <section class="theory-block">
+      <h3>Twin Prime History Timeline</h3>
+      <div class="theory-timeline">
+        ${(tab.timeline || []).map((item) => `
+          <article class="theory-timeline-card">
+            <span class="theory-timeline-label">${item.label}</span>
+            <h4>${item.title}</h4>
+            <p>${item.body}</p>
+          </article>
+        `).join('')}
+      </div>
+    </section>
+  ` : '';
+  const faq = (tab.faq || []).length ? `
+    <section class="theory-block">
+      <h3>Twin Prime FAQ</h3>
+      <div class="theory-faq-grid">
+        ${(tab.faq || []).map((item) => `
+          <article class="theory-faq-card">
+            <h4>${item.question}</h4>
+            <p>${item.answer}</p>
+          </article>
+        `).join('')}
+      </div>
+    </section>
+  ` : '';
+  const references = (tab.references || []).length ? `
+    <section class="theory-block">
+      <h3>Further Reading and References</h3>
+      <div class="theory-reference-list">
+        ${(tab.references || []).map((item) => `
+          <article class="theory-reference-card">
+            <h4>${item.title}</h4>
+            <p class="theory-reference-note">${item.note}</p>
+          </article>
+        `).join('')}
+      </div>
+    </section>
+  ` : '';
   tabPanel.setAttribute('aria-labelledby', `theory-tab-${tab.id}`);
   tabPanel.innerHTML = `
     <div class="theory-intro-block">
       <h2>${tab.label}</h2>
       <p class="theory-intro">${tab.intro}</p>
+      ${meta}
     </div>
     ${sections ? `<div class="theory-sections">${sections}</div>` : ''}
     ${cards ? `<div class="theory-approaches">${cards}</div>` : ''}
+    ${timeline}
+    ${faq}
+    ${references}
   `;
 }
 
@@ -945,6 +1138,10 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
         f'<a class="nav-link{" active" if item.active_route == page.active_route else ""}" href="{item.route}">{item.nav_label}</a>'
         for item in PAGE_DEFINITIONS
     )
+    if page.active_route == "theory":
+        main_html = _render_theory_main_html(page.main_html)
+    else:
+        main_html = page.main_html
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -966,7 +1163,7 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
     </header>
     {page.hero_html}
     <main class="content-stack">
-      {page.main_html}
+      {main_html}
     </main>
   </div>
   <script src="/{page.script_name}?v={asset_version}"></script>
