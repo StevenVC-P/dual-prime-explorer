@@ -116,6 +116,22 @@ THEORY_TABS = [
                 "note": "Modern techniques expanding the theory of prime gaps.",
             },
         ],
+        "explore_next": [
+            {
+                "title": "See twin centers in the Lab",
+                "body": "Use the visual field to watch twin primes and twin centers appear together across a live range.",
+                "href": "/lab#visualization-title",
+                "link_label": "Open the Lab",
+                "destination": "Lab",
+            },
+            {
+                "title": "Trace prime gaps in Analysis",
+                "body": "Move from the history of the problem into the Gaps and Modular views to inspect the structure directly.",
+                "href": "/analysis#analysis-views-title",
+                "link_label": "Open Analysis",
+                "destination": "Analysis",
+            },
+        ],
     },
     {
         "id": "approaches",
@@ -165,6 +181,22 @@ THEORY_TABS = [
                 "body": "Each approach contributes a different kind of insight. Sieve methods control local structure but hit the parity barrier, analytic methods describe global behavior but lack exact local precision, arithmetic progressions constrain where primes can occur, heuristics predict what should happen, and computation shows what does happen in large finite ranges. The twin prime conjecture sits at the intersection of all these methods, requiring both global understanding and exact local control. That combination is what makes the twin prime problem so resistant to a final proof.",
             },
         ],
+        "explore_next": [
+            {
+                "title": "Try Mod 6 in the Lab",
+                "body": "Use the Mod 6 view to see why primes greater than 3 fall into narrow residue classes and why twin centers matter.",
+                "href": "/lab#visualization-title",
+                "link_label": "Open the Lab",
+                "destination": "Lab",
+            },
+            {
+                "title": "Inspect divisibility in Explorer",
+                "body": "Use row-level divisor and neighborhood views when you want the local arithmetic detail behind the theory.",
+                "href": "/explorer#number-table-title",
+                "link_label": "Open Explorer",
+                "destination": "Explorer",
+            },
+        ],
     },
     {
         "id": "progress",
@@ -191,6 +223,22 @@ THEORY_TABS = [
             {
                 "title": "Synthesis: Where We Stand",
                 "body": "The current state of the twin prime problem can be summarized clearly. Infinitely many primes exist. Infinitely many bounded gaps between primes exist. Strong heuristics predict infinitely many twin primes. But no proof yet guarantees infinitely many gap-2 pairs. The gap between arbitrarily close and exactly 2 remains the final unresolved step.",
+            },
+        ],
+        "explore_next": [
+            {
+                "title": "Open Analysis for gap structure",
+                "body": "Use the Gaps and Expected views to connect bounded-gap theory to a concrete range.",
+                "href": "/analysis#analysis-views-title",
+                "link_label": "Open Analysis",
+                "destination": "Analysis",
+            },
+            {
+                "title": "See local proximity in the Lab",
+                "body": "Use the visual field to scan twin-prime clusters and twin centers before you move into the deeper metrics.",
+                "href": "/lab#visualization-title",
+                "link_label": "Open the Lab",
+                "destination": "Lab",
             },
         ],
     },
@@ -223,6 +271,22 @@ THEORY_TABS = [
             {
                 "title": "Synthesis: The Core Difficulty",
                 "body": "The twin prime problem persists because it requires global understanding of how primes are distributed, local precision to isolate exact gap-2 pairs, and control over infinitely many constraints at once. Each existing method solves part of this puzzle, but no approach yet unifies all three requirements into a single proof.",
+            },
+        ],
+        "explore_next": [
+            {
+                "title": "Inspect divisor structure in Explorer",
+                "body": "Use the number table when you want to see prime neighborhoods, divisors, and exact composite structure one row at a time.",
+                "href": "/explorer#number-table-title",
+                "link_label": "Open Explorer",
+                "destination": "Explorer",
+            },
+            {
+                "title": "Compare local structure in Analysis",
+                "body": "Use Modular, Gaps, and Density when you want to move from abstract difficulty to measurable structure.",
+                "href": "/analysis#analysis-views-title",
+                "link_label": "Open Analysis",
+                "destination": "Analysis",
             },
         ],
     },
@@ -269,6 +333,10 @@ GLOSSARY_SECTIONS = [
                 "term": "Twin Center",
                 "summary": "A twin center is the number exactly between two twin primes.",
                 "detail": "For example, 12 is the twin center between 11 and 13. The Lab treats twin centers as a first-class structure because they often make pair behavior easier to see.",
+                "theory_link": {
+                    "label": "See this in Theory: History",
+                    "href": "/theory#history",
+                },
             },
             {
                 "term": "Single Prime",
@@ -300,6 +368,10 @@ GLOSSARY_SECTIONS = [
                 "term": "Mod 6",
                 "summary": "Mod 6 refers to looking at numbers by their remainder after division by 6.",
                 "detail": "Primes greater than 3 must fall into the 1 or 5 residue classes modulo 6. That is why the Mod 6 view is useful for seeing twin-prime structure quickly.",
+                "theory_link": {
+                    "label": "See this in Theory: Approaches",
+                    "href": "/theory#approaches",
+                },
             },
             {
                 "term": "Residue Class",
@@ -326,6 +398,10 @@ GLOSSARY_SECTIONS = [
                 "term": "Bounded Gaps Between Primes",
                 "summary": "Bounded gaps between primes means there exists some fixed number B such that infinitely many prime pairs differ by at most B.",
                 "detail": "This was first proved by Yitang Zhang in 2013. It is a major breakthrough toward the twin prime conjecture, but it does not prove gap 2 occurs infinitely often.",
+                "theory_link": {
+                    "label": "See this in Theory: Current Progress",
+                    "href": "/theory#progress",
+                },
             },
             {
                 "term": "Hardy-Littlewood Conjecture",

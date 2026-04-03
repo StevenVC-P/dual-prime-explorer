@@ -37,7 +37,7 @@ python -m dual_prime_explorer --serve
 Then open:
 
 ```text
-http://127.0.0.1:8000/explorer
+http://127.0.0.1:8000/lab
 ```
 
 ### Local Development Mode
@@ -55,9 +55,11 @@ In `--dev` mode, the server reloads the web UI modules on each request and sends
 
 The app now uses real top-level routes:
 
+- `/lab` for the visualization-first home experience
 - `/explorer` for range setup, summary, and number-by-number classification
 - `/analysis` for modular, gap, factorization, density, and expected-count views
 - `/theory` for the educational/theory section
+- `/glossary` for shared mathematical and product vocabulary
 - `/experiments` as a future-facing placeholder route
 
 ### Web Structure
@@ -77,6 +79,8 @@ The Theory route contains tabbed reference material for:
 - Approaches
 - Current Progress
 - Why It's Hard
+
+Theory now also links back into the interactive product through targeted Lab, Explorer, and Analysis entry points, while the Glossary provides lightweight return links into selected Theory topics.
 
 The theory tabs support direct linking by URL hash, for example:
 
