@@ -64,6 +64,11 @@ class DualPrimeRequestHandler(BaseHTTPRequestHandler):
         if parsed.path == "/styles.css":
             self._send_response(runtime["app_css"], content_type="text/css; charset=utf-8")
             return
+        if parsed.path == "/favicon.ico":
+            self.send_response(HTTPStatus.NO_CONTENT)
+            self._set_cache_headers()
+            self.end_headers()
+            return
         if parsed.path == "/explorer.js":
             self._send_response(runtime["explorer_js"], content_type="application/javascript; charset=utf-8")
             return
@@ -72,6 +77,9 @@ class DualPrimeRequestHandler(BaseHTTPRequestHandler):
             return
         if parsed.path == "/theory.js":
             self._send_response(runtime["theory_js"], content_type="application/javascript; charset=utf-8")
+            return
+        if parsed.path == "/experiments.js":
+            self._send_response(runtime["experiments_js"], content_type="application/javascript; charset=utf-8")
             return
         if parsed.path == "/api/analyze":
             self._handle_analyze_request(parse_qs(parsed.query))
@@ -107,27 +115,36 @@ class DualPrimeRequestHandler(BaseHTTPRequestHandler):
 
     def _send_json(self, payload: dict[str, Any], status: HTTPStatus = HTTPStatus.OK) -> None:
         body = json.dumps(payload).encode("utf-8")
-        self.send_response(status)
-        self.send_header("Content-Type", "application/json; charset=utf-8")
-        self.send_header("Content-Length", str(len(body)))
-        self._set_cache_headers()
-        self.end_headers()
-        self.wfile.write(body)
+        try:
+            self.send_response(status)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self._set_cache_headers()
+            self.end_headers()
+            self.wfile.write(body)
+        except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError):
+            return
 
     def _send_response(self, body: str, *, content_type: str) -> None:
         encoded = body.encode("utf-8")
-        self.send_response(HTTPStatus.OK)
-        self.send_header("Content-Type", content_type)
-        self.send_header("Content-Length", str(len(encoded)))
-        self._set_cache_headers()
-        self.end_headers()
-        self.wfile.write(encoded)
+        try:
+            self.send_response(HTTPStatus.OK)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(len(encoded)))
+            self._set_cache_headers()
+            self.end_headers()
+            self.wfile.write(encoded)
+        except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError):
+            return
 
     def _redirect(self, location: str) -> None:
-        self.send_response(HTTPStatus.FOUND)
-        self.send_header("Location", location)
-        self._set_cache_headers()
-        self.end_headers()
+        try:
+            self.send_response(HTTPStatus.FOUND)
+            self.send_header("Location", location)
+            self._set_cache_headers()
+            self.end_headers()
+        except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError):
+            return
 
 
 def run_server(host: str = "127.0.0.1", port: int = 8000, dev_mode: bool = False) -> None:
