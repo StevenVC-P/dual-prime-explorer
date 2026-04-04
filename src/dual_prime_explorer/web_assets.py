@@ -126,6 +126,23 @@ a { color: inherit; }
 .mod-residue-pill.active { background: var(--accent-soft); border-color: rgba(20, 83, 45, 0.24); color: var(--accent); font-weight: 600; }
 .lab-experiment-summary { padding: 10px 12px; border: 1px solid rgba(20, 83, 45, 0.12); border-radius: 12px; background: rgba(236, 246, 238, 0.58); color: var(--muted); font-size: 0.92rem; }
 .lab-experiment-summary.active { color: var(--ink); border-color: rgba(20, 83, 45, 0.18); background: rgba(236, 246, 238, 0.82); }
+.experiments-layout { display: grid; gap: 18px; grid-template-columns: minmax(250px, 300px) minmax(0, 1fr); align-items: start; }
+.experiment-setup-shell { gap: 12px; }
+.experiment-setup-group { display: grid; gap: 10px; padding: 12px; border: 1px solid rgba(24, 21, 18, 0.08); border-radius: 14px; background: rgba(255, 255, 255, 0.5); }
+.experiment-parameter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: 10px; }
+.experiment-parameter-grid label { display: grid; gap: 8px; align-content: start; padding: 10px 12px; border: 1px solid rgba(24, 21, 18, 0.08); border-radius: 12px; background: rgba(248, 245, 238, 0.86); min-width: 0; }
+.experiment-parameter-grid label span { font-size: 0.82rem; color: var(--muted); }
+.experiment-parameter-grid .is-hidden { display: none; }
+.experiment-type-note { margin-top: -2px; }
+.experiments-results { display: grid; gap: 14px; }
+.experiment-verdict-card { display: grid; gap: 10px; }
+.experiment-verdict-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.experiment-status-pill { display: inline-flex; align-items: center; padding: 6px 10px; border-radius: 999px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.experiment-status-pill.supported { background: rgba(20, 83, 45, 0.12); color: var(--accent); }
+.experiment-status-pill.mixed { background: rgba(184, 115, 51, 0.14); color: var(--warn); }
+.experiment-status-pill.inconclusive { background: rgba(184, 115, 51, 0.14); color: var(--warn); }
+.experiment-status-pill.contradicted { background: rgba(153, 27, 27, 0.12); color: #9f1239; }
+@media (max-width: 980px) { .experiments-layout { grid-template-columns: 1fr; } }
 .lab-inline-button:disabled { opacity: 0.45; cursor: default; }
 .visualization-svg.mod-filter-active .viz-cell-group.mod-muted { opacity: 0.22; }
 .visualization-svg.mod-filter-active .viz-cell-group.mod-match .viz-cell { stroke: rgba(20, 83, 45, 0.42); stroke-width: 2.1; }
@@ -441,6 +458,8 @@ const VISUAL_PAGE_ROWS = 25;
 const VISUAL_PAGE_SIZE = VISUAL_PAGE_COLUMNS * VISUAL_PAGE_ROWS;
 
 const form = document.getElementById('analysis-form');
+const startInput = document.getElementById('start-input');
+const endInput = document.getElementById('end-input');
 const statusText = document.getElementById('status-text');
 const summaryCards = document.getElementById('summary-cards');
 const tabContent = document.getElementById('tab-content');
@@ -1089,8 +1108,6 @@ const explorerVisualSummary = document.getElementById('explorer-visual-summary')
 const visualizationModeButtons = Array.from(document.querySelectorAll('[data-visual-mode]'));
 const visualizationModeNote = document.getElementById('visualization-mode-note');
 const visualizationPagination = document.getElementById('visualization-pagination');
-const startInput = document.getElementById('start-input');
-const endInput = document.getElementById('end-input');
 const modBaseInput = document.getElementById('mod-base-input');
 const modResidueOptions = document.getElementById('mod-residue-options');
 const clearModFilterButton = document.getElementById('clear-mod-filter');
@@ -2209,6 +2226,519 @@ def _render_glossary_main_html(main_html: str) -> str:
     )
 
 
+EXPERIMENTS_JS = COMMON_ANALYSIS_JS + """
+const experimentResults = document.getElementById('experiment-results');
+const experimentTemplateSummary = document.getElementById('experiment-template-summary');
+const experimentTypeInput = document.getElementById('experiment-type');
+const experimentParam1Group = document.getElementById('experiment-param-1-group');
+const experimentParam1Label = document.getElementById('experiment-param-1-label');
+const experimentParam1Input = document.getElementById('experiment-param-1');
+const experimentParam2Group = document.getElementById('experiment-param-2-group');
+const experimentParam2Label = document.getElementById('experiment-param-2-label');
+const experimentParam2Input = document.getElementById('experiment-param-2');
+const experimentParam3Group = document.getElementById('experiment-param-3-group');
+const experimentParam3Label = document.getElementById('experiment-param-3-label');
+const experimentParam3Input = document.getElementById('experiment-param-3');
+let experimentRangeTimer = null;
+
+const EXPERIMENT_TEMPLATES = {
+  'center-congruent': {
+    label: 'Twin centers congruent to k mod n',
+    defaults: { modulus: 6, residue: 0 },
+    summary: (params) => `Check whether twin-prime centers above 4 settle into residue ${params.residue} mod ${params.modulus}.`,
+    question: (params) => `After the exceptional first case, do the centers settle into residue ${params.residue} mod ${params.modulus}?`,
+    lookFor: (params) => `Focus on centers above 4. If the claim is clean, the tested centers should keep landing in residue ${params.residue} mod ${params.modulus}.`,
+    nextStep: 'Move into Modular in Analysis if you want the residue structure summarized across the full range.',
+    links: [
+      { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
+      { href: '/glossary#glossary-term-residue-class', label: 'Glossary: Residue Class' },
+    ],
+    fields: [
+      { key: 'modulus', label: 'Modulus', min: 2, max: 60 },
+      { key: 'residue', label: 'Target residue', min: 0, maxFrom: 'modulus-minus-one' },
+    ],
+  },
+  'center-divisible': {
+    label: 'Twin centers divisible by n',
+    defaults: { divisor: 6 },
+    summary: (params) => `Check whether twin-prime centers above 4 are consistently divisible by ${params.divisor}.`,
+    question: (params) => `Do the centers that survive beyond the first case behave like arithmetic anchors divisible by ${params.divisor}?`,
+    lookFor: (params) => `Watch whether each tested center is divisible by ${params.divisor}, and whether the surviving examples still look representative of the full range.`,
+    nextStep: 'Use Factors in Analysis if the divisibility pattern looks strong enough to compare against the broader composite field.',
+    links: [
+      { href: '/glossary#glossary-term-divisor', label: 'Glossary: Divisor' },
+      { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
+    ],
+    fields: [
+      { key: 'divisor', label: 'Divisor n', min: 2, max: 60 },
+    ],
+  },
+  'pair-residues': {
+    label: 'Twin-prime pair residues mod n',
+    defaults: { modulus: 6, left: 5, right: 1 },
+    summary: (params) => `Check whether twin-prime pairs above (3, 5) settle into residues (${params.left}, ${params.right}) mod ${params.modulus}.`,
+    question: (params) => `Once the first exceptional pair is out of the way, do pair members line up with residues (${params.left}, ${params.right}) mod ${params.modulus}?`,
+    lookFor: (params) => `Focus on pairs starting above 5. The pair residues should read (${params.left}, ${params.right}) mod ${params.modulus} when the claimed structure is holding.`,
+    nextStep: 'Use Modular in Analysis or the Lab when you want to compare this residue rule with the broader visible structure.',
+    links: [
+      { href: '/glossary#glossary-term-mod-6', label: 'Glossary: Mod 6' },
+      { href: '/glossary#glossary-term-residue-class', label: 'Glossary: Residue Class' },
+    ],
+    fields: [
+      { key: 'modulus', label: 'Modulus', min: 2, max: 60 },
+      { key: 'left', label: 'Left residue', min: 0, maxFrom: 'modulus-minus-one' },
+      { key: 'right', label: 'Right residue', min: 0, maxFrom: 'modulus-minus-one' },
+    ],
+  },
+  'center-spacing': {
+    label: 'Twin center spacing',
+    defaults: {},
+    summary: () => 'Check how the spacing between consecutive twin centers behaves across the current range.',
+    question: () => 'Do the gaps between consecutive twin centers settle into one interval, or do several spacing values keep repeating?',
+    lookFor: () => 'Focus on repeated center-to-center gaps, the smallest observed spacing, and whether one single interval dominates the range.',
+    nextStep: 'Use Gaps in Analysis next if the spacing pattern looks worth interpreting more formally across the same range.',
+    links: [
+      { href: '/glossary#glossary-term-prime-gap', label: 'Glossary: Prime Gap' },
+      { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
+    ],
+    fields: [],
+  },
+};
+
+function getDefaultParams(templateId) {
+  const template = EXPERIMENT_TEMPLATES[templateId] || EXPERIMENT_TEMPLATES['center-congruent'];
+  return { ...template.defaults };
+}
+
+function getRequestedExperimentRange() {
+  const params = new URLSearchParams(window.location.search);
+  const start = Number(params.get('start'));
+  const end = Number(params.get('end'));
+  return Number.isInteger(start) && Number.isInteger(end) ? { start, end } : null;
+}
+
+function getRequestedExperimentState() {
+  const params = new URLSearchParams(window.location.search);
+  const template = params.get('experiment');
+  const activeTemplate = template && EXPERIMENT_TEMPLATES[template] ? template : 'center-congruent';
+  const defaults = getDefaultParams(activeTemplate);
+  const stateParams = { ...defaults };
+  Object.keys(defaults).forEach((key) => {
+    const value = Number(params.get(key));
+    if (Number.isInteger(value)) {
+      stateParams[key] = value;
+    }
+  });
+  return { template: activeTemplate, params: stateParams };
+}
+
+function clampExperimentValue(value, min, max) {
+  if (!Number.isInteger(value)) {
+    return min;
+  }
+  return Math.max(min, Math.min(max, value));
+}
+
+function normalizeExperimentParams(templateId, params) {
+  const template = EXPERIMENT_TEMPLATES[templateId] || EXPERIMENT_TEMPLATES['center-congruent'];
+  const next = { ...getDefaultParams(templateId), ...params };
+  const modulusLike = Number.isInteger(next.modulus) ? next.modulus : Number.isInteger(next.divisor) ? next.divisor : null;
+  template.fields.forEach((field) => {
+    const min = field.min ?? 0;
+    const max = field.maxFrom === 'modulus-minus-one'
+      ? Math.max(min, (modulusLike ?? field.max ?? min) - 1)
+      : field.max ?? Math.max(min, modulusLike ?? min);
+    next[field.key] = clampExperimentValue(Number(next[field.key]), min, max);
+  });
+  return next;
+}
+
+function syncExperimentUrlState() {
+  if (window.location.pathname !== '/experiments') {
+    return;
+  }
+  const url = new URL(window.location.href);
+  url.searchParams.set('experiment', state.activeExperiment);
+  if (state.analysis) {
+    url.searchParams.set('start', state.analysis.start);
+    url.searchParams.set('end', state.analysis.limit);
+  }
+  Object.entries(state.experimentParams || {}).forEach(([key, value]) => {
+    url.searchParams.set(key, value);
+  });
+  window.history.replaceState({}, '', url.toString());
+}
+
+function getExperimentStatusTone(status) {
+  const tones = { supported: 'supported', contradicted: 'contradicted', inconclusive: 'inconclusive', mixed: 'mixed' };
+  return tones[status] || 'inconclusive';
+}
+
+function getExperimentStatusLabel(status) {
+  const labels = {
+    supported: 'Supported in this range',
+    contradicted: 'Not supported in this range',
+    inconclusive: 'Too little evidence',
+    mixed: 'Mixed in this range',
+  };
+  return labels[status] || 'Too little evidence';
+}
+
+function classifyExperimentStatus(matches, exceptions, total) {
+  if (!total) {
+    return 'inconclusive';
+  }
+  if (matches && !exceptions) {
+    return 'supported';
+  }
+  if (!matches && exceptions) {
+    return 'contradicted';
+  }
+  return 'mixed';
+}
+
+function getTwinCentersAfterFirst(analysis) {
+  return analysis.pair_structures.filter((row) => row.center > 4);
+}
+
+function getMostCommonGapValues(gapRows) {
+  const counts = new Map();
+  gapRows.forEach((row) => {
+    counts.set(row.gap, (counts.get(row.gap) || 0) + 1);
+  });
+  const maxCount = Math.max(...counts.values());
+  return Array.from(counts.entries())
+    .filter(([, count]) => count === maxCount)
+    .map(([gap]) => gap)
+    .sort((left, right) => left - right);
+}
+
+function updateExperimentSummary() {
+  const template = EXPERIMENT_TEMPLATES[state.activeExperiment] || EXPERIMENT_TEMPLATES['center-congruent'];
+  if (experimentTemplateSummary) {
+    experimentTemplateSummary.textContent = template.summary(state.experimentParams);
+  }
+}
+
+function renderExperimentParameterFields() {
+  const template = EXPERIMENT_TEMPLATES[state.activeExperiment] || EXPERIMENT_TEMPLATES['center-congruent'];
+  const controls = [
+    { group: experimentParam1Group, label: experimentParam1Label, input: experimentParam1Input },
+    { group: experimentParam2Group, label: experimentParam2Label, input: experimentParam2Input },
+    { group: experimentParam3Group, label: experimentParam3Label, input: experimentParam3Input },
+  ];
+  state.experimentParams = normalizeExperimentParams(state.activeExperiment, state.experimentParams || {});
+  controls.forEach((control, index) => {
+    const field = template.fields[index];
+    if (!control.group || !control.label || !control.input) {
+      return;
+    }
+    if (!field) {
+      control.group.classList.add('is-hidden');
+      return;
+    }
+    control.group.classList.remove('is-hidden');
+    control.label.textContent = field.label;
+    const min = field.min ?? 0;
+    const modulusLike = Number.isInteger(state.experimentParams.modulus)
+      ? state.experimentParams.modulus
+      : Number.isInteger(state.experimentParams.divisor)
+        ? state.experimentParams.divisor
+        : min;
+    const max = field.maxFrom === 'modulus-minus-one'
+      ? Math.max(min, modulusLike - 1)
+      : field.max ?? Math.max(min, modulusLike);
+    control.input.min = String(min);
+    control.input.max = String(max);
+    control.input.value = String(state.experimentParams[field.key]);
+    control.input.dataset.paramKey = field.key;
+  });
+  updateExperimentSummary();
+}
+
+function setActiveExperiment(templateId, options = {}) {
+  const { syncOnly = false } = options;
+  state.activeExperiment = EXPERIMENT_TEMPLATES[templateId] ? templateId : 'center-congruent';
+  state.experimentParams = normalizeExperimentParams(state.activeExperiment, state.experimentParams || getDefaultParams(state.activeExperiment));
+  if (experimentTypeInput) {
+    experimentTypeInput.value = state.activeExperiment;
+  }
+  renderExperimentParameterFields();
+  if (state.analysis && !syncOnly) {
+    renderExperimentResults(state.analysis);
+  }
+  syncExperimentUrlState();
+}
+
+function readExperimentParamsFromInputs() {
+  const next = { ...state.experimentParams };
+  [experimentParam1Input, experimentParam2Input, experimentParam3Input].forEach((input) => {
+    const key = input?.dataset.paramKey;
+    if (!key) {
+      return;
+    }
+    next[key] = Number(input.value);
+  });
+  state.experimentParams = normalizeExperimentParams(state.activeExperiment, next);
+}
+
+function evaluateActiveExperiment(analysis) {
+  const template = EXPERIMENT_TEMPLATES[state.activeExperiment] || EXPERIMENT_TEMPLATES['center-congruent'];
+  const params = state.experimentParams || getDefaultParams(state.activeExperiment);
+  const byNumber = new Map(analysis.number_classifications.map((row) => [row.number, row]));
+  if (state.activeExperiment === 'center-spacing') {
+    const centers = getTwinCentersAfterFirst(analysis);
+    const gapRows = centers.slice(1).map((row, index) => ({
+      previousCenter: centers[index].center,
+      currentCenter: row.center,
+      gap: row.center - centers[index].center,
+    }));
+    const distinctGapValues = [...new Set(gapRows.map((row) => row.gap))].sort((left, right) => left - right);
+    const mostCommonGaps = gapRows.length ? getMostCommonGapValues(gapRows) : [];
+    const smallestGap = gapRows.length ? Math.min(...gapRows.map((row) => row.gap)) : null;
+    const status = !gapRows.length
+      ? 'inconclusive'
+      : distinctGapValues.length === 1
+        ? 'supported'
+        : mostCommonGaps.length && gapRows.filter((row) => row.gap === mostCommonGaps[0]).length > 1
+          ? 'mixed'
+          : 'contradicted';
+    return {
+      kicker: 'Experiment result',
+      title: distinctGapValues.length === 1 ? 'Twin center spacing holds to one interval in this range.' : 'Twin center spacing is structured, but not constant, in this range.',
+      body: !gapRows.length
+        ? 'This range does not yet contain enough later twin-prime centers to compare spacing.'
+        : distinctGapValues.length === 1
+          ? `In this range, every tested gap between consecutive twin centers is ${distinctGapValues[0]}.`
+          : mostCommonGaps.length && gapRows.filter((row) => row.gap === mostCommonGaps[0]).length > 1
+            ? `This range shows repeated spacing values rather than one fixed interval. The most common observed gap${mostCommonGaps.length > 1 ? 's are' : ' is'} ${mostCommonGaps.join(', ')}.`
+            : 'No single spacing rule holds across this range. The observed center gaps vary without one repeated interval taking over.',
+      status,
+      question: template.question(params),
+      lookFor: template.lookFor(params),
+      nextStep: template.nextStep,
+      links: [
+        { href: getAnalysisViewHref('gaps', analysis), label: 'Open Gaps in Analysis' },
+        { href: '/explorer', label: 'Open Explorer' },
+        ...template.links,
+      ],
+      stats: [
+        { label: 'Tested center gaps', value: formatValue(gapRows.length), note: 'Consecutive gaps between later twin centers.' },
+        { label: 'Smallest gap', value: smallestGap !== null ? formatValue(smallestGap) : 'N/A', note: 'The closest observed center-to-center spacing in this range.' },
+        { label: 'Most common gap(s)', value: mostCommonGaps.length ? formatValue(mostCommonGaps) : 'N/A', note: 'Repeated spacing values that show up most often.' },
+        { label: 'Distinct gap sizes', value: formatValue(distinctGapValues.length), note: 'How many different spacing values appear in the tested rows.' },
+      ],
+      tableTitle: 'Twin center spacing evidence',
+      tableSubtitle: 'Examples of consecutive twin-center pairs and the gap between them.',
+      tableColumns: [
+        { label: 'Previous center', render: (row) => row.previousCenter },
+        { label: 'Next center', render: (row) => row.currentCenter },
+        { label: 'Center gap', render: (row) => row.gap },
+      ],
+      tableRows: gapRows.slice(0, 12),
+    };
+  }
+  if (state.activeExperiment === 'pair-residues') {
+    const rows = analysis.pair_structures.filter((row) => row.pair[0] > 5);
+    const matches = rows.filter((row) => row.pair_mod30 ? ((row.pair[0] % params.modulus + params.modulus) % params.modulus) === params.left && ((row.pair[1] % params.modulus + params.modulus) % params.modulus) === params.right : false);
+    const exceptions = rows.filter((row) => !matches.includes(row));
+    const status = classifyExperimentStatus(matches.length, exceptions.length, rows.length);
+    return {
+      kicker: 'Experiment result',
+      title: `Pair residues match (${params.left}, ${params.right}) mod ${params.modulus}.`,
+      body: !rows.length
+        ? 'This range does not yet contain enough later twin-prime pairs to say much about the selected residue rule.'
+        : status === 'supported'
+          ? `In this range, every tested pair above (3, 5) matches residues (${params.left}, ${params.right}) mod ${params.modulus}.`
+          : status === 'contradicted'
+            ? `In this range, none of the tested pairs above (3, 5) match residues (${params.left}, ${params.right}) mod ${params.modulus}.`
+            : `In this range, ${formatValue(matches.length)} tested pairs match residues (${params.left}, ${params.right}) mod ${params.modulus}, while ${formatValue(exceptions.length)} do not.`,
+      status,
+      question: template.question(params),
+      lookFor: template.lookFor(params),
+      nextStep: template.nextStep,
+      links: [
+        { href: getAnalysisViewHref('modular', analysis), label: 'Open Modular in Analysis' },
+        { href: '/lab', label: 'Open the Lab' },
+        ...template.links,
+      ],
+      stats: [
+        { label: 'Tested pairs', value: formatValue(rows.length), note: 'Pairs starting above 5.' },
+        { label: 'Matches', value: formatValue(matches.length), note: `Pairs matching residues (${params.left}, ${params.right}) mod ${params.modulus}.` },
+        { label: 'Exceptions', value: formatValue(exceptions.length), note: 'Pairs outside the selected residue rule.' },
+      ],
+      tableTitle: 'Pair residue evidence',
+      tableSubtitle: 'A row-by-row sample of the pairs used in this test.',
+      tableColumns: [
+        { label: 'Pair', render: (row) => row.pair.join(' - ') },
+        { label: `Pair residues mod ${params.modulus}`, render: (row) => `${((row.pair[0] % params.modulus) + params.modulus) % params.modulus}, ${((row.pair[1] % params.modulus) + params.modulus) % params.modulus}` },
+        { label: 'Center', render: (row) => row.center },
+      ],
+      tableRows: rows.slice(0, 12),
+    };
+  }
+  if (state.activeExperiment === 'center-divisible') {
+    const rows = getTwinCentersAfterFirst(analysis);
+    const matches = rows.filter((row) => row.center % params.divisor === 0);
+    const exceptions = rows.filter((row) => row.center % params.divisor !== 0);
+    const status = classifyExperimentStatus(matches.length, exceptions.length, rows.length);
+    return {
+      kicker: 'Experiment result',
+      title: `Twin centers above 4 are divisible by ${params.divisor}.`,
+      body: !rows.length
+        ? 'This range does not yet contain enough later twin-prime centers to say much about the selected divisibility rule.'
+        : status === 'supported'
+          ? `In this range, every tested center above 4 is divisible by ${params.divisor}.`
+          : status === 'contradicted'
+            ? `In this range, none of the tested centers above 4 are divisible by ${params.divisor}.`
+            : `In this range, ${formatValue(matches.length)} tested centers are divisible by ${params.divisor}, while ${formatValue(exceptions.length)} are not.`,
+      status,
+      question: template.question(params),
+      lookFor: template.lookFor(params),
+      nextStep: template.nextStep,
+      links: [
+        { href: getAnalysisViewHref('factors', analysis), label: 'Open Factors in Analysis' },
+        { href: '/lab', label: 'Open the Lab' },
+        ...template.links,
+      ],
+      stats: [
+        { label: 'Tested centers', value: formatValue(rows.length), note: 'Centers above 4.' },
+        { label: 'Divisible by n', value: formatValue(matches.length), note: `Centers divisible by ${params.divisor}.` },
+        { label: 'Exceptions', value: formatValue(exceptions.length), note: 'Centers that fail the selected divisibility rule.' },
+      ],
+      tableTitle: 'Center divisibility evidence',
+      tableSubtitle: 'A row-by-row sample of the centers used in this test.',
+      tableColumns: [
+        { label: 'Pair', render: (row) => row.pair.join(' - ') },
+        { label: 'Center', render: (row) => row.center },
+        { label: `Center mod ${params.divisor}`, render: (row) => ((row.center % params.divisor) + params.divisor) % params.divisor },
+        { label: 'Composite?', render: (row) => formatBool((byNumber.get(row.center) || {}).number_type === 'composite') },
+      ],
+      tableRows: rows.slice(0, 12),
+    };
+  }
+  const rows = getTwinCentersAfterFirst(analysis);
+  const matches = rows.filter((row) => ((row.center % params.modulus) + params.modulus) % params.modulus === params.residue);
+  const exceptions = rows.filter((row) => !matches.includes(row));
+  const status = classifyExperimentStatus(matches.length, exceptions.length, rows.length);
+  return {
+    kicker: 'Experiment result',
+    title: `Twin centers above 4 are congruent to ${params.residue} mod ${params.modulus}.`,
+    body: !rows.length
+      ? 'This range does not yet contain enough later twin-prime centers to say much about the selected residue rule.'
+      : status === 'supported'
+        ? `In this range, every tested center above 4 lands in residue ${params.residue} mod ${params.modulus}.`
+        : status === 'contradicted'
+          ? `In this range, none of the tested centers above 4 land in residue ${params.residue} mod ${params.modulus}.`
+          : `In this range, ${formatValue(matches.length)} tested centers land in residue ${params.residue} mod ${params.modulus}, while ${formatValue(exceptions.length)} do not.`,
+    status,
+    question: template.question(params),
+    lookFor: template.lookFor(params),
+    nextStep: template.nextStep,
+    links: [
+      { href: getAnalysisViewHref('modular', analysis), label: 'Open Modular in Analysis' },
+      { href: '/lab', label: 'Open the Lab' },
+      ...template.links,
+    ],
+    stats: [
+      { label: 'Tested centers', value: formatValue(rows.length), note: 'Centers above 4.' },
+      { label: `Residue ${params.residue} mod ${params.modulus}`, value: formatValue(matches.length), note: 'Centers matching the selected congruence rule.' },
+      { label: 'Exceptions', value: formatValue(exceptions.length), note: 'Centers outside the selected residue lane.' },
+    ],
+    tableTitle: 'Center residue evidence',
+    tableSubtitle: 'A row-by-row sample of the centers used in this test.',
+    tableColumns: [
+      { label: 'Pair', render: (row) => row.pair.join(' - ') },
+      { label: 'Center', render: (row) => row.center },
+      { label: `Center mod ${params.modulus}`, render: (row) => ((row.center % params.modulus) + params.modulus) % params.modulus },
+      { label: 'Center mod 30', render: (row) => row.center_mod30 },
+    ],
+    tableRows: rows.slice(0, 12),
+  };
+}
+
+function renderExperimentResults(analysis) {
+  if (!experimentResults) {
+    return;
+  }
+  const evaluation = evaluateActiveExperiment(analysis);
+  const template = EXPERIMENT_TEMPLATES[state.activeExperiment] || EXPERIMENT_TEMPLATES['center-congruent'];
+  experimentResults.innerHTML = `
+    <article class="analysis-card experiment-verdict-card">
+      <span class="explanation-kicker">${evaluation.kicker}</span>
+      <div class="experiment-verdict-header">
+        <h3>${evaluation.title}</h3>
+        <span class="experiment-status-pill ${getExperimentStatusTone(evaluation.status)}">${getExperimentStatusLabel(evaluation.status)}</span>
+      </div>
+      <p>${evaluation.body}</p>
+    </article>
+    ${makeExplanationCard({
+      kicker: 'What this result means',
+      title: template.label,
+      body: `This experiment is checking one bounded rule against the current range: ${template.summary(state.experimentParams).charAt(0).toLowerCase()}${template.summary(state.experimentParams).slice(1)}`,
+      question: evaluation.question,
+      lookFor: evaluation.lookFor,
+      nextStep: evaluation.nextStep,
+      links: evaluation.links,
+    }, 'analysis-intro-card')}
+    ${makeStatCards(evaluation.stats, 0)}
+    ${makeTableCard(evaluation.tableTitle, evaluation.tableSubtitle, makeTable(evaluation.tableColumns, evaluation.tableRows))}
+  `;
+  syncExperimentUrlState();
+}
+
+function tryFetchExperimentRange() {
+  if (!startInput || !endInput) {
+    return;
+  }
+  readExperimentParamsFromInputs();
+  renderExperimentParameterFields();
+  const startValue = Number(startInput.value);
+  const endValue = Number(endInput.value);
+  const validationMessage = getRangeValidationMessage(startValue, endValue);
+  if (validationMessage) {
+    showRangeValidationError(validationMessage);
+    if (experimentResults) {
+      experimentResults.innerHTML = `<div class="error">${validationMessage}</div>`;
+    }
+    return;
+  }
+  fetchAnalysis(startValue, endValue, renderExperimentResults);
+}
+
+function scheduleExperimentRangeUpdate() {
+  clearTimeout(experimentRangeTimer);
+  experimentRangeTimer = setTimeout(tryFetchExperimentRange, 140);
+}
+
+if (form && experimentResults) {
+  const requestedExperiment = getRequestedExperimentState();
+  const requestedRange = getRequestedExperimentRange();
+  state.activeExperiment = requestedExperiment.template;
+  state.experimentParams = requestedExperiment.params;
+  if (requestedRange && startInput && endInput) {
+    startInput.value = String(requestedRange.start);
+    endInput.value = String(requestedRange.end);
+  }
+  setActiveExperiment(state.activeExperiment, { syncOnly: true });
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    tryFetchExperimentRange();
+  });
+  [startInput, endInput, experimentParam1Input, experimentParam2Input, experimentParam3Input].forEach((control) => {
+    control?.addEventListener('input', scheduleExperimentRangeUpdate);
+    control?.addEventListener('change', tryFetchExperimentRange);
+  });
+  experimentTypeInput?.addEventListener('change', () => {
+    state.activeExperiment = experimentTypeInput.value;
+    state.experimentParams = getDefaultParams(state.activeExperiment);
+    setActiveExperiment(state.activeExperiment);
+  });
+  tryFetchExperimentRange();
+}
+"""
+
+
 def build_theory_js() -> str:
     return (
         "const theoryTabs = " + json.dumps(THEORY_TABS) + ";\n\n"
@@ -2428,7 +2958,7 @@ if (glossarySearch && glossaryTermCards.length) {
 
 
 def build_asset_version() -> str:
-    payload = "||".join([APP_CSS, EXPLORER_JS, ANALYSIS_JS, build_theory_js()])
+    payload = "||".join([APP_CSS, EXPLORER_JS, ANALYSIS_JS, EXPERIMENTS_JS, build_theory_js()])
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:12]
 
 

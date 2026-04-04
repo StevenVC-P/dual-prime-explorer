@@ -546,9 +546,83 @@ EXPERIMENTS_PAGE = PageDefinition(
     title="Dual Prime Explorer | Experiments",
     nav_label="Experiments",
     active_route="experiments",
-    hero_html="""<section class=\"hero-block theory-hero\">\n  <div class=\"hero-copy theory-copy\">\n    <p class=\"eyebrow\">Experiments</p>\n    <h1>Hypothesis-driven tools are coming next.</h1>\n    <p class=\"hero-text\">This space is reserved for future workflows that compare conjectures, save experiment settings, and turn the current analysis engine into a more explicit research notebook.</p>\n  </div>\n</section>""",
-    main_html="""<section class=\"panel theory-panel\">\n  <div class=\"panel-heading theory-heading\">\n    <div>\n      <h2>Experiments</h2>\n      <p>Planned direction for the next layer of the app.</p>\n    </div>\n  </div>\n  <div class=\"metric-grid\">\n    <article class=\"metric-box\">\n      <h3>Future Workbench</h3>\n      <p>Compare multiple ranges side by side, save conjecture notes, and test hypotheses against the explorer output.</p>\n    </article>\n    <article class=\"metric-box\">\n      <h3>Why It Is Separate</h3>\n      <p>The app now has clear roles: Explorer for computation, Analysis for structured views, Theory for context, and Experiments for future hypothesis testing.</p>\n    </article>\n  </div>\n</section>""",
-    script_name="theory.js",
+    hero_html="""<section class="hero-block theory-hero">
+  <div class="hero-copy theory-copy">
+    <p class="eyebrow">Experiments</p>
+    <h1>Test one structured rule against a live range.</h1>
+    <p class="hero-text">Choose an experiment type, adjust a few meaningful parameters, and see whether the current twin-prime structure supports the rule you want to test.</p>
+  </div>
+</section>""",
+    main_html=f'''<section class="panel experiments-panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Hypothesis Workbench</h2>
+      <p>Pick a range, choose a structured experiment type, and read the evidence before deciding what to inspect next.</p>
+    </div>
+  </div>
+  <div class="experiments-layout">
+    <form id="analysis-form" class="control-panel experiments-controls">
+      <div class="lab-card-copy">
+        <h3>Experiment Setup</h3>
+        <p>Use a bounded rule template so the result stays testable, readable, and grounded in twin-prime structure.</p>
+      </div>
+      <label>
+        <span>Range Start</span>
+        <input id="start-input" name="start" type="number" min="1" max="{MAX_WEB_END}" value="1" required>
+      </label>
+      <label>
+        <span>Range End</span>
+        <input id="end-input" name="end" type="number" min="2" max="{MAX_WEB_END}" value="600" required>
+      </label>
+      <button type="submit">Run Experiment</button>
+      <div class="lab-experiment-panel experiment-setup-shell">
+        <div class="experiment-setup-group">
+          <label>
+            <span>Experiment type</span>
+            <select id="experiment-type">
+              <option value="center-congruent">Twin centers congruent to k mod n</option>
+              <option value="center-divisible">Twin centers divisible by n</option>
+              <option value="pair-residues">Twin-prime pair residues mod n</option>
+              <option value="center-spacing">Twin center spacing</option>
+            </select>
+          </label>
+        </div>
+        <div class="experiment-setup-group">
+          <span class="filter-label">Parameters</span>
+          <div id="experiment-parameter-fields" class="experiment-parameter-grid">
+            <label id="experiment-param-1-group">
+              <span id="experiment-param-1-label">Modulus</span>
+              <input id="experiment-param-1" type="number" min="2" max="60" value="6">
+            </label>
+            <label id="experiment-param-2-group">
+              <span id="experiment-param-2-label">Target residue</span>
+              <input id="experiment-param-2" type="number" min="0" max="5" value="0">
+            </label>
+            <label id="experiment-param-3-group" class="is-hidden">
+              <span id="experiment-param-3-label">Right residue</span>
+              <input id="experiment-param-3" type="number" min="0" max="5" value="1">
+            </label>
+          </div>
+        </div>
+        <div id="experiment-template-summary" class="lab-experiment-summary active">Testing whether twin-prime centers above 4 land in residue 0 mod 6.</div>
+        <p class="section-copy">This first workbench keeps the interaction structured: choose an experiment type, adjust only the parameters that matter, and let the page return a verdict plus evidence.</p>
+      </div>
+      <p id="status-text" class="section-copy">Ready to test a range.</p>
+      <p class="section-copy">Web ranges are capped at {MAX_WEB_RANGE_SIZE:,} numbers and an end value of {MAX_WEB_END:,}.</p>
+    </form>
+    <section class="experiments-results" aria-labelledby="experiment-results-title">
+      <div class="lab-card-copy">
+        <h3 id="experiment-results-title">Experiment Results</h3>
+        <p>Read the verdict, check the evidence, and then continue into Explorer, Analysis, or Theory if the pattern looks meaningful.</p>
+      </div>
+      <div id="summary-cards" class="summary-cards"></div>
+      <div id="experiment-results" class="analysis-layout">
+        <div class="empty-note">Run an experiment to populate this workbench.</div>
+      </div>
+    </section>
+  </div>
+</section>''',
+    script_name="experiments.js",
 )
 
 PAGE_DEFINITIONS = [LAB_PAGE, EXPLORER_PAGE, ANALYSIS_PAGE, ANALYSIS_GUIDE_PAGE, GLOSSARY_PAGE, THEORY_PAGE, EXPERIMENTS_PAGE]
