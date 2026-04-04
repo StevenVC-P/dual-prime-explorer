@@ -256,6 +256,7 @@ EXPLORER_PAGE = PageDefinition(
       </div>
     </form>
   </section>
+  <div id="table-state-explanation" class="explorer-state-explanation"></div>
   <section class="column-panel" aria-labelledby="column-panel-title">
     <div class="column-panel-header">
       <div>

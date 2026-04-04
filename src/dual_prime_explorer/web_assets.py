@@ -148,6 +148,7 @@ a { color: inherit; }
 .explanation-points li { line-height: 1.55; }
 .explanation-links { display: flex; flex-wrap: wrap; gap: 10px; }
 .analysis-intro-card { margin-bottom: 16px; }
+.explorer-state-explanation { margin: 14px 0; }
 .lab-fact-list { display: grid; gap: 10px; }
 .lab-fact { display: grid; gap: 5px; padding-top: 10px; border-top: 1px solid rgba(24, 21, 18, 0.08); }
 .lab-fact:first-child { border-top: 0; padding-top: 0; }
@@ -850,6 +851,7 @@ function getAnalysisTabExplanation(analysis) {
       links: [
         { href: '/glossary#glossary-term-mod-6', label: 'Glossary: Mod 6' },
         { href: '/analysis-guide', label: 'Open Analysis Guide' },
+        { href: '/theory#approaches', label: 'Theory: Approaches' },
       ],
     },
     gaps: {
@@ -870,6 +872,7 @@ function getAnalysisTabExplanation(analysis) {
       links: [
         { href: '/glossary#glossary-term-prime-gap', label: 'Glossary: Prime Gap' },
         { href: '/lab#visualization-title', label: 'Open Lab' },
+        { href: '/theory#progress', label: 'Theory: Current Progress' },
       ],
     },
     factors: {
@@ -890,6 +893,7 @@ function getAnalysisTabExplanation(analysis) {
       links: [
         { href: '/glossary#glossary-term-divisor', label: 'Glossary: Divisor' },
         { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
+        { href: '/theory#why-its-hard', label: "Theory: Why It's Hard" },
       ],
     },
     density: {
@@ -909,7 +913,7 @@ function getAnalysisTabExplanation(analysis) {
       ],
       links: [
         { href: '/glossary#glossary-term-bounded-gaps-between-primes', label: 'Glossary: Bounded Gaps Between Primes' },
-        { href: '/theory', label: 'Open Theory' },
+        { href: '/theory#progress', label: 'Theory: Current Progress' },
       ],
     },
     expected: {
@@ -925,7 +929,7 @@ function getAnalysisTabExplanation(analysis) {
       ],
       links: [
         { href: '/analysis-guide', label: 'Open Analysis Guide' },
-        { href: '/theory', label: 'Open Theory' },
+        { href: '/theory#progress', label: 'Theory: Current Progress' },
       ],
     },
   };
@@ -1077,6 +1081,7 @@ const filterMin = document.getElementById('filter-min');
 const filterMax = document.getElementById('filter-max');
 const filterReset = document.getElementById('filter-reset');
 const filterStatus = document.getElementById('table-filter-status');
+const tableStateExplanation = document.getElementById('table-state-explanation');
 const visualizationStage = document.getElementById('visualization-stage');
 const visualizationHover = document.getElementById('visualization-hover');
 const visualizationRangeLabel = document.getElementById('visualization-range-label');
@@ -1198,6 +1203,141 @@ function getFilteredRows(rows) {
     }
     return true;
   });
+}
+
+function getSelectedNeighborhoodFilters() {
+  return filterNeighborhoodOptions.filter((option) => option.checked).map((option) => option.value);
+}
+
+function getExplorerTableExplanation(analysis, filteredRows) {
+  const divisorValues = parseDivisorFilterValues();
+  const selectedNeighborhoods = getSelectedNeighborhoodFilters();
+  const activeFilters = [];
+  if (filterRole && filterRole.value !== 'all') {
+    activeFilters.push(`prime role: ${formatPrimeRole({ prime_role: filterRole.value })}`);
+  }
+  if (selectedNeighborhoods.length) {
+    activeFilters.push(`neighborhood: ${selectedNeighborhoods.map((value) => formatAdjacentPrimeRole({ number_type: value === 'prime' || value === 'prime_edge_case' ? 'prime' : 'composite', adjacent_prime_role: value === 'twin_center' ? 'between_two_primes' : value, is_edge_case: value === 'prime_edge_case' })).join(', ')}`);
+  }
+  if (divisorValues.length) {
+    activeFilters.push(`divisors: ${divisorValues.join(', ')} (${(filterDivisorLogic?.value || 'or').toUpperCase()})`);
+  }
+  if (filterMin?.value || filterMax?.value) {
+    activeFilters.push(`numeric slice: ${filterMin?.value || analysis.start}-${filterMax?.value || analysis.limit}`);
+  }
+
+  if (!filteredRows.length) {
+    const noResultLinks = divisorValues.length
+      ? [
+          { href: '/glossary#glossary-term-divisor', label: 'Glossary: Divisor' },
+          { href: '/glossary#glossary-term-prime-neighborhood', label: 'Glossary: Prime Neighborhood' },
+        ]
+      : [
+          { href: '/glossary#glossary-term-prime-neighborhood', label: 'Glossary: Prime Neighborhood' },
+        ];
+    return {
+      kicker: 'Current table state',
+      title: 'No numbers match the current filter combination.',
+      body: activeFilters.length
+        ? `The current slice is too narrow: ${activeFilters.join(' | ')}.`
+        : 'No numbers are visible right now.',
+      question: 'Which filter should you relax first to recover a meaningful comparison set?',
+      lookFor: 'Clear one filter at a time, especially divisor requirements or narrow numeric slices, until a useful comparison group returns.',
+      nextStep: 'Reset the table filters or remove the most restrictive filter first, then use Analysis once the slice contains enough structure to interpret.',
+      links: noResultLinks,
+    };
+  }
+
+  if (selectedNeighborhoods.includes('twin_center') && divisorValues.length) {
+    const logicLabel = (filterDivisorLogic?.value || 'or').toUpperCase();
+    return {
+      kicker: 'Current table state',
+      title: 'You are isolating twin centers through a divisor rule.',
+      body: `This slice is combining twin-center structure with a divisor filter: ${divisorValues.join(', ')} (${logicLabel}).`,
+      question: 'Do the twin centers that survive this arithmetic slice still look representative of the range, or are you narrowing down to a special sub-pattern?',
+      lookFor: `${formatValue(filteredRows.length)} twin-center rows currently satisfy the divisor rule. Compare whether the survivors still look spread across the full range or collapse into a much tighter arithmetic subset.`,
+      nextStep: 'Use Factors in Analysis next if the arithmetic slice looks meaningful, and use Theory only after you know the pattern is worth explaining.',
+      links: [
+        { href: getAnalysisViewHref('factors', analysis), label: 'Open Factors in Analysis' },
+        { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
+        { href: '/glossary#glossary-term-divisor', label: 'Glossary: Divisor' },
+      ],
+    };
+  }
+
+  if (filterRole?.value === 'prime_in_twin_pair') {
+    return {
+      kicker: 'Current table state',
+      title: 'You are isolating twin-prime members.',
+      body: `This slice shows only primes that belong to twin-prime pairs in ${analysis.start}-${analysis.limit}.`,
+      question: 'Where are the pair members, and how dense or sparse do they feel in this range?',
+      lookFor: `${formatValue(filteredRows.length)} twin-prime rows are visible. Compare their spacing here, then open Gaps when you want the distance pattern summarized.`,
+      nextStep: 'Use this table to inspect exact rows, then jump to Gaps in Analysis for the spacing story across the same range.',
+      links: [
+        { href: getAnalysisViewHref('gaps', analysis), label: 'Open Gaps in Analysis' },
+        { href: '/glossary#glossary-term-twin-prime', label: 'Glossary: Twin Prime' },
+      ],
+    };
+  }
+
+  if (selectedNeighborhoods.includes('twin_center')) {
+    return {
+      kicker: 'Current table state',
+      title: 'You are isolating twin centers.',
+      body: 'This slice centers the table on the numbers that sit between paired primes.',
+      question: 'Do these centers look arithmetically or locally different from the broader field?',
+      lookFor: `${formatValue(filteredRows.length)} twin-center rows are visible. Compare divisor patterns here, then use Factors in Analysis when you want the center-vs-even baseline.`,
+      nextStep: 'Use Factors in Analysis next if you want to test whether the center arithmetic feels unusual rather than just visually obvious.',
+      links: [
+        { href: getAnalysisViewHref('factors', analysis), label: 'Open Factors in Analysis' },
+        { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
+      ],
+    };
+  }
+
+  if (divisorValues.length) {
+    const logicLabel = (filterDivisorLogic?.value || 'or').toUpperCase();
+    return {
+      kicker: 'Current table state',
+      title: `You are filtering by divisors: ${divisorValues.join(', ')} (${logicLabel}).`,
+      body: 'This slice is testing a divisibility idea directly against the current range rather than just reading the full field.',
+      question: 'Does this divisor pattern line up with prime neighborhoods, twin centers, or the broader composite background?',
+      lookFor: `${formatValue(filteredRows.length)} rows currently satisfy the divisor rule. Compare their roles and neighborhoods before deciding whether the pattern is structural or incidental.`,
+      nextStep: 'If the slice feels meaningful, compare it with the Lab Factors mode or move into Factors in Analysis for the larger arithmetic context.',
+      links: [
+        { href: getAnalysisViewHref('factors', analysis), label: 'Open Factors in Analysis' },
+        { href: '/glossary#glossary-term-divisor', label: 'Glossary: Divisor' },
+      ],
+    };
+  }
+
+  if (activeFilters.length) {
+    return {
+      kicker: 'Current table state',
+      title: 'You are reading a filtered inspection slice.',
+      body: `The table is no longer showing the full analyzed range. Active focus: ${activeFilters.join(' | ')}.`,
+      question: 'What does this narrower slice reveal that the full range would hide?',
+      lookFor: `${formatValue(filteredRows.length)} of ${formatValue(analysis.number_classifications.length)} rows are still visible. Watch whether the remaining rows cluster around one role, neighborhood, or divisor story.`,
+      nextStep: 'Use the table for exact row inspection first, then move into the matching Analysis view once the pattern is clear enough to summarize.',
+      links: [
+        { href: '/analysis', label: 'Open Analysis' },
+        { href: '/glossary', label: 'Open Glossary' },
+      ],
+    };
+  }
+
+  return {
+    kicker: 'Current table state',
+    title: 'This is the baseline inspection view.',
+    body: 'The table is currently showing the full analyzed range without any table filters applied.',
+    question: 'Which numbers in this range are twin primes, single primes, twin centers, or composite background?',
+    lookFor: `${formatValue(filteredRows.length)} rows are visible across ${analysis.start}-${analysis.limit}. Start broad here, then add one filter at a time when you want to test a narrower idea.`,
+    nextStep: 'Begin with a prime role, neighborhood, divisor, or numeric slice only after you know what the unfiltered range looks like.',
+    links: [
+      { href: '/glossary#glossary-term-prime-neighborhood', label: 'Glossary: Prime Neighborhood' },
+      { href: '/glossary#glossary-term-divisor', label: 'Glossary: Divisor' },
+    ],
+  };
 }
 
 function getVisibleNumberTableColumns() {
@@ -1387,7 +1527,7 @@ function renderVisualizationContext(analysis) {
       ? {
           kicker: 'Active mode',
           title: 'Factors reveals divisor-heavy composites.',
-          body: 'This view keeps twin primes and twin centers visible while showing which composite numbers are simple, moderate, rich, or highly divisible.',
+          body: 'This view keeps twin primes and twin centers visible while showing which composite numbers are simple, moderate, divisor-rich, or highly divisible.',
           points: [
             'Darker composites have more divisors and usually more arithmetic structure packed into them.',
             'Twin centers stay distinct so you can compare pair structure against composite density at the same time.',
@@ -1425,13 +1565,37 @@ function renderVisualizationContext(analysis) {
             ],
           };
 
-  const modFilterNote = hasActiveModFilter() ? makeExplanationCard({
+  const modFilterNote = hasActiveModFilter() ? makeExplanationCard(state.visualMode === 'centers' && state.modBase === 6 ? {
+    kicker: 'Active experiment',
+    title: 'Twin centers inside Mod 6.',
+    body: 'This combined state narrows the field to one residue system while keeping twin centers as the main landmarks.',
+    question: 'Do the center positions still collect where the Mod 6 structure suggests they should?',
+    lookFor: 'Twin centers should remain the main anchors while the chosen residue slice clarifies which numbers belong to the same modular lane.',
+    nextStep: 'Use Modular in Analysis next if the residue pattern looks clean enough to summarize.',
+    links: [
+      { href: '/glossary#glossary-term-twin-center', label: 'Glossary: Twin Center' },
+      { href: '/glossary#glossary-term-mod-6', label: 'Glossary: Mod 6' },
+      { href: getAnalysisViewHref('modular', analysis), label: 'Open Modular in Analysis' },
+    ],
+  } : state.visualMode === 'factors' ? {
+    kicker: 'Active experiment',
+    title: `Divisor pressure inside ${getResidueFilterLabel()}.`,
+    body: 'This combined state lets you compare divisor-heavy composites against one modular slice at a time.',
+    question: 'Are the divisor-rich composites in this residue slice behaving like broad background, or do they seem to crowd around the same local structures?',
+    lookFor: 'Watch whether the darker composites cluster near the same twin-center or twin-prime landmarks, or whether they stay more evenly spread through the slice.',
+    nextStep: 'Move into Factors in Analysis only after you know whether the modular slice changes the arithmetic story in a visible way.',
+    links: [
+      { href: '/glossary#glossary-term-residue-class', label: 'Glossary: Residue Class' },
+      { href: '/glossary#glossary-term-divisor', label: 'Glossary: Divisor' },
+      { href: getAnalysisViewHref('factors', analysis), label: 'Open Factors in Analysis' },
+    ],
+  } : {
     kicker: 'Active experiment',
     title: `Watching ${getResidueFilterLabel()}.`,
-    body: 'The field is currently emphasizing one modular slice so you can test whether a residue pattern lines up with prime or twin-center structure.',
-    points: [
-      'Matching numbers stay prominent while non-matching numbers recede into the background.',
-    ],
+    body: 'The field is currently emphasizing one modular slice so you can test whether a residue pattern lines up with twin-prime structure.',
+    question: 'Which kinds of numbers stay prominent inside this residue slice, and which patterns fade away?',
+    lookFor: 'Matching numbers stay prominent while non-matching numbers recede into the background. Watch whether twin primes and twin centers remain easy to spot inside the slice.',
+    nextStep: 'Use Modular in Analysis if the slice looks structural rather than incidental.',
     links: [
       { href: '/glossary#glossary-term-residue-class', label: 'Glossary: Residue Class' },
       { href: getAnalysisViewHref('modular', analysis), label: 'Open Modular in Analysis' },
@@ -1495,7 +1659,7 @@ function renderVisualizationContext(analysis) {
         : {
             kicker: 'Why this matters',
             title: `${focused.number} is not prime in this view.`,
-            body: 'Composite numbers and the unit 1 create the background that primes must avoid. Their divisor structure helps shape where prime patterns can appear.',
+            body: 'Composite numbers and the unit 1 create the background that primes must avoid. Their divisor structure helps shape where prime patterns can appear in the field.',
             points: [
               `Prime neighborhood: ${formatAdjacentPrimeRole(focused)}.`,
               ...(state.visualMode === 'factors' && getFactorBandLabel(focused) ? [`Factor view: ${getFactorBandLabel(focused)}.`] : []),
@@ -1681,6 +1845,9 @@ function renderNumberTable(analysis) {
     return;
   }
   const filteredRows = getFilteredRows(analysis.number_classifications);
+  if (tableStateExplanation) {
+    tableStateExplanation.innerHTML = makeExplanationCard(getExplorerTableExplanation(analysis, filteredRows));
+  }
   numberTable.innerHTML = makeTableCard(
     'Number classification table',
     `Each row tracks primality, twin-pair membership, and whether the number is the center of a pair. Analyzed range: ${analysis.start}-${analysis.limit} before table filters.`,
