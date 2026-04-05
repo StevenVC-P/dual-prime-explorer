@@ -862,7 +862,7 @@ function getAnalysisTabExplanation(analysis) {
       lookFor: structuresAfterFirst.length
         ? `${formatValue(sixKPatternCount)} of ${formatValue(structuresAfterFirst.length)} later pairs currently match the 6k +/- 1 pattern, and ${formatValue(centerMod6Zero)} centers land at 0 mod 6.`
         : 'In very small ranges, treat the first few pairs as setup cases and watch for the later 6k +/- 1 rhythm to emerge as the range grows.',
-      nextStep: 'If the residue structure looks clean here, follow it into Theory or compare the same range in the Lab Mod 6 mode.',
+      nextStep: 'If the residue structure looks clean here, check the Glossary for Mod 6 or compare the same range in the Lab Mod 6 mode.',
       points: [
         'Most later pairs should line up with the 6k +/- 1 pattern.',
         'Later twin centers should collect in the 0 class modulo 6.',
@@ -937,18 +937,19 @@ function getAnalysisTabExplanation(analysis) {
     },
     expected: {
       kicker: 'Read this view',
-      title: 'Start here for heuristic comparison.',
-      body: 'Use Expected when you want a benchmark, not a proof. It compares the observed count with a common heuristic estimate.',
-      question: 'How does the observed twin-prime count compare with a rough heuristic baseline at this range?',
+      title: 'Use this as a rough benchmark, not a proof.',
+      body: 'Expected compares the observed count with a common heuristic estimate. It is most useful after you already understand the structure and spacing in the range.',
+      question: 'Does the observed count stay in the same rough neighborhood as the heuristic baseline at this range?',
       lookFor: `At the largest checkpoint, the actual / expected ratio is ${lastExpected && lastExpected.ratio !== null ? formatValue(lastExpected.ratio) : 'N/A'}. Read this as a rough calibration, not as evidence that a structural pattern has been explained.`,
-      nextStep: 'Use this last, after you already understand the structure and spacing, so the heuristic stays in the right supporting role.',
+      nextStep: 'Use this after Modular, Gaps, or Factors so the benchmark stays in a supporting role instead of becoming the main story.',
       points: [
         `Final actual / expected ratio: ${lastExpected && lastExpected.ratio !== null ? formatValue(lastExpected.ratio) : 'N/A'}.`,
         'Treat this as a benchmark, not as structural evidence on its own.',
       ],
       links: [
+        { href: '/glossary#glossary-term-hardy-littlewood-conjecture', label: 'Glossary: Hardy-Littlewood Conjecture' },
+        { href: '/glossary#glossary-term-twin-prime-constant', label: 'Glossary: Twin Prime Constant' },
         { href: '/analysis-guide', label: 'Open Analysis Guide' },
-        { href: '/theory#progress', label: 'Theory: Current Progress' },
       ],
     },
   };
@@ -1009,10 +1010,10 @@ function getRangeValidationMessage(start, end) {
     return 'Range start must be less than or equal to range end.';
   }
   if (end > maxWebEnd) {
-    return `Range end must be ${formatValue(maxWebEnd)} or lower in the web app.`;
+    return `Range end must be ${formatValue(maxWebEnd)} or lower in the web app so updates stay responsive.`;
   }
   if ((end - start + 1) > maxWebRangeSize) {
-    return `Range size must be ${formatValue(maxWebRangeSize)} numbers or fewer.`;
+    return `Range size must be ${formatValue(maxWebRangeSize)} numbers or fewer in the web app.`;
   }
   return null;
 }
@@ -2009,18 +2010,23 @@ if (form && statusText) {
     });
   });
 
-  const initialStart = requestedAnalysisRange ? requestedAnalysisRange.start : 1;
-  const initialEnd = requestedAnalysisRange ? requestedAnalysisRange.end : 100;
-  const validationMessage = getRangeValidationMessage(initialStart, initialEnd);
+  let initialStart = requestedAnalysisRange ? requestedAnalysisRange.start : 1;
+  let initialEnd = requestedAnalysisRange ? requestedAnalysisRange.end : 100;
+  let validationMessage = getRangeValidationMessage(initialStart, initialEnd);
+  if (validationMessage) {
+    initialStart = 1;
+    initialEnd = 100;
+    validationMessage = getRangeValidationMessage(initialStart, initialEnd);
+  }
+  if (startInput) {
+    startInput.value = initialStart;
+  }
+  if (endInput) {
+    endInput.value = initialEnd;
+  }
   if (validationMessage) {
     showRangeValidationError(validationMessage);
   } else {
-    if (startInput) {
-      startInput.value = initialStart;
-    }
-    if (endInput) {
-      endInput.value = initialEnd;
-    }
     fetchAnalysis(initialStart, initialEnd);
   }
 }
