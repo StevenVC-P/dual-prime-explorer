@@ -55,21 +55,21 @@ LAB_PAGE = PageDefinition(
       </label>
       <button type="submit">Refresh Range</button>
       <fieldset class="lab-experiment-panel">
-        <legend>Mod Experiment</legend>
+        <legend>Mod Filter</legend>
         <label>
           <span>Modulus</span>
           <input id="mod-base-input" type="number" min="2" max="60" placeholder="6">
         </label>
-        <p class="section-copy">Choose a modulus from 2 to 60, then select one or more residues.</p>
+        <p class="section-copy">Choose a modulus from 2 to 60, then select one or more residues. The modulus sets the remainder system; the field only changes after you choose residues.</p>
         <div>
           <span class="filter-label">Residues</span>
           <div id="mod-residue-options" class="mod-residue-options"></div>
         </div>
         <div id="mod-filter-summary" class="lab-experiment-summary">No mod filter active.</div>
         <button id="clear-mod-filter" class="lab-inline-button" type="button">Clear Mod Filter</button>
-        <p class="section-copy">Highlight numbers by residue class to test modular ideas inside the live field.</p>
+        <p class="section-copy">Use this as a lightweight residue filter. If terms like modulus or residue class feel unfamiliar, use the <a class="inline-link" href="/glossary#glossary-term-residue-class">Glossary</a> instead of learning them here.</p>
       </fieldset>
-      <p class="section-copy">Updates live while you adjust the range. Web ranges are capped at 20,000 numbers and an end value of 200,000.</p>
+      <p class="section-copy">Updates live while you adjust the range. Web ranges are capped at 20,000 numbers and an end value of 200,000 to keep the app responsive.</p>
       <p class="section-copy"><a class="inline-link" href="/explorer">Open the detailed Explorer page</a></p>
     </form>
     <section class="lab-visualization-card" aria-labelledby="visualization-title">
@@ -159,7 +159,7 @@ EXPLORER_PAGE = PageDefinition(
       <input id="end-input" name="end" type="number" min="2" max="200000" value="100" required>
     </label>
     <button type="submit">Analyze Range</button>
-    <p class="section-copy">Web ranges are capped at 20,000 numbers and an end value of 200,000.</p>
+    <p class="section-copy">Web ranges are capped at 20,000 numbers and an end value of 200,000 to keep the app responsive.</p>
     <p class="section-copy"><a class="inline-link" href="/lab">Open the Visualization Lab</a></p>
   </form>
 </section>""",
@@ -314,7 +314,7 @@ ANALYSIS_PAGE = PageDefinition(
       <input id="end-input" name="end" type="number" min="2" max="200000" value="100" required>
     </label>
     <button type="submit">Refresh Analysis</button>
-    <p class="section-copy">Web ranges are capped at 20,000 numbers and an end value of 200,000.</p>
+    <p class="section-copy">Web ranges are capped at 20,000 numbers and an end value of 200,000 to keep the app responsive.</p>
   </form>
 </section>""",
     main_html="""<section class="panel summary-panel">
@@ -348,12 +348,12 @@ ANALYSIS_PAGE = PageDefinition(
   </div>
   <div class="metric-grid">
     <article class="metric-box">
-      <h3>What this page does</h3>
-      <p>The Analysis page turns one selected range into several coordinated reads of the same twin-prime data. Each tab changes the interpretation lens, not the underlying numbers.</p>
+      <h3>How this page helps</h3>
+      <p>The Analysis page gives several coordinated reads of the same twin-prime range. Each tab changes the interpretation lens, not the underlying numbers.</p>
     </article>
     <article class="metric-box">
-      <h3>How to use the tabs</h3>
-      <p>Start with Modular or Gaps if you want pattern recognition, then move to Factors, Density, and Expected when you want explanation, comparison, and broader interpretation. Each tab opens with a short guide to the exact question that view is answering.</p>
+      <h3>If terms feel unfamiliar</h3>
+      <p>Start with Modular or Gaps for the clearest pattern read. If terms like Mod 6, twin center, or heuristic feel unfamiliar, use the <a class="inline-link" href="/glossary">Glossary</a> for quick definitions or the guide for a fuller read.</p>
       <p><a class="inline-link" href="/analysis-guide" target="_blank" rel="noopener noreferrer">Open the full analysis guide in a new tab</a></p>
     </article>
   </div>
@@ -362,7 +362,7 @@ ANALYSIS_PAGE = PageDefinition(
     <button class="insight-pill insight-pill-button" type="button" data-analysis-target="gaps">Start with Gaps for spacing</button>
     <button class="insight-pill insight-pill-button" type="button" data-analysis-target="factors">Start with Factors for centers</button>
     <button class="insight-pill insight-pill-button" type="button" data-analysis-target="density">Start with Density for clustering</button>
-    <button class="insight-pill insight-pill-button" type="button" data-analysis-target="expected">Start with Expected for heuristic comparison</button>
+    <button class="insight-pill insight-pill-button" type="button" data-analysis-target="expected">Use Expected last for a rough benchmark</button>
   </div>
 </section>
 
@@ -431,7 +431,7 @@ ANALYSIS_GUIDE_PAGE = PageDefinition(
     </article>
     <article class="theory-section">
       <h3>Expected view</h3>
-      <p>Open Expected first when your question is, how does the observed count compare with a common heuristic? The Expected tab compares observed twin-prime counts to the heuristic N divided by log squared N. It does not prove anything by itself, but it helps you judge whether the observed range behaves roughly in line with a common asymptotic expectation.</p>
+      <p>Open Expected when your question is, how does the observed count compare with a rough benchmark? The Expected tab compares observed twin-prime counts to N divided by log squared N. Treat it as a supporting heuristic, not as proof or as a full explanation of the range.</p>
     </article>
     <article class="theory-section">
       <h3>Recommended reading order</h3>
