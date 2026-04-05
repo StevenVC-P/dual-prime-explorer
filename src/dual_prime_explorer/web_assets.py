@@ -1021,11 +1021,13 @@ function showRangeValidationError(message) {
   if (statusText) {
     statusText.textContent = 'Range limit reached.';
   }
-  if (visualizationRangeLabel) {
-    visualizationRangeLabel.textContent = 'Range limit reached.';
+  const rangeLabel = document.getElementById('visualization-range-label');
+  if (rangeLabel) {
+    rangeLabel.textContent = 'Range limit reached.';
   }
-  if (visualizationStage) {
-    visualizationStage.innerHTML = `<div class="error">${message}</div>`;
+  const stage = document.getElementById('visualization-stage');
+  if (stage) {
+    stage.innerHTML = `<div class="error">${message}</div>`;
   }
   if (tabContent) {
     tabContent.innerHTML = `<div class="error">${message}</div>`;

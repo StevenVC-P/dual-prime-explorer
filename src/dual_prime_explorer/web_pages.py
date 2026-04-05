@@ -623,6 +623,7 @@ EXPERIMENTS_PAGE = PageDefinition(
   </div>
 </section>''',
     script_name="experiments.js",
+    include_in_nav=False,
 )
 
 PAGE_DEFINITIONS = [LAB_PAGE, EXPLORER_PAGE, ANALYSIS_PAGE, ANALYSIS_GUIDE_PAGE, GLOSSARY_PAGE, THEORY_PAGE, EXPERIMENTS_PAGE]
