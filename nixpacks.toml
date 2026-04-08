@@ -1,5 +1,5 @@
-[variables]
-NIXPACKS_PYTHON_PACKAGE_MANAGER = "skip"
+[phases.install]
+cmds = ["echo 'Skipping package installation; TwinPrimeExplorer.com runs directly from source on Railway.'"]
 
 [start]
 cmd = "PYTHONPATH=src python -m dual_prime_explorer --serve --host 0.0.0.0 --port $PORT"
