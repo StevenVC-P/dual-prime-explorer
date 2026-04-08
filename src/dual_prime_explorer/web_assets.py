@@ -2995,7 +2995,7 @@ def build_asset_version() -> str:
 
 
 PAGE_BY_ROUTE_FOOTER = {page.route: page.nav_label for page in PAGE_DEFINITIONS}
-ADSENSE_CLIENT = os.getenv("ADSENSE_CLIENT", "").strip()
+ADSENSE_CLIENT = os.getenv("ADSENSE_CLIENT", "ca-pub-6401940195640064").strip()
 ADSENSE_SLOT_IDS = {
     "interactive": os.getenv("ADSENSE_SLOT_INTERACTIVE", "").strip(),
     "content_top": os.getenv("ADSENSE_SLOT_CONTENT_TOP", "").strip(),
