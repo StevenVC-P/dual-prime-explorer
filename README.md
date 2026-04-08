@@ -106,6 +106,8 @@ Repo notes for Railway:
   deploy command
 - `Procfile` and `railway.json` are included so Railway has an explicit start
   command instead of trying to infer one
+- `nixpacks.toml` forces Nixpacks to skip `pip install .` during build, because
+  this app is launched directly from source instead of from an installed wheel
 
 If Railway is configured from the UI, the service should point at the repo root
 and use the same start command above.
