@@ -93,7 +93,10 @@ http://127.0.0.1:8000/theory#approaches
 This repository can be deployed to Railway as a single Python web service using the
 built-in HTTP server.
 
-The production start command is:
+The Railway deployment now uses the root `Dockerfile` so Railway does not need to
+infer Python packaging or start behavior.
+
+The container starts the app with:
 
 ```bash
 PYTHONPATH=src python -m dual_prime_explorer --serve --host 0.0.0.0 --port $PORT
@@ -102,13 +105,9 @@ PYTHONPATH=src python -m dual_prime_explorer --serve --host 0.0.0.0 --port $PORT
 Repo notes for Railway:
 
 - the app lives in the Python package under `src/dual_prime_explorer`
-- the repo uses a `src/` layout, so `PYTHONPATH=src` is required for the current
-  deploy command
-- `Procfile` and `railway.json` are included so Railway has an explicit start
-  command instead of trying to infer one
-- `nixpacks.toml` overrides the Nixpacks install phase so Railway does not try
-  to run `pip install .` during build; this app is launched directly from source
-  instead of from an installed wheel
+- the repo uses a `src/` layout, so `PYTHONPATH=/app/src` is set in the container
+- `railway.json` tells Railway to build with the root `Dockerfile`
+- the image copies only the application source needed to run the site
 
 If Railway is configured from the UI, the service should point at the repo root
-and use the same start command above.
+and use the repository `Dockerfile`.
