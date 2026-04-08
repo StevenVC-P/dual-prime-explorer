@@ -295,7 +295,7 @@ EXPLORER_PAGE = PageDefinition(
 
 ANALYSIS_PAGE = PageDefinition(
     route="/analysis",
-    title="Dual Prime Explorer | Analysis",
+    title="Twin Prime Exploration Lab | Analysis",
     nav_label="Analysis",
     active_route="analysis",
     hero_html="""<section class="hero-block hero-grid">
@@ -387,7 +387,7 @@ ANALYSIS_PAGE = PageDefinition(
 
 ANALYSIS_GUIDE_PAGE = PageDefinition(
     route="/analysis-guide",
-    title="Dual Prime Explorer | Analysis Guide",
+    title="Twin Prime Exploration Lab | Analysis Guide",
     nav_label="Analysis Guide",
     active_route="analysis",
     hero_html="""<section class="hero-block theory-hero">
@@ -481,7 +481,7 @@ GLOSSARY_PAGE = PageDefinition(
 
 THEORY_PAGE = PageDefinition(
     route="/theory",
-    title="Dual Prime Explorer | Theory",
+    title="Twin Prime Exploration Lab | Theory",
     nav_label="Theory",
     active_route="theory",
     hero_html="""<section class="hero-block theory-hero">
@@ -541,9 +541,182 @@ THEORY_PAGE = PageDefinition(
     script_name="theory.js",
 )
 
+ABOUT_PAGE = PageDefinition(
+    route="/about",
+    title="Twin Prime Exploration Lab | About",
+    nav_label="About",
+    active_route="about",
+    hero_html="""<section class="hero-block theory-hero">
+  <div class="hero-copy theory-copy">
+    <p class="eyebrow">About</p>
+    <h1>A small site for exploring primes and twin primes.</h1>
+    <p class="hero-text">Twin Prime Exploration Lab is a focused mathematics site built for people who enjoy patterns in prime numbers and want a simple way to explore them a little more deeply.</p>
+  </div>
+</section>""",
+    main_html="""<section class="panel theory-panel">
+  <div class="panel-heading theory-heading">
+    <div>
+      <h2>About This Site</h2>
+      <p>What the site is for, who it is for, and what kind of experience it is trying to offer.</p>
+    </div>
+  </div>
+  <div class="metric-grid">
+    <article class="metric-box">
+      <h3>What it is</h3>
+      <p>A compact mathematics site for exploring prime structure, twin primes, twin centers, and a few related ways of reading the same range of numbers.</p>
+    </article>
+    <article class="metric-box">
+      <h3>Who it is for</h3>
+      <p>Anyone who likes number patterns, from casual curiosity and student exploration to more serious independent interest in prime behavior.</p>
+    </article>
+    <article class="metric-box">
+      <h3>What makes it different</h3>
+      <p>The site treats twin centers as part of the story, not just the primes around them, and it tries to connect visual discovery, exact inspection, interpretation, and reference notes in one place.</p>
+    </article>
+    <article class="metric-box">
+      <h3>What it is not</h3>
+      <p>It is not a proof tool, a full research environment, or a giant general-purpose number theory site. It stays intentionally narrow and exploratory.</p>
+    </article>
+  </div>
+</section>
+
+<section class="panel theory-panel">
+  <div class="panel-heading theory-heading">
+    <div>
+      <h2>Ways To Explore The Site</h2>
+      <p>The main pages are meant to work together without feeling heavy or technical.</p>
+    </div>
+  </div>
+  <div class="metric-grid theory-path-grid">
+    <article class="metric-box theory-path-card">
+      <h3>Lab</h3>
+      <p>Start with the visual side and scan a live range for structure.</p>
+      <p><a class="inline-link" href="/lab">Open the Lab</a></p>
+    </article>
+    <article class="metric-box theory-path-card">
+      <h3>Explorer</h3>
+      <p>Look at exact rows, divisors, and filtered slices of the same numbers.</p>
+      <p><a class="inline-link" href="/explorer">Open Explorer</a></p>
+    </article>
+    <article class="metric-box theory-path-card">
+      <h3>Analysis</h3>
+      <p>Read the range through modular patterns, gaps, factors, density, and rough heuristics.</p>
+      <p><a class="inline-link" href="/analysis">Open Analysis</a></p>
+    </article>
+    <article class="metric-box theory-path-card">
+      <h3>Theory and Glossary</h3>
+      <p>Use the reference pages when you want concept support or a quick definition.</p>
+      <p><a class="inline-link" href="/theory">Open Theory</a> ? <a class="inline-link" href="/glossary">Open Glossary</a></p>
+    </article>
+  </div>
+</section>""",
+    script_name="theory.js",
+    include_in_nav=False,
+)
+
+CONTACT_PAGE = PageDefinition(
+    route="/contact",
+    title="Twin Prime Exploration Lab | Contact",
+    nav_label="Contact",
+    active_route="contact",
+    hero_html="""<section class="hero-block theory-hero">
+  <div class="hero-copy theory-copy">
+    <p class="eyebrow">Contact</p>
+    <h1>Questions, corrections, and general feedback.</h1>
+    <p class="hero-text">This is a small independent site. If a public contact method is offered with the live release, this page is where it should be listed clearly.</p>
+  </div>
+</section>""",
+    main_html="""<section class="panel theory-panel">
+  <div class="panel-heading theory-heading">
+    <div>
+      <h2>Contact</h2>
+      <p>This page is here to make the site feel transparent and reachable, even though it is a small independently maintained project.</p>
+    </div>
+  </div>
+  <div class="metric-grid">
+    <article class="metric-box">
+      <h3>General questions</h3>
+      <p>If you want to ask about the site, suggest a correction, or point out something unclear, use the contact method published with the live version of the site.</p>
+    </article>
+    <article class="metric-box">
+      <h3>Site issues</h3>
+      <p>If you notice a broken page, incorrect link, or behavior that does not match what the page says it should do, that is the most useful kind of feedback to send first.</p>
+    </article>
+    <article class="metric-box">
+      <h3>Scope</h3>
+      <p>This site is meant for playful exploration and reference, not formal support, tutoring, or custom mathematical research help.</p>
+    </article>
+    <article class="metric-box">
+      <h3>Response expectations</h3>
+      <p>Because the site is independently maintained, replies may be limited or slow. The contact route listed with the live release should be treated as the current best path.</p>
+    </article>
+  </div>
+</section>""",
+    script_name="theory.js",
+    include_in_nav=False,
+)
+
+PRIVACY_PAGE = PageDefinition(
+    route="/privacy",
+    title="Twin Prime Exploration Lab | Privacy Policy",
+    nav_label="Privacy Policy",
+    active_route="privacy",
+    hero_html="""<section class="hero-block theory-hero">
+  <div class="hero-copy theory-copy">
+    <p class="eyebrow">Privacy Policy</p>
+    <h1>How this site currently handles information.</h1>
+    <p class="hero-text">This policy is written to match the current state of the site and should be updated again before advertising, analytics, or other third-party services go live.</p>
+  </div>
+</section>""",
+    main_html="""<section class="panel theory-panel">
+  <div class="panel-heading theory-heading">
+    <div>
+      <h2>Privacy Policy</h2>
+      <p>Last updated: April 7, 2026</p>
+    </div>
+  </div>
+  <div class="section-stack">
+    <article class="theory-section">
+      <h3>What this site is</h3>
+      <p>Twin Prime Exploration Lab is a mathematics website focused on twin-prime visualization, inspection, analysis, theory, and glossary reference content.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Information you actively provide</h3>
+      <p>The site does not currently provide user accounts, comments, uploads, or on-site contact forms. If a direct contact method is added later, this policy should be updated to explain what information may be shared through that route.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Technical data and server logs</h3>
+      <p>Like most websites, hosting or delivery infrastructure may record basic technical information such as IP address, browser type, referring pages, timestamps, and requested URLs for security, diagnostics, and normal site operations.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Cookies and tracking</h3>
+      <p>The site does not currently present itself as using advertising cookies, user accounts, or a broader tracking stack. If analytics, advertising, consent tools, or other tracking technologies are added later, this policy should be updated before they are enabled.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Advertising</h3>
+      <p>Google Ads or other advertising services are not described here as active unless they are actually deployed. If advertising is enabled in the future, this policy should be updated to describe those services, any related cookies or personalization behavior, and any consent choices offered to users.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Third-party links</h3>
+      <p>This site may link to third-party destinations such as reference sources or other outside websites. Those sites have their own privacy practices, and this policy does not control how they handle information.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Policy updates</h3>
+      <p>This page should be reviewed and updated whenever the site's data practices materially change, especially before analytics, ad technology, contact forms, or account features are introduced.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Questions about this policy</h3>
+      <p>Use the <a class="inline-link" href="/contact">Contact page</a> for the currently supported public contact routes.</p>
+    </article>
+  </div>
+</section>""",
+    script_name="theory.js",
+    include_in_nav=False,
+)
+
 EXPERIMENTS_PAGE = PageDefinition(
     route="/experiments",
-    title="Dual Prime Explorer | Experiments",
+    title="Twin Prime Exploration Lab | Experiments",
     nav_label="Experiments",
     active_route="experiments",
     hero_html="""<section class="hero-block theory-hero">
@@ -626,6 +799,6 @@ EXPERIMENTS_PAGE = PageDefinition(
     include_in_nav=False,
 )
 
-PAGE_DEFINITIONS = [LAB_PAGE, EXPLORER_PAGE, ANALYSIS_PAGE, ANALYSIS_GUIDE_PAGE, GLOSSARY_PAGE, THEORY_PAGE, EXPERIMENTS_PAGE]
+PAGE_DEFINITIONS = [LAB_PAGE, EXPLORER_PAGE, ANALYSIS_PAGE, ANALYSIS_GUIDE_PAGE, GLOSSARY_PAGE, THEORY_PAGE, ABOUT_PAGE, CONTACT_PAGE, PRIVACY_PAGE, EXPERIMENTS_PAGE]
 PAGE_BY_ROUTE = {page.route: page for page in PAGE_DEFINITIONS}
 PAGE_BY_ACTIVE_ROUTE = {page.active_route: page for page in PAGE_DEFINITIONS}

@@ -45,6 +45,11 @@ a { color: inherit; }
 .nav-link { text-decoration: none; padding: 10px 14px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.72); color: var(--muted); transition: border-color 120ms ease, color 120ms ease, background 120ms ease; }
 .nav-link:hover, .nav-link:focus-visible { outline: none; border-color: var(--line-strong); color: var(--ink); }
 .nav-link.active { background: var(--accent); color: white; border-color: var(--accent); }
+.site-footer { margin-top: 24px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 20px; background: rgba(255, 255, 255, 0.72); display: grid; gap: 12px; }
+.site-footer-copy { color: var(--muted); }
+.footer-nav { display: flex; flex-wrap: wrap; gap: 10px; }
+.footer-link { text-decoration: none; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); background: rgba(244, 241, 235, 0.72); transition: border-color 120ms ease, color 120ms ease, background 120ms ease; }
+.footer-link:hover, .footer-link:focus-visible { outline: none; border-color: var(--line-strong); color: var(--ink); }
 .inline-link { color: var(--accent); font-weight: 600; text-decoration: none; }
 .inline-link:hover, .inline-link:focus-visible { text-decoration: underline; outline: none; }
 .hero-block, .panel, .control-panel { background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow); }
@@ -2970,12 +2975,20 @@ def build_asset_version() -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:12]
 
 
+PAGE_BY_ROUTE_FOOTER = {page.route: page.nav_label for page in PAGE_DEFINITIONS}
+
+
 def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
     asset_version = asset_version or build_asset_version()
     nav_html = "".join(
         f'<a class="nav-link{" active" if item.active_route == page.active_route else ""}" href="{item.route}">{item.nav_label}</a>'
         for item in PAGE_DEFINITIONS
         if item.include_in_nav
+    )
+    footer_routes = ["/lab", "/about", "/contact", "/privacy"]
+    footer_html = "".join(
+        f'<a class="footer-link" href="{route}">{PAGE_BY_ROUTE_FOOTER[route]}</a>'
+        for route in footer_routes
     )
     if page.active_route == "theory":
         main_html = _render_theory_main_html(page.main_html)
@@ -2995,7 +3008,7 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
   <div class="page-shell">
     <header class="site-header">
       <a class="brand-mark" href="/lab">
-        <span class="brand-kicker">Dual Prime Explorer</span>
+        <span class="brand-kicker">Twin Prime Exploration Lab</span>
         <span class="brand-title">Twin-prime analysis for computation and theory</span>
       </a>
       <nav class="top-nav" aria-label="Primary">
@@ -3006,6 +3019,12 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
     <main class="content-stack">
       {main_html}
     </main>
+    <footer class="site-footer">
+      <p class="site-footer-copy">Twin Prime Exploration Lab is a focused mathematics product for visual exploration, exact inspection, structured analysis, and reference context.</p>
+      <nav class="footer-nav" aria-label="Secondary">
+        {footer_html}
+      </nav>
+    </footer>
   </div>
   <script src="/{page.script_name}?v={asset_version}"></script>
 </body>

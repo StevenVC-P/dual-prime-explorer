@@ -152,7 +152,7 @@ def run_server(host: str = "127.0.0.1", port: int = 8000, dev_mode: bool = False
     server = DualPrimeThreadingHTTPServer((host, port), DualPrimeRequestHandler)
     server.dev_mode = dev_mode
     mode_label = " with live UI reloads" if dev_mode else ""
-    print(f"Dual Prime Explorer web app running at http://{host}:{port}/lab{mode_label}")
+    print(f"Twin Prime Exploration Lab web app running at http://{host}:{port}/lab{mode_label}")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
