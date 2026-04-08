@@ -3004,6 +3004,9 @@ ADSENSE_SLOT_IDS = {
 INTERACTIVE_ACTIVE_ROUTES = {"lab", "explorer", "analysis", "experiments"}
 
 
+ADS_TXT = os.getenv("ADS_TXT_CONTENT", "google.com, pub-6401940195640064, DIRECT, f08c47fec0942fa0").strip() + "\n"
+
+
 def _page_ad_mode(page: PageDefinition) -> str:
     return "interactive" if page.active_route in INTERACTIVE_ACTIVE_ROUTES else "content"
 

@@ -64,6 +64,9 @@ class DualPrimeRequestHandler(BaseHTTPRequestHandler):
         if parsed.path == "/styles.css":
             self._send_response(runtime["app_css"], content_type="text/css; charset=utf-8")
             return
+        if parsed.path == "/ads.txt":
+            self._send_response(runtime["ads_txt"], content_type="text/plain; charset=utf-8")
+            return
         if parsed.path == "/favicon.ico":
             self.send_response(HTTPStatus.NO_CONTENT)
             self._set_cache_headers()
