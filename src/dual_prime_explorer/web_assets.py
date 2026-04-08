@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import html
 import json
+import os
 import re
 
 from .web_content import GLOSSARY_SECTIONS, THEORY_TABS
@@ -50,6 +51,13 @@ a { color: inherit; }
 .footer-nav { display: flex; flex-wrap: wrap; gap: 10px; }
 .footer-link { text-decoration: none; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); background: rgba(244, 241, 235, 0.72); transition: border-color 120ms ease, color 120ms ease, background 120ms ease; }
 .footer-link:hover, .footer-link:focus-visible { outline: none; border-color: var(--line-strong); color: var(--ink); }
+.ad-slot { margin: 4px 0 2px; padding: 14px; border: 1px solid var(--line); border-radius: 20px; background: rgba(255, 255, 255, 0.72); box-shadow: var(--shadow); }
+.ad-slot-label { margin: 0 0 10px; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+.ad-slot-frame { min-height: 120px; border: 1px dashed rgba(24, 21, 18, 0.18); border-radius: 16px; background: linear-gradient(180deg, rgba(248, 245, 238, 0.9) 0%, rgba(255, 255, 255, 0.92) 100%); display: grid; place-items: center; padding: 18px; text-align: center; color: var(--muted); }
+.ad-slot-frame .adsbygoogle { display: block; width: 100%; min-height: 120px; }
+.ad-slot-copy { display: grid; gap: 6px; }
+.ad-slot-copy strong { font-size: 1rem; color: var(--ink); }
+.ad-slot-content-bottom, .ad-slot-interactive-bottom { margin-top: 18px; }
 .inline-link { color: var(--accent); font-weight: 600; text-decoration: none; }
 .inline-link:hover, .inline-link:focus-visible { text-decoration: underline; outline: none; }
 .hero-block, .panel, .control-panel { background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow); }
@@ -2987,6 +2995,51 @@ def build_asset_version() -> str:
 
 
 PAGE_BY_ROUTE_FOOTER = {page.route: page.nav_label for page in PAGE_DEFINITIONS}
+ADSENSE_CLIENT = os.getenv("ADSENSE_CLIENT", "").strip()
+ADSENSE_SLOT_IDS = {
+    "interactive": os.getenv("ADSENSE_SLOT_INTERACTIVE", "").strip(),
+    "content_top": os.getenv("ADSENSE_SLOT_CONTENT_TOP", "").strip(),
+    "content_bottom": os.getenv("ADSENSE_SLOT_CONTENT_BOTTOM", "").strip(),
+}
+INTERACTIVE_ACTIVE_ROUTES = {"lab", "explorer", "analysis", "experiments"}
+
+
+def _page_ad_mode(page: PageDefinition) -> str:
+    return "interactive" if page.active_route in INTERACTIVE_ACTIVE_ROUTES else "content"
+
+
+def _render_ad_slot(slot_key: str, placement_class: str) -> str:
+    client = ADSENSE_CLIENT
+    slot_id = ADSENSE_SLOT_IDS.get(slot_key, "")
+    if client and slot_id:
+        frame_html = (
+            f'<ins class="adsbygoogle" '
+            f'style="display:block" '
+            f'data-ad-client="{html.escape(client, quote=True)}" '
+            f'data-ad-slot="{html.escape(slot_id, quote=True)}" '
+            f'data-ad-format="auto" '
+            f'data-full-width-responsive="true"></ins>'
+        )
+    else:
+        frame_html = """<div class="ad-slot-copy">
+  <strong>Ad space reserved</strong>
+  <span>This slot is ready for a future AdSense unit.</span>
+</div>"""
+    return f"""<aside class="ad-slot {placement_class}" aria-label="Advertisement">
+  <p class="ad-slot-label">Advertisement</p>
+  <div class="ad-slot-frame">
+    {frame_html}
+  </div>
+</aside>"""
+
+
+def _render_page_ads(page: PageDefinition) -> tuple[str, str]:
+    if _page_ad_mode(page) == "interactive":
+        return "", _render_ad_slot("interactive", "ad-slot-interactive-bottom")
+    return (
+        _render_ad_slot("content_top", "ad-slot-content-top"),
+        _render_ad_slot("content_bottom", "ad-slot-content-bottom"),
+    )
 
 
 def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
@@ -3007,14 +3060,40 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
         main_html = _render_glossary_main_html(page.main_html)
     else:
         main_html = page.main_html
+    top_ads_html, bottom_ads_html = _render_page_ads(page)
+    canonical_url = f"https://www.twinprimeexplorer.com{page.route}"
+    canonical_html = f'  <link rel="canonical" href="{html.escape(canonical_url, quote=True)}">\n'
     meta_description = f'  <meta name="description" content="{html.escape(page.meta_description, quote=True)}">\n' if page.meta_description else ""
+    robots_meta = f'  <meta name="robots" content="{html.escape(page.robots_directive, quote=True)}">\n' if page.robots_directive else ""
+    adsense_script = ""
+    adsense_init = ""
+    if ADSENSE_CLIENT:
+        adsense_script = (
+            f'  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={html.escape(ADSENSE_CLIENT, quote=True)}" crossorigin="anonymous"></script>\n'
+        )
+        adsense_init = """  <script>
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.adsbygoogle').forEach((slot) => {
+        if (slot.dataset.adsbygoogleLoaded === 'true') {
+          return;
+        }
+        try {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          slot.dataset.adsbygoogleLoaded = 'true';
+        } catch (error) {
+          console.warn('AdSense slot failed to initialize.', error);
+        }
+      });
+    });
+  </script>
+"""
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{page.title}</title>
-{meta_description}  <link rel="stylesheet" href="/styles.css?v={asset_version}">
+{meta_description}{robots_meta}{canonical_html}{adsense_script}  <link rel="stylesheet" href="/styles.css?v={asset_version}">
 </head>
 <body>
   <div class="page-shell">
@@ -3029,7 +3108,9 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
     </header>
     {page.hero_html}
     <main class="content-stack">
+      {top_ads_html}
       {main_html}
+      {bottom_ads_html}
     </main>
     <footer class="site-footer">
       <p class="site-footer-copy">TwinPrimeExplorer.com is a focused mathematics site for visual exploration, exact inspection, structured analysis, and reference context.</p>
@@ -3039,7 +3120,7 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
     </footer>
   </div>
   <script src="/{page.script_name}?v={asset_version}"></script>
-</body>
+{adsense_init}</body>
 </html>
 """
 
