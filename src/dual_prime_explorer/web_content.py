@@ -139,6 +139,13 @@ THEORY_TABS = [
                 "destination": "Read",
             },
             {
+                "title": "Read: Has the twin prime conjecture been solved?",
+                "body": "Use the standalone page when you want the short answer and the exact reason the conjecture remains open.",
+                "href": "/has-the-twin-prime-conjecture-been-solved",
+                "link_label": "Open the article",
+                "destination": "Read",
+            },
+            {
                 "title": "Trace prime gaps in Analysis",
                 "body": "Move from the history of the problem into the Gaps and Modular views to inspect the structure directly.",
                 "href": "/analysis#analysis-views-title",
@@ -214,6 +221,13 @@ THEORY_TABS = [
                 "title": "Read: Why twin centers matter",
                 "body": "Use the standalone page when you want the shortest explanation of why the site highlights centers so strongly.",
                 "href": "/why-twin-centers-matter",
+                "link_label": "Open the article",
+                "destination": "Read",
+            },
+            {
+                "title": "Read: How mathematicians study twin primes",
+                "body": "Use the standalone page when you want the major research approaches in one shorter read.",
+                "href": "/how-mathematicians-study-twin-primes",
                 "link_label": "Open the article",
                 "destination": "Read",
             },
@@ -325,8 +339,8 @@ EXPLANATORY_PAGES = [
     {
         "route": "/what-are-twin-primes",
         "nav_label": "What Are Twin Primes?",
-        "title": "Twin Prime Exploration Lab | What Are Twin Primes?",
-        "meta_description": "A clear introduction to twin primes, why gap 2 matters, and how Twin Prime Exploration Lab helps you explore the pattern.",
+        "title": "TwinPrimeExplorer.com | What Are Twin Primes?",
+        "meta_description": "A clear introduction to twin primes, why gap 2 matters, and how TwinPrimeExplorer.com helps you explore the pattern.",
         "eyebrow": "Twin Primes",
         "hero_title": "What are twin primes?",
         "hero_text": "Twin primes are pairs of prime numbers that differ by exactly 2. They are simple to state, easy to spot in small ranges, and still connected to one of the best-known open questions in number theory.",
@@ -347,7 +361,7 @@ EXPLANATORY_PAGES = [
             },
             {
                 "title": "How this site uses the idea",
-                "body": "Twin Prime Exploration Lab treats twin primes as something you can see, inspect, and interpret from several angles. The Lab makes the pattern visible, Explorer shows the exact rows, Analysis summarizes the structure, and Theory explains why mathematicians still care about the problem.",
+                "body": "TwinPrimeExplorer.com treats twin primes as something you can see, inspect, and interpret from several angles. The Lab makes the pattern visible, Explorer shows the exact rows, Analysis summarizes the structure, and Theory explains why mathematicians still care about the problem.",
             },
         ],
         "related_links": [
@@ -359,7 +373,7 @@ EXPLANATORY_PAGES = [
     {
         "route": "/what-did-yitang-zhang-prove",
         "nav_label": "What Did Yitang Zhang Prove?",
-        "title": "Twin Prime Exploration Lab | What Did Yitang Zhang Prove?",
+        "title": "TwinPrimeExplorer.com | What Did Yitang Zhang Prove?",
         "meta_description": "A concise explanation of Yitang Zhang's bounded-gaps breakthrough, what it proved, and what it did not prove about twin primes.",
         "eyebrow": "Modern Progress",
         "hero_title": "What did Yitang Zhang prove?",
@@ -393,7 +407,7 @@ EXPLANATORY_PAGES = [
     {
         "route": "/why-mod-6-shows-up-so-often",
         "nav_label": "Why Mod 6 Shows Up So Often",
-        "title": "Twin Prime Exploration Lab | Why Mod 6 Shows Up So Often",
+        "title": "TwinPrimeExplorer.com | Why Mod 6 Shows Up So Often",
         "meta_description": "Why mod 6 appears so often in prime-number discussions, and how residue classes help make twin-prime structure easier to see.",
         "eyebrow": "Mod 6",
         "hero_title": "Why Mod 6 shows up so often",
@@ -427,7 +441,7 @@ EXPLANATORY_PAGES = [
     {
         "route": "/why-twin-centers-matter",
         "nav_label": "Why Twin Centers Matter",
-        "title": "Twin Prime Exploration Lab | Why Twin Centers Matter",
+        "title": "TwinPrimeExplorer.com | Why Twin Centers Matter",
         "meta_description": "Why twin centers are useful for seeing, organizing, and interpreting twin-prime structure across the site.",
         "eyebrow": "Twin Centers",
         "hero_title": "Why twin centers matter",
@@ -458,6 +472,142 @@ EXPLANATORY_PAGES = [
             {"title": "Connect centers to reference context", "body": "Use the Glossary for the short definition first, then move into Theory when you want the broader twin-prime context.", "href": "/glossary#glossary-term-twin-center", "label": "Open the Glossary"},
         ],
     },
+    {
+        "route": "/has-the-twin-prime-conjecture-been-solved",
+        "nav_label": "Has The Twin Prime Conjecture Been Solved?",
+        "title": "TwinPrimeExplorer.com | Has The Twin Prime Conjecture Been Solved?",
+        "meta_description": "A clear explanation of whether the twin prime conjecture has been solved and how bounded-gap progress differs from a full proof.",
+        "eyebrow": "Twin Prime Conjecture",
+        "hero_title": "Has the twin prime conjecture been solved?",
+        "hero_text": "No. The twin prime conjecture remains unsolved. Modern progress shows that primes come within some bounded distance infinitely often, but that is not the same as proving infinitely many gap-2 pairs.",
+        "intro_title": "The short answer",
+        "intro_text": "If you only need the answer in one line, it is no. This page exists to make the next sentence clear too: important progress has happened, but the exact twin-prime claim still has not been proved.",
+        "sections": [
+            {
+                "title": "What the conjecture actually says",
+                "body": "The twin prime conjecture claims that there are infinitely many pairs of prime numbers that differ by exactly 2. It is not a claim about small gaps in general. It is a claim about the exact gap of 2 repeating forever.",
+            },
+            {
+                "title": "Why people sometimes think it was solved",
+                "body": "News about bounded gaps between primes can sound very close to the twin prime conjecture. If you hear that primes come close together infinitely often, it is easy to assume that twin primes were proved too. That last step is exactly the part that remains open.",
+            },
+            {
+                "title": "What modern results do prove",
+                "body": "Modern theorems show that there exists some fixed finite bound B such that infinitely many prime pairs differ by at most B. That is a major breakthrough, because it proves recurring small gaps. But the bound is not known to be 2.",
+            },
+            {
+                "title": "Why the distinction matters",
+                "body": "This is one of the clearest examples in number theory of progress versus proof. The field has moved much closer to the conjecture, but the exact statement mathematicians want to prove is still unresolved.",
+            },
+        ],
+        "related_links": [
+            {"title": "Read the bounded-gap breakthrough", "body": "Use the Zhang page when you want the cleanest explanation of what bounded gaps actually proved.", "href": "/what-did-yitang-zhang-prove", "label": "Read about Zhang"},
+            {"title": "See the current progress summary", "body": "Theory collects the larger progress picture in one place.", "href": "/theory#progress", "label": "Open Theory: Current Progress"},
+            {"title": "Check the conjecture terms", "body": "Use the Glossary when you want short definitions for twin prime conjecture and bounded gaps.", "href": "/glossary#glossary-term-twin-prime-conjecture", "label": "Open the Glossary"},
+        ],
+    },
+    {
+        "route": "/what-bounded-gaps-between-primes-actually-proved",
+        "nav_label": "What Bounded Gaps Between Primes Actually Proved",
+        "title": "TwinPrimeExplorer.com | What Bounded Gaps Between Primes Actually Proved",
+        "meta_description": "What bounded gaps between primes really proved, why it matters, and why it still stops short of proving infinitely many twin primes.",
+        "eyebrow": "Bounded Gaps",
+        "hero_title": "What bounded gaps between primes actually proved",
+        "hero_text": "Bounded-gap results proved that primes come within some fixed finite distance infinitely often. That is a major structural theorem about prime clustering, but it is still not the same as proving infinitely many twin primes.",
+        "intro_title": "Why this page helps",
+        "intro_text": "Bounded gaps is one of the most important phrases in the modern twin-prime story, but it is also one of the easiest to blur into something it does not say. This page keeps the claim precise.",
+        "sections": [
+            {
+                "title": "What bounded gaps means",
+                "body": "A bounded-gap theorem says there is some fixed number B so that infinitely many prime pairs differ by at most B. The key point is that the same finite bound works infinitely often.",
+            },
+            {
+                "title": "What the breakthrough changed",
+                "body": "Before these results, it was not known whether primes could be proved to recur within any fixed finite distance infinitely many times. The breakthrough turned that possibility into a theorem and changed how mathematicians talk about small prime gaps.",
+            },
+            {
+                "title": "Why it still falls short of twin primes",
+                "body": "Twin primes require the exact gap of 2. Bounded-gap theorems only prove that some finite bound works. Even if that bound is much smaller than earlier ones, it is still not the same as isolating the exact twin-prime pattern.",
+            },
+            {
+                "title": "Why the result still matters so much",
+                "body": "These theorems prove that local prime clustering is a real structural phenomenon, not just something suggested by computations or heuristics. That is why bounded gaps sits so close to the center of the modern twin-prime story.",
+            },
+        ],
+        "related_links": [
+            {"title": "Read the Zhang milestone", "body": "Use the Zhang page when you want the breakthrough framed around the person and the 2013 result.", "href": "/what-did-yitang-zhang-prove", "label": "Read about Zhang"},
+            {"title": "See how Theory summarizes the progress", "body": "The Current Progress tab keeps the wider bounded-gap picture connected to the conjecture itself.", "href": "/theory#progress", "label": "Open Theory: Current Progress"},
+            {"title": "Use Analysis for gap structure", "body": "Analysis lets you compare the article idea with gap patterns in a concrete finite range.", "href": "/analysis#analysis-views-title", "label": "Open Analysis"},
+        ],
+    },
+    {
+        "route": "/why-the-twin-prime-problem-is-hard",
+        "nav_label": "Why The Twin Prime Problem Is Hard",
+        "title": "TwinPrimeExplorer.com | Why The Twin Prime Problem Is Hard",
+        "meta_description": "Why the twin prime problem is difficult, including local divisibility constraints, global versus local control, and the limits of computation.",
+        "eyebrow": "Why It Is Hard",
+        "hero_title": "Why the twin prime problem is hard",
+        "hero_text": "The twin prime problem sounds simple because the statement is short. The difficulty is that any proof has to control both the large-scale distribution of primes and the exact local conditions that produce gap-2 pairs.",
+        "intro_title": "The short version",
+        "intro_text": "This problem is hard because primes look partly irregular but obey strict arithmetic rules at the same time. A proof has to manage both sides at once.",
+        "sections": [
+            {
+                "title": "Exact gaps are harder than small gaps",
+                "body": "It is one thing to prove that primes come close together infinitely often. It is a stronger and more delicate task to prove that the exact gap of 2 occurs infinitely often. That extra precision is where current methods still fall short.",
+            },
+            {
+                "title": "Divisibility constraints pile up",
+                "body": "For a twin-prime pair (p, p+2), both numbers must avoid divisibility by many small primes at the same time. Those restrictions overlap and accumulate, which makes the local arithmetic much harder to control than the primality of a single number.",
+            },
+            {
+                "title": "Average information is not enough",
+                "body": "Modern methods often describe how primes behave on average or across large scales. The twin prime problem needs more than that. It asks for infinitely many exact local alignments, not just broad tendencies.",
+            },
+            {
+                "title": "Computation does not finish the job",
+                "body": "Computers can find enormous twin-prime examples and measure real patterns, but every computation ends at a finite range. The conjecture is about what happens beyond every finite limit, so examples alone can never complete the proof.",
+            },
+        ],
+        "related_links": [
+            {"title": "Read the Theory summary", "body": "Theory keeps the full difficulty story connected to the rest of the conjecture context.", "href": "/theory#why-its-hard", "label": "Open Theory: Why It's Hard"},
+            {"title": "Inspect local arithmetic in Explorer", "body": "Explorer helps make divisibility and neighborhood structure concrete one row at a time.", "href": "/explorer#number-table-title", "label": "Open Explorer"},
+            {"title": "Use the Glossary for quick support", "body": "Glossary definitions help if terms like bounded gaps, divisor, or twin center feel unfamiliar while you read.", "href": "/glossary#glossary-term-bounded-gaps-between-primes", "label": "Open the Glossary"},
+        ],
+    },
+    {
+        "route": "/how-mathematicians-study-twin-primes",
+        "nav_label": "How Mathematicians Study Twin Primes",
+        "title": "TwinPrimeExplorer.com | How Mathematicians Study Twin Primes",
+        "meta_description": "An overview of how mathematicians study twin primes through sieve methods, analytic number theory, arithmetic progressions, heuristics, and computation.",
+        "eyebrow": "Approaches",
+        "hero_title": "How mathematicians study twin primes",
+        "hero_text": "There is no single method that solves the twin prime problem. Instead, mathematicians approach it from several angles, each of which captures part of the structure but not yet the final proof.",
+        "intro_title": "Why there are several approaches",
+        "intro_text": "The twin prime problem sits at the intersection of local arithmetic structure, global distribution, and repeated small gaps. That is why different methods each illuminate a different part of the picture.",
+        "sections": [
+            {
+                "title": "Sieve methods",
+                "body": "Sieve methods filter large sets of integers by divisibility conditions. They are powerful for finding numbers that behave almost like primes and for proving bounded-gap style results, but they run into the parity barrier before reaching a full twin-prime proof.",
+            },
+            {
+                "title": "Analytic number theory",
+                "body": "Analytic methods study primes through functions, asymptotic estimates, and large-scale distribution patterns. They reveal deep structure, but often at the level of averages rather than exact local pair formation.",
+            },
+            {
+                "title": "Primes in arithmetic progressions",
+                "body": "Modular structure matters because primes must land in certain residue classes to avoid small divisors. Studying primes in arithmetic progressions helps explain why patterns like mod 6 keep reappearing in twin-prime discussions.",
+            },
+            {
+                "title": "Heuristics and computation",
+                "body": "Heuristic models predict that twin primes should continue forever, and computation gives large-scale evidence for those predictions. Both are valuable, but neither replaces a proof.",
+            },
+        ],
+        "related_links": [
+            {"title": "Read the Theory approaches tab", "body": "Theory keeps the method-level overview together in one reference surface.", "href": "/theory#approaches", "label": "Open Theory: Approaches"},
+            {"title": "See Mod 6 in the Lab", "body": "Use the visual mode that makes arithmetic-progression structure easier to spot quickly.", "href": "/lab#visualization-title", "label": "Open the Lab"},
+            {"title": "Read the modular explainer", "body": "Use the standalone Mod 6 page when you want the shortest clear explanation of why residue classes matter here.", "href": "/why-mod-6-shows-up-so-often", "label": "Read the Mod 6 page"},
+        ],
+    },
 ]
 
 
@@ -470,7 +620,7 @@ GLOSSARY_SECTIONS = [
             {
                 "term": "Prime",
                 "summary": "A prime number is a whole number greater than 1 with exactly two positive divisors: 1 and itself.",
-                "detail": "Examples include 2, 3, 5, 7, and 11. Prime numbers are the main building blocks of the Twin Prime Exploration Lab.",
+                "detail": "Examples include 2, 3, 5, 7, and 11. Prime numbers are the main building blocks of TwinPrimeExplorer.com.",
             },
             {
                 "term": "Composite",
@@ -496,7 +646,7 @@ GLOSSARY_SECTIONS = [
             {
                 "term": "Twin Prime",
                 "summary": "Twin primes are pairs of prime numbers that differ by exactly 2.",
-                "detail": "Examples include (3, 5), (5, 7), and (11, 13). Twin primes are the central object of study in the Twin Prime Exploration Lab.",
+                "detail": "Examples include (3, 5), (5, 7), and (11, 13). Twin primes are the central object of study on TwinPrimeExplorer.com.",
                 "article_link": {
                     "label": "Read more: What Are Twin Primes?",
                     "href": "/what-are-twin-primes",
@@ -574,6 +724,10 @@ GLOSSARY_SECTIONS = [
                 "term": "Twin Prime Conjecture",
                 "summary": "The twin prime conjecture is the claim that infinitely many twin-prime pairs exist.",
                 "detail": "This remains one of the most famous unsolved problems in number theory. The project explores structure related to the conjecture without claiming a proof.",
+                "article_link": {
+                    "label": "Read more: Has The Twin Prime Conjecture Been Solved?",
+                    "href": "/has-the-twin-prime-conjecture-been-solved",
+                },
             },
             {
                 "term": "Bounded Gaps Between Primes",
@@ -592,6 +746,10 @@ GLOSSARY_SECTIONS = [
                 "term": "Hardy-Littlewood Conjecture",
                 "summary": "The Hardy-Littlewood prime pair conjecture is a heuristic framework for predicting how often twin primes should occur.",
                 "detail": "It gives a quantitative expectation for twin-prime frequency and is one of the main reasons mathematicians expect infinitely many twin primes to exist.",
+                "article_link": {
+                    "label": "Read more: How Mathematicians Study Twin Primes",
+                    "href": "/how-mathematicians-study-twin-primes",
+                },
             },
             {
                 "term": "Twin Prime Constant",

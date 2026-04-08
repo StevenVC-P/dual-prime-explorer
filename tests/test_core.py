@@ -223,9 +223,15 @@ def test_route_registry_is_ready_for_more_pages() -> None:
     assert "What did Yitang Zhang prove?" in rendered_pages["/what-did-yitang-zhang-prove"]
     assert "Why Mod 6 shows up so often" in rendered_pages["/why-mod-6-shows-up-so-often"]
     assert "Why twin centers matter" in rendered_pages["/why-twin-centers-matter"]
-    assert '<meta name="description" content="A clear introduction to twin primes, why gap 2 matters, and how Twin Prime Exploration Lab helps you explore the pattern.">' in rendered_pages["/what-are-twin-primes"]
+    assert "Has the twin prime conjecture been solved?" in rendered_pages["/has-the-twin-prime-conjecture-been-solved"]
+    assert "What bounded gaps between primes actually proved" in rendered_pages["/what-bounded-gaps-between-primes-actually-proved"]
+    assert "Why the twin prime problem is hard" in rendered_pages["/why-the-twin-prime-problem-is-hard"]
+    assert "How mathematicians study twin primes" in rendered_pages["/how-mathematicians-study-twin-primes"]
+    assert '<meta name="description" content="A clear introduction to twin primes, why gap 2 matters, and how TwinPrimeExplorer.com helps you explore the pattern.">' in rendered_pages["/what-are-twin-primes"]
     assert "Read: What are twin primes?" in rendered_pages["/theory"]
     assert "Read more: Why Mod 6 Shows Up So Often" in rendered_pages["/glossary"]
+    assert "Read more: Has The Twin Prime Conjecture Been Solved?" in rendered_pages["/glossary"]
+    assert "Read more: How Mathematicians Study Twin Primes" in rendered_pages["/glossary"]
     assert "About This Site" in rendered_pages["/about"]
     assert "<h2>Contact</h2>" in rendered_pages["/contact"]
     assert "Privacy Policy" in rendered_pages["/privacy"]
@@ -485,6 +491,11 @@ def test_explanatory_pages_are_configured_for_standalone_routes() -> None:
         "/what-did-yitang-zhang-prove",
         "/why-mod-6-shows-up-so-often",
         "/why-twin-centers-matter",
+        "/has-the-twin-prime-conjecture-been-solved",
+        "/what-bounded-gaps-between-primes-actually-proved",
+        "/why-the-twin-prime-problem-is-hard",
+        "/how-mathematicians-study-twin-primes",
     ]
     assert all(page["meta_description"] for page in EXPLANATORY_PAGES)
     assert any(page["nav_label"] == "Why Twin Centers Matter" for page in EXPLANATORY_PAGES)
+    assert any(page["nav_label"] == "How Mathematicians Study Twin Primes" for page in EXPLANATORY_PAGES)

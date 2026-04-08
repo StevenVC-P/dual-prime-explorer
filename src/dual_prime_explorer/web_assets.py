@@ -3020,8 +3020,8 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
   <div class="page-shell">
     <header class="site-header">
       <a class="brand-mark" href="/lab">
-        <span class="brand-kicker">Twin Prime Exploration Lab</span>
-        <span class="brand-title">Twin-prime analysis for computation and theory</span>
+        <span class="brand-kicker">TwinPrimeExplorer.com</span>
+        <span class="brand-title">Twin-prime analysis and reference</span>
       </a>
       <nav class="top-nav" aria-label="Primary">
         {nav_html}
@@ -3032,7 +3032,7 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
       {main_html}
     </main>
     <footer class="site-footer">
-      <p class="site-footer-copy">Twin Prime Exploration Lab is a focused mathematics product for visual exploration, exact inspection, structured analysis, and reference context.</p>
+      <p class="site-footer-copy">TwinPrimeExplorer.com is a focused mathematics site for visual exploration, exact inspection, structured analysis, and reference context.</p>
       <nav class="footer-nav" aria-label="Secondary">
         {footer_html}
       </nav>

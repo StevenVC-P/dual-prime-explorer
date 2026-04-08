@@ -104,7 +104,7 @@ def _build_explanatory_page(content: dict[str, object]) -> PageDefinition:
 
 LAB_PAGE = PageDefinition(
     route="/lab",
-    title="Twin Prime Exploration Lab | Lab",
+    title="TwinPrimeExplorer.com | Lab",
     nav_label="Lab",
     active_route="lab",
     meta_description="Explore primes, twin primes, and twin centers in a live visual field with lightweight range controls and connected analysis links.",
@@ -224,7 +224,7 @@ LAB_PAGE = PageDefinition(
 
 EXPLORER_PAGE = PageDefinition(
     route="/explorer",
-    title="Twin Prime Exploration Lab | Explorer",
+    title="TwinPrimeExplorer.com | Explorer",
     nav_label="Explorer",
     active_route="explorer",
     meta_description="Inspect primes, twin-prime structure, divisors, and prime neighborhoods one number at a time across a selected range.",
@@ -380,7 +380,7 @@ EXPLORER_PAGE = PageDefinition(
 
 ANALYSIS_PAGE = PageDefinition(
     route="/analysis",
-    title="Twin Prime Exploration Lab | Analysis",
+    title="TwinPrimeExplorer.com | Analysis",
     nav_label="Analysis",
     active_route="analysis",
     meta_description="Read twin-prime ranges through modular structure, gaps, factors, density, and rough expected-versus-observed benchmarks.",
@@ -473,7 +473,7 @@ ANALYSIS_PAGE = PageDefinition(
 
 ANALYSIS_GUIDE_PAGE = PageDefinition(
     route="/analysis-guide",
-    title="Twin Prime Exploration Lab | Analysis Guide",
+    title="TwinPrimeExplorer.com | Analysis Guide",
     nav_label="Analysis Guide",
     active_route="analysis",
     meta_description="A practical guide to reading the Analysis page, including modular patterns, prime gaps, factor views, density, and expected counts.",
@@ -538,10 +538,10 @@ ANALYSIS_GUIDE_PAGE = PageDefinition(
 
 GLOSSARY_PAGE = PageDefinition(
     route="/glossary",
-    title="Twin Prime Exploration Lab | Glossary",
+    title="TwinPrimeExplorer.com | Glossary",
     nav_label="Glossary",
     active_route="glossary",
-    meta_description="Quick definitions for twin-prime, modular, gap, divisor, and theory terms used across the Twin Prime Exploration Lab.",
+    meta_description="Quick definitions for twin-prime, modular, gap, divisor, and theory terms used across TwinPrimeExplorer.com.",
     hero_html="""<section class="hero-block theory-hero">
   <div class="hero-copy theory-copy">
     <p class="eyebrow">Glossary</p>
@@ -553,7 +553,7 @@ GLOSSARY_PAGE = PageDefinition(
   <div class="panel-heading theory-heading">
     <div>
       <h2>Glossary</h2>
-      <p>A concise reference for core terms used throughout the Twin Prime Exploration Lab.</p>
+      <p>A concise reference for core terms used throughout TwinPrimeExplorer.com.</p>
     </div>
   </div>
   <div class="glossary-toolbar" aria-label="Glossary tools">
@@ -569,7 +569,7 @@ GLOSSARY_PAGE = PageDefinition(
 
 THEORY_PAGE = PageDefinition(
     route="/theory",
-    title="Twin Prime Exploration Lab | Theory",
+    title="TwinPrimeExplorer.com | Theory",
     nav_label="Theory",
     active_route="theory",
     meta_description="Reference notes on the twin prime conjecture, modern progress, research approaches, and why the problem remains difficult.",
@@ -632,15 +632,15 @@ THEORY_PAGE = PageDefinition(
 
 ABOUT_PAGE = PageDefinition(
     route="/about",
-    title="Twin Prime Exploration Lab | About",
+    title="TwinPrimeExplorer.com | About",
     nav_label="About",
     active_route="about",
-    meta_description="About Twin Prime Exploration Lab, a small independent site for exploring primes, twin primes, twin centers, and related patterns.",
+    meta_description="About TwinPrimeExplorer.com, a small independent site for exploring primes, twin primes, twin centers, and related patterns.",
     hero_html="""<section class="hero-block theory-hero">
   <div class="hero-copy theory-copy">
     <p class="eyebrow">About</p>
     <h1>A small site for exploring primes and twin primes.</h1>
-    <p class="hero-text">Twin Prime Exploration Lab is a focused mathematics site built for people who enjoy patterns in prime numbers and want a simple way to explore them a little more deeply.</p>
+    <p class="hero-text">TwinPrimeExplorer.com is a focused mathematics site built for people who enjoy patterns in prime numbers and want a simple way to explore them a little more deeply.</p>
   </div>
 </section>""",
     main_html="""<section class="panel theory-panel">
@@ -706,10 +706,10 @@ ABOUT_PAGE = PageDefinition(
 
 CONTACT_PAGE = PageDefinition(
     route="/contact",
-    title="Twin Prime Exploration Lab | Contact",
+    title="TwinPrimeExplorer.com | Contact",
     nav_label="Contact",
     active_route="contact",
-    meta_description="Contact information, scope notes, and feedback expectations for the Twin Prime Exploration Lab site.",
+    meta_description="Contact information, scope notes, and feedback expectations for TwinPrimeExplorer.com.",
     hero_html="""<section class="hero-block theory-hero">
   <div class="hero-copy theory-copy">
     <p class="eyebrow">Contact</p>
@@ -749,10 +749,10 @@ CONTACT_PAGE = PageDefinition(
 
 PRIVACY_PAGE = PageDefinition(
     route="/privacy",
-    title="Twin Prime Exploration Lab | Privacy Policy",
+    title="TwinPrimeExplorer.com | Privacy Policy",
     nav_label="Privacy Policy",
     active_route="privacy",
-    meta_description="Privacy policy for Twin Prime Exploration Lab, including the site's current handling of technical data, cookies, and future advertising changes.",
+    meta_description="Privacy policy for TwinPrimeExplorer.com, including the site's current handling of technical data, cookies, and future advertising changes.",
     hero_html="""<section class="hero-block theory-hero">
   <div class="hero-copy theory-copy">
     <p class="eyebrow">Privacy Policy</p>
@@ -770,7 +770,7 @@ PRIVACY_PAGE = PageDefinition(
   <div class="section-stack">
     <article class="theory-section">
       <h3>What this site is</h3>
-      <p>Twin Prime Exploration Lab is a mathematics website focused on twin-prime visualization, inspection, analysis, theory, and glossary reference content.</p>
+      <p>TwinPrimeExplorer.com is a mathematics website focused on twin-prime visualization, inspection, analysis, theory, and glossary reference content.</p>
     </article>
     <article class="theory-section">
       <h3>Information you actively provide</h3>
@@ -808,7 +808,7 @@ PRIVACY_PAGE = PageDefinition(
 
 EXPERIMENTS_PAGE = PageDefinition(
     route="/experiments",
-    title="Twin Prime Exploration Lab | Experiments",
+    title="TwinPrimeExplorer.com | Experiments",
     nav_label="Experiments",
     active_route="experiments",
     meta_description="A structured hypothesis workbench for testing bounded twin-prime rules and reading verdicts, evidence, and next steps.",
