@@ -9,5 +9,11 @@ description = "Tools for exploring strategies to find twin primes."
 readme = "README.md"
 requires-python = ">=3.10"
 
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
