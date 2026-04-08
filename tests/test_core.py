@@ -282,6 +282,7 @@ def test_load_web_runtime_supports_dev_mode() -> None:
     assert "Visualization Lab" in runtime["page_registry"]["/lab"]
     assert "visualization-stage" in runtime["page_registry"]["/lab"]
     assert "visualization-pagination" in runtime["page_registry"]["/lab"]
+    assert runtime["ads_txt"].strip() == "google.com, pub-6401940195640064, DIRECT, f08c47fec0942fa0"
     assert "mod-base-input" in runtime["page_registry"]["/lab"]
     assert "mod-residue-options" in runtime["page_registry"]["/lab"]
     assert "max=\"60\"" in runtime["page_registry"]["/lab"]

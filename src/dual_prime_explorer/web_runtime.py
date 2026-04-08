@@ -19,6 +19,7 @@ class WebRuntime(TypedDict):
     analysis_js: str
     theory_js: str
     experiments_js: str
+    ads_txt: str
 
 
 def _load_core_module(dev_mode: bool = False) -> Any:
@@ -263,4 +264,5 @@ def load_web_runtime(dev_mode: bool = False) -> WebRuntime:
         "analysis_js": web_assets.ANALYSIS_JS,
         "theory_js": web_assets.build_theory_js(),
         "experiments_js": web_assets.EXPERIMENTS_JS,
+        "ads_txt": web_assets.ADS_TXT,
     }
