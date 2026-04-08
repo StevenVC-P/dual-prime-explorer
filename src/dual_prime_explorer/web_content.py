@@ -125,6 +125,20 @@ THEORY_TABS = [
                 "destination": "Lab",
             },
             {
+                "title": "Read: What are twin primes?",
+                "body": "Use the standalone page when you want the shortest clear definition before diving back into the interactive views.",
+                "href": "/what-are-twin-primes",
+                "link_label": "Open the article",
+                "destination": "Read",
+            },
+            {
+                "title": "Read: What did Yitang Zhang prove?",
+                "body": "Use the standalone page to keep bounded gaps and the twin prime conjecture clearly separated.",
+                "href": "/what-did-yitang-zhang-prove",
+                "link_label": "Open the article",
+                "destination": "Read",
+            },
+            {
                 "title": "Trace prime gaps in Analysis",
                 "body": "Move from the history of the problem into the Gaps and Modular views to inspect the structure directly.",
                 "href": "/analysis#analysis-views-title",
@@ -188,6 +202,20 @@ THEORY_TABS = [
                 "href": "/lab#visualization-title",
                 "link_label": "Open the Lab",
                 "destination": "Lab",
+            },
+            {
+                "title": "Read: Why Mod 6 shows up so often",
+                "body": "Use the standalone page when the modular pattern is the main idea you want in plain language.",
+                "href": "/why-mod-6-shows-up-so-often",
+                "link_label": "Open the article",
+                "destination": "Read",
+            },
+            {
+                "title": "Read: Why twin centers matter",
+                "body": "Use the standalone page when you want the shortest explanation of why the site highlights centers so strongly.",
+                "href": "/why-twin-centers-matter",
+                "link_label": "Open the article",
+                "destination": "Read",
             },
             {
                 "title": "Inspect divisibility in Explorer",
@@ -293,6 +321,147 @@ THEORY_TABS = [
 ]
 
 
+EXPLANATORY_PAGES = [
+    {
+        "route": "/what-are-twin-primes",
+        "nav_label": "What Are Twin Primes?",
+        "title": "Twin Prime Exploration Lab | What Are Twin Primes?",
+        "meta_description": "A clear introduction to twin primes, why gap 2 matters, and how Twin Prime Exploration Lab helps you explore the pattern.",
+        "eyebrow": "Twin Primes",
+        "hero_title": "What are twin primes?",
+        "hero_text": "Twin primes are pairs of prime numbers that differ by exactly 2. They are simple to state, easy to spot in small ranges, and still connected to one of the best-known open questions in number theory.",
+        "intro_title": "A short introduction",
+        "intro_text": "Start here if you want the core idea in plain language, then move back into the Lab, Explorer, Analysis, or Theory pages when you want to see the pattern from a different angle.",
+        "sections": [
+            {
+                "title": "The basic definition",
+                "body": "A twin-prime pair is a pair of prime numbers with a difference of 2, such as (3, 5), (5, 7), or (11, 13). Once numbers get larger, twin primes become less frequent, but they continue to appear in many finite ranges.",
+            },
+            {
+                "title": "Why gap 2 matters",
+                "body": "A gap of 2 is the smallest possible gap between odd prime numbers. That makes twin primes the simplest nontrivial prime-gap pattern, and it is one reason they sit so close to the center of prime-number research.",
+            },
+            {
+                "title": "Why people care about them",
+                "body": "The twin prime conjecture asks whether infinitely many twin-prime pairs exist. That question is still open. The pattern is easy to understand, but proving it continues forever is much harder than finding many examples.",
+            },
+            {
+                "title": "How this site uses the idea",
+                "body": "Twin Prime Exploration Lab treats twin primes as something you can see, inspect, and interpret from several angles. The Lab makes the pattern visible, Explorer shows the exact rows, Analysis summarizes the structure, and Theory explains why mathematicians still care about the problem.",
+            },
+        ],
+        "related_links": [
+            {"title": "See the pattern in the Lab", "body": "Start with a live range and watch twin primes and twin centers appear together.", "href": "/lab#visualization-title", "label": "Open the Lab"},
+            {"title": "Read the longer history", "body": "Use Theory when you want the conjecture, timeline, and current mathematical status in one place.", "href": "/theory#history", "label": "Open Theory: History"},
+            {"title": "Check the key terms", "body": "Use the Glossary when you want quick definitions for twin prime, twin center, and prime gap.", "href": "/glossary#glossary-term-twin-prime", "label": "Open the Glossary"},
+        ],
+    },
+    {
+        "route": "/what-did-yitang-zhang-prove",
+        "nav_label": "What Did Yitang Zhang Prove?",
+        "title": "Twin Prime Exploration Lab | What Did Yitang Zhang Prove?",
+        "meta_description": "A concise explanation of Yitang Zhang's bounded-gaps breakthrough, what it proved, and what it did not prove about twin primes.",
+        "eyebrow": "Modern Progress",
+        "hero_title": "What did Yitang Zhang prove?",
+        "hero_text": "In 2013, Yitang Zhang proved that there is some fixed finite bound B such that infinitely many pairs of primes differ by at most B. It was a major breakthrough, but it did not prove the twin prime conjecture.",
+        "intro_title": "What this page clarifies",
+        "intro_text": "Zhang's breakthrough is often mentioned in one sentence and misunderstood in the next. This page keeps the distinction clear: bounded gaps were proved, but gap 2 was not.",
+        "sections": [
+            {
+                "title": "The theorem in plain language",
+                "body": "Zhang proved that prime numbers do not drift apart forever. Instead, there exists at least one fixed distance B so that infinitely many prime pairs appear with a gap no larger than B.",
+            },
+            {
+                "title": "Why this mattered immediately",
+                "body": "Before Zhang, no one had proved that primes come close together infinitely often in any bounded way. His result changed the field by turning a long-standing expectation into a theorem.",
+            },
+            {
+                "title": "What it did not prove",
+                "body": "Zhang did not prove that the gap is 2 infinitely often. The twin prime conjecture asks for the exact gap of 2, while bounded-gap results only guarantee that some finite gap occurs infinitely many times.",
+            },
+            {
+                "title": "Why the result still belongs in the twin-prime story",
+                "body": "The theorem showed that prime clustering is not just a heuristic guess. It established that small prime gaps recur across infinitely many scales, which is one of the strongest pieces of progress connected to the twin prime problem.",
+            },
+        ],
+        "related_links": [
+            {"title": "See the broader progress picture", "body": "Theory puts Zhang, Polymath, and Maynard-Tao into the same timeline.", "href": "/theory#progress", "label": "Open Theory: Current Progress"},
+            {"title": "Look at gap structure directly", "body": "Analysis helps connect the idea of small gaps to concrete ranges and repeated spacing.", "href": "/analysis#analysis-views-title", "label": "Open Analysis"},
+            {"title": "Check the bounded-gaps definition", "body": "The Glossary keeps the distinction between bounded gaps and twin primes short and clear.", "href": "/glossary#glossary-term-bounded-gaps-between-primes", "label": "Open the Glossary"},
+        ],
+    },
+    {
+        "route": "/why-mod-6-shows-up-so-often",
+        "nav_label": "Why Mod 6 Shows Up So Often",
+        "title": "Twin Prime Exploration Lab | Why Mod 6 Shows Up So Often",
+        "meta_description": "Why mod 6 appears so often in prime-number discussions, and how residue classes help make twin-prime structure easier to see.",
+        "eyebrow": "Mod 6",
+        "hero_title": "Why Mod 6 shows up so often",
+        "hero_text": "When people study primes greater than 3, mod 6 keeps appearing because divisibility by 2 and 3 removes most residue classes immediately. That leaves a much narrower structure to inspect.",
+        "intro_title": "Why this helps",
+        "intro_text": "You do not need a long lesson in modular arithmetic to get the basic idea. This page gives the shortest useful explanation, then points you back to the visual and analytical views where the pattern becomes easier to see.",
+        "sections": [
+            {
+                "title": "What mod 6 means",
+                "body": "Looking at numbers mod 6 means grouping them by their remainder after division by 6. Every integer falls into one of six residue classes: 0, 1, 2, 3, 4, or 5 mod 6.",
+            },
+            {
+                "title": "Why primes narrow to two classes",
+                "body": "Any number congruent to 0, 2, or 4 mod 6 is even, so it cannot be prime unless it is 2. Any number congruent to 3 mod 6 is divisible by 3, so it cannot be prime unless it is 3. For primes greater than 3, that leaves only residue classes 1 and 5 mod 6.",
+            },
+            {
+                "title": "Why this matters for twin primes",
+                "body": "A typical twin-prime pair above (3, 5) looks like (6k - 1, 6k + 1). That means mod 6 quickly reveals why the pair members and the center between them keep falling into a narrow pattern.",
+            },
+            {
+                "title": "Why the site highlights it",
+                "body": "Mod 6 is one of the fastest ways to move from raw numbers to visible structure. The Lab uses it as a visual mode, Analysis uses it as a structural read, and the Glossary keeps the key terms short when you do not want a longer explanation.",
+            },
+        ],
+        "related_links": [
+            {"title": "See it in the Lab", "body": "Use the Mod 6 view to see the residue pattern rather than only reading about it.", "href": "/lab#visualization-title", "label": "Open the Lab"},
+            {"title": "Read the modular interpretation", "body": "Analysis summarizes the pair and center residue counts across the selected range, so you can compare the article idea with live data.", "href": "/analysis#analysis-views-title", "label": "Open Analysis"},
+            {"title": "Keep the terms nearby", "body": "Use the Glossary for Mod 6, residue class, and arithmetic progression definitions.", "href": "/glossary#glossary-term-mod-6", "label": "Open the Glossary"},
+        ],
+    },
+    {
+        "route": "/why-twin-centers-matter",
+        "nav_label": "Why Twin Centers Matter",
+        "title": "Twin Prime Exploration Lab | Why Twin Centers Matter",
+        "meta_description": "Why twin centers are useful for seeing, organizing, and interpreting twin-prime structure across the site.",
+        "eyebrow": "Twin Centers",
+        "hero_title": "Why twin centers matter",
+        "hero_text": "Twin centers are the numbers exactly between twin-prime pairs. They are not prime themselves, but they often make the surrounding pair structure easier to see and talk about.",
+        "intro_title": "Why this page exists",
+        "intro_text": "Twin centers are one of the site's distinctive ideas. This page explains why they are useful without turning them into a bigger theory than they need to be.",
+        "sections": [
+            {
+                "title": "What a twin center is",
+                "body": "If (p, p + 2) is a twin-prime pair, then the number in the middle is p + 1. That middle value is the twin center. For example, 12 is the twin center between 11 and 13.",
+            },
+            {
+                "title": "Why the center is useful",
+                "body": "The center compresses a pair into one location. That makes it easier to see where twin-prime structure sits inside a larger range, especially when you want a visual or counting-based summary rather than only a list of pairs.",
+            },
+            {
+                "title": "Why centers connect naturally to mod 6",
+                "body": "For twin-prime pairs above the earliest exceptions, the center typically lands on a multiple of 6. That makes centers a clean bridge between the visual pattern and the modular explanation.",
+            },
+            {
+                "title": "How the site uses centers",
+                "body": "The Lab highlights centers visually, Explorer treats them as a neighborhood role, and Analysis uses them for factor and modular summaries. They are not a replacement for the primes themselves, but they are often the fastest way to see the structure they create.",
+            },
+        ],
+        "related_links": [
+            {"title": "See twin centers visually", "body": "The Lab makes centers easy to spot inside a live number field.", "href": "/lab#visualization-title", "label": "Open the Lab"},
+            {"title": "Inspect exact center rows", "body": "Explorer shows the number-by-number detail behind each center and its neighbors.", "href": "/explorer#number-table-title", "label": "Open Explorer"},
+            {"title": "Connect centers to reference context", "body": "Use the Glossary for the short definition first, then move into Theory when you want the broader twin-prime context.", "href": "/glossary#glossary-term-twin-center", "label": "Open the Glossary"},
+        ],
+    },
+]
+
+
+
 GLOSSARY_SECTIONS = [
     {
         "title": "Core Number Types",
@@ -328,6 +497,10 @@ GLOSSARY_SECTIONS = [
                 "term": "Twin Prime",
                 "summary": "Twin primes are pairs of prime numbers that differ by exactly 2.",
                 "detail": "Examples include (3, 5), (5, 7), and (11, 13). Twin primes are the central object of study in the Twin Prime Exploration Lab.",
+                "article_link": {
+                    "label": "Read more: What Are Twin Primes?",
+                    "href": "/what-are-twin-primes",
+                },
             },
             {
                 "term": "Twin Center",
@@ -336,6 +509,10 @@ GLOSSARY_SECTIONS = [
                 "theory_link": {
                     "label": "See this in Theory: History",
                     "href": "/theory#history",
+                },
+                "article_link": {
+                    "label": "Read more: Why Twin Centers Matter",
+                    "href": "/why-twin-centers-matter",
                 },
             },
             {
@@ -372,6 +549,10 @@ GLOSSARY_SECTIONS = [
                     "label": "See this in Theory: Approaches",
                     "href": "/theory#approaches",
                 },
+                "article_link": {
+                    "label": "Read more: Why Mod 6 Shows Up So Often",
+                    "href": "/why-mod-6-shows-up-so-often",
+                },
             },
             {
                 "term": "Residue Class",
@@ -401,6 +582,10 @@ GLOSSARY_SECTIONS = [
                 "theory_link": {
                     "label": "See this in Theory: Current Progress",
                     "href": "/theory#progress",
+                },
+                "article_link": {
+                    "label": "Read more: What Did Yitang Zhang Prove?",
+                    "href": "/what-did-yitang-zhang-prove",
                 },
             },
             {
