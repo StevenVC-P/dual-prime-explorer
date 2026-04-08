@@ -212,12 +212,16 @@ def test_web_payload_enforces_range_limits() -> None:
         raise AssertionError("expected range size cap to be enforced")
 
 def test_route_registry_is_ready_for_more_pages() -> None:
-    assert set(PAGE_BY_ROUTE) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/experiments"}
+    assert set(PAGE_BY_ROUTE) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/about", "/contact", "/privacy", "/experiments"}
     rendered_pages = build_page_registry()
     assert "/analysis" in rendered_pages
     assert "href=\"/analysis\"" in rendered_pages["/explorer"]
     assert "Analysis Views" in rendered_pages["/analysis"]
     assert "Hypothesis Workbench" in rendered_pages["/experiments"]
+    assert "About This Site" in rendered_pages["/about"]
+    assert "<h2>Contact</h2>" in rendered_pages["/contact"]
+    assert "Privacy Policy" in rendered_pages["/privacy"]
+
 
 
 def test_theory_tab_configuration_is_present() -> None:
@@ -250,7 +254,7 @@ def test_theory_tab_configuration_is_present() -> None:
 def test_load_web_runtime_supports_dev_mode() -> None:
     runtime = load_web_runtime(dev_mode=True)
 
-    assert set(runtime["page_by_route"]) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/experiments"}
+    assert set(runtime["page_by_route"]) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/about", "/contact", "/privacy", "/experiments"}
     assert "Visualization Lab" in runtime["page_registry"]["/lab"]
     assert "visualization-stage" in runtime["page_registry"]["/lab"]
     assert "visualization-pagination" in runtime["page_registry"]["/lab"]
@@ -392,6 +396,16 @@ def test_load_web_runtime_supports_dev_mode() -> None:
     assert "analysis-views-title" in runtime["explorer_js"]
     assert "Analyze centers in Factors" in runtime["explorer_js"]
     assert "Glossary" in runtime["page_registry"]["/glossary"]
+    assert "site-footer" in runtime["page_registry"]["/lab"]
+    assert "href=\"/about\"" in runtime["page_registry"]["/lab"]
+    assert "href=\"/contact\"" in runtime["page_registry"]["/lab"]
+    assert "href=\"/privacy\"" in runtime["page_registry"]["/lab"]
+    assert "A small site for exploring primes and twin primes." in runtime["page_registry"]["/about"]
+    assert "Ways To Explore The Site" in runtime["page_registry"]["/about"]
+    assert "<h2>Contact</h2>" in runtime["page_registry"]["/contact"]
+    assert "playful exploration and reference" in runtime["page_registry"]["/contact"]
+    assert "How this site currently handles information." in runtime["page_registry"]["/privacy"]
+    assert "Cookies and tracking" in runtime["page_registry"]["/privacy"]
     assert "id=\"glossary-term-mod-6\"" in runtime["page_registry"]["/glossary"]
     assert "Twin Center" in runtime["page_registry"]["/glossary"]
     assert "Hardy-Littlewood Conjecture" in runtime["page_registry"]["/glossary"]
