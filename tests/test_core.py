@@ -223,6 +223,9 @@ def test_route_registry_is_ready_for_more_pages() -> None:
     assert rendered_pages["/what-are-twin-primes"].count('aria-label="Advertisement"') == 2
     assert 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6401940195640064' in rendered_pages["/lab"]
     assert rendered_pages["/lab"].count('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js') == 1
+    assert "What is Twin Prime Explorer?" in rendered_pages["/lab"]
+    assert "Why study twin primes?" in rendered_pages["/lab"]
+    assert "Read What Are Twin Primes?" in rendered_pages["/lab"]
     assert 'Ad space reserved' in rendered_pages["/lab"]
     assert "href=\"/analysis\"" in rendered_pages["/explorer"]
     assert "Analysis Views" in rendered_pages["/analysis"]
@@ -239,6 +242,11 @@ def test_route_registry_is_ready_for_more_pages() -> None:
     assert '<link rel="canonical" href="https://www.twinprimeexplorer.com/lab">' in rendered_pages["/lab"]
     assert '<meta name="robots" content="noindex,follow">' in rendered_pages["/experiments"]
     assert "Read: What are twin primes?" in rendered_pages["/theory"]
+    assert "Take the theory back into the tools" in rendered_pages["/theory"]
+    assert "This guide explains how to read the site's structured analysis outputs" in rendered_pages["/analysis-guide"]
+    assert "Take this back into the tools" in rendered_pages["/analysis-guide"]
+    assert "This glossary collects the core terms used throughout TwinPrimeExplorer.com" in rendered_pages["/glossary"]
+    assert "Where to use these terms next" in rendered_pages["/glossary"]
     assert "Read more: Why Mod 6 Shows Up So Often" in rendered_pages["/glossary"]
     assert "Read more: Has The Twin Prime Conjecture Been Solved?" in rendered_pages["/glossary"]
     assert "Read more: How Mathematicians Study Twin Primes" in rendered_pages["/glossary"]
