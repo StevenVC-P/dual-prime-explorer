@@ -5,7 +5,7 @@ from dual_prime_explorer.__main__ import build_parser
 from dual_prime_explorer.core import analyze_primes_up_to, primes_up_to, twin_primes_up_to
 from dual_prime_explorer.web import build_analysis_payload, load_web_runtime
 from dual_prime_explorer.web_assets import build_page_registry
-from dual_prime_explorer.web_content import THEORY_TABS
+from dual_prime_explorer.web_content import EXPLANATORY_PAGES, THEORY_TABS
 from dual_prime_explorer.web_limits import MAX_WEB_END, MAX_WEB_RANGE_SIZE
 from dual_prime_explorer.web_pages import PAGE_BY_ROUTE
 
@@ -212,16 +212,23 @@ def test_web_payload_enforces_range_limits() -> None:
         raise AssertionError("expected range size cap to be enforced")
 
 def test_route_registry_is_ready_for_more_pages() -> None:
-    assert set(PAGE_BY_ROUTE) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/about", "/contact", "/privacy", "/experiments"}
+    explanatory_routes = {page["route"] for page in EXPLANATORY_PAGES}
+    assert set(PAGE_BY_ROUTE) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/about", "/contact", "/privacy", "/experiments", *explanatory_routes}
     rendered_pages = build_page_registry()
     assert "/analysis" in rendered_pages
     assert "href=\"/analysis\"" in rendered_pages["/explorer"]
     assert "Analysis Views" in rendered_pages["/analysis"]
     assert "Hypothesis Workbench" in rendered_pages["/experiments"]
+    assert "What are twin primes?" in rendered_pages["/what-are-twin-primes"]
+    assert "What did Yitang Zhang prove?" in rendered_pages["/what-did-yitang-zhang-prove"]
+    assert "Why Mod 6 shows up so often" in rendered_pages["/why-mod-6-shows-up-so-often"]
+    assert "Why twin centers matter" in rendered_pages["/why-twin-centers-matter"]
+    assert '<meta name="description" content="A clear introduction to twin primes, why gap 2 matters, and how Twin Prime Exploration Lab helps you explore the pattern.">' in rendered_pages["/what-are-twin-primes"]
+    assert "Read: What are twin primes?" in rendered_pages["/theory"]
+    assert "Read more: Why Mod 6 Shows Up So Often" in rendered_pages["/glossary"]
     assert "About This Site" in rendered_pages["/about"]
     assert "<h2>Contact</h2>" in rendered_pages["/contact"]
     assert "Privacy Policy" in rendered_pages["/privacy"]
-
 
 
 def test_theory_tab_configuration_is_present() -> None:
@@ -254,7 +261,8 @@ def test_theory_tab_configuration_is_present() -> None:
 def test_load_web_runtime_supports_dev_mode() -> None:
     runtime = load_web_runtime(dev_mode=True)
 
-    assert set(runtime["page_by_route"]) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/about", "/contact", "/privacy", "/experiments"}
+    explanatory_routes = {page["route"] for page in EXPLANATORY_PAGES}
+    assert set(runtime["page_by_route"]) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/about", "/contact", "/privacy", "/experiments", *explanatory_routes}
     assert "Visualization Lab" in runtime["page_registry"]["/lab"]
     assert "visualization-stage" in runtime["page_registry"]["/lab"]
     assert "visualization-pagination" in runtime["page_registry"]["/lab"]
@@ -421,7 +429,7 @@ def test_load_web_runtime_supports_dev_mode() -> None:
     assert "/explorer#number-table-title" in runtime["theory_js"]
     assert "Last reviewed: April 2026" in runtime["page_registry"]["/theory"]
     assert "Glossary links" in runtime["page_registry"]["/theory"]
-    assert "Choose your next product surface" in runtime["page_registry"]["/theory"]
+    assert "Explore the site next" in runtime["page_registry"]["/theory"]
     assert "The fastest route from a theory concept to a visible pattern." in runtime["page_registry"]["/theory"]
     assert "Take this into the product" in runtime["page_registry"]["/theory"]
     assert "Use the visual field to watch twin primes and twin centers appear together across a live range." in runtime["page_registry"]["/theory"]
@@ -468,3 +476,15 @@ def test_small_limits() -> None:
     assert analysis.gap_analysis.pair_start_gaps == []
     assert analysis.factorization_analysis.center_records == []
 
+
+
+def test_explanatory_pages_are_configured_for_standalone_routes() -> None:
+    routes = [page["route"] for page in EXPLANATORY_PAGES]
+    assert routes == [
+        "/what-are-twin-primes",
+        "/what-did-yitang-zhang-prove",
+        "/why-mod-6-shows-up-so-often",
+        "/why-twin-centers-matter",
+    ]
+    assert all(page["meta_description"] for page in EXPLANATORY_PAGES)
+    assert any(page["nav_label"] == "Why Twin Centers Matter" for page in EXPLANATORY_PAGES)

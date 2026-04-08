@@ -2209,13 +2209,24 @@ def _render_glossary_main_html(main_html: str) -> str:
         term_cards = []
         for item in section["terms"]:
             term_id = _glossary_term_id(item["term"])
+            links = []
             theory_link = item.get("theory_link")
-            theory_link_html = ""
+            article_link = item.get("article_link")
             if theory_link:
-                theory_link_html = '<div class="glossary-term-links"><a class="inline-link" href="{href}">{label}</a></div>'.format(
-                    href=html.escape(theory_link["href"], quote=True),
-                    label=html.escape(theory_link["label"]),
+                links.append(
+                    '<a class="inline-link" href="{href}">{label}</a>'.format(
+                        href=html.escape(theory_link["href"], quote=True),
+                        label=html.escape(theory_link["label"]),
+                    )
                 )
+            if article_link:
+                links.append(
+                    '<a class="inline-link" href="{href}">{label}</a>'.format(
+                        href=html.escape(article_link["href"], quote=True),
+                        label=html.escape(article_link["label"]),
+                    )
+                )
+            links_html = '<div class="glossary-term-links">{}</div>'.format("".join(links)) if links else ""
             term_cards.append(
                 '<article id="{term_id}" class="glossary-term-card" data-glossary-term data-term-label="{label}"><h3>{term}</h3><p class="glossary-term-summary">{summary}</p><p class="glossary-term-detail">{detail}</p>{links}</article>'.format(
                     term_id=html.escape(term_id),
@@ -2223,7 +2234,7 @@ def _render_glossary_main_html(main_html: str) -> str:
                     term=html.escape(item["term"]),
                     summary=html.escape(item["summary"]),
                     detail=html.escape(item["detail"]),
-                    links=theory_link_html,
+                    links=links_html,
                 )
             )
         sections_html.append(
@@ -2996,13 +3007,14 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
         main_html = _render_glossary_main_html(page.main_html)
     else:
         main_html = page.main_html
+    meta_description = f'  <meta name="description" content="{html.escape(page.meta_description, quote=True)}">\n' if page.meta_description else ""
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{page.title}</title>
-  <link rel="stylesheet" href="/styles.css?v={asset_version}">
+{meta_description}  <link rel="stylesheet" href="/styles.css?v={asset_version}">
 </head>
 <body>
   <div class="page-shell">

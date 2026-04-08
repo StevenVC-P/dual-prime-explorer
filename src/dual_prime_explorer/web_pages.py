@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import html
 
+from .web_content import EXPLANATORY_PAGES
 from .web_limits import MAX_WEB_END, MAX_WEB_RANGE_SIZE
 
 
@@ -16,7 +18,88 @@ class PageDefinition:
     hero_html: str
     main_html: str
     script_name: str
+    meta_description: str | None = None
     include_in_nav: bool = True
+
+
+def _render_explanatory_links(items: list[dict[str, str]]) -> str:
+    return "".join(
+        """<article class="metric-box theory-path-card">
+      <h3>{title}</h3>
+      <p>{body}</p>
+      <p><a class="inline-link" href="{href}">{label}</a></p>
+    </article>""".format(
+            title=html.escape(item["title"]),
+            body=html.escape(item["body"]),
+            href=html.escape(item["href"], quote=True),
+            label=html.escape(item["label"]),
+        )
+        for item in items
+    )
+
+
+def _build_explanatory_page(content: dict[str, object]) -> PageDefinition:
+    sections = "".join(
+        """<article class="theory-section">
+      <h3>{title}</h3>
+      <p>{body}</p>
+    </article>""".format(
+            title=html.escape(section["title"]),
+            body=html.escape(section["body"]),
+        )
+        for section in content["sections"]
+    )
+    related_links = _render_explanatory_links(content["related_links"])
+    hero_html = """<section class="hero-block theory-hero">
+  <div class="hero-copy theory-copy">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>{hero_title}</h1>
+    <p class="hero-text">{hero_text}</p>
+  </div>
+</section>""".format(
+        eyebrow=html.escape(content["eyebrow"]),
+        hero_title=html.escape(content["hero_title"]),
+        hero_text=html.escape(content["hero_text"]),
+    )
+    main_html = """<section class="panel theory-panel">
+  <div class="panel-heading theory-heading">
+    <div>
+      <h2>{intro_title}</h2>
+      <p>{intro_text}</p>
+    </div>
+  </div>
+  <div class="section-stack">
+    {sections}
+  </div>
+</section>
+
+<section class="panel theory-panel">
+  <div class="panel-heading theory-heading">
+    <div>
+      <h2>Where to go next</h2>
+      <p>Use these links to keep reading or jump back into the live number views.</p>
+    </div>
+  </div>
+  <div class="metric-grid theory-path-grid">
+    {related_links}
+  </div>
+</section>""".format(
+        intro_title=html.escape(content["intro_title"]),
+        intro_text=html.escape(content["intro_text"]),
+        sections=sections,
+        related_links=related_links,
+    )
+    return PageDefinition(
+        route=content["route"],
+        title=content["title"],
+        nav_label=content["nav_label"],
+        active_route="theory",
+        hero_html=hero_html,
+        main_html=main_html,
+        script_name="theory.js",
+        meta_description=content["meta_description"],
+        include_in_nav=False,
+    )
 
 
 LAB_PAGE = PageDefinition(
@@ -24,6 +107,7 @@ LAB_PAGE = PageDefinition(
     title="Twin Prime Exploration Lab | Lab",
     nav_label="Lab",
     active_route="lab",
+    meta_description="Explore primes, twin primes, and twin centers in a live visual field with lightweight range controls and connected analysis links.",
     hero_html="""<section class="hero-block">
   <div class="hero-copy">
     <p class="eyebrow">Lab</p>
@@ -60,7 +144,7 @@ LAB_PAGE = PageDefinition(
           <span>Modulus</span>
           <input id="mod-base-input" type="number" min="2" max="60" placeholder="6">
         </label>
-        <p class="section-copy">Choose a modulus from 2 to 60, then select one or more residues. The modulus sets the remainder system; the field only changes after you choose residues.</p>
+        <p class="section-copy">Choose a modulus from 2 to 60, then select one or more residues. The modulus sets the remainder system; the field only changes after you choose residues. If you want the shortest plain-language explanation, read <a class="inline-link" href="/why-mod-6-shows-up-so-often">Why Mod 6 Shows Up So Often</a>.</p>
         <div>
           <span class="filter-label">Residues</span>
           <div id="mod-residue-options" class="mod-residue-options"></div>
@@ -76,7 +160,7 @@ LAB_PAGE = PageDefinition(
       <div class="lab-card-header">
         <div>
           <h3 id="visualization-title">Prime Field</h3>
-          <p class="section-copy"><a class="inline-link" href="/glossary#glossary-term-twin-center">Twin centers</a> mark where twin primes occur.</p>
+          <p class="section-copy"><a class="inline-link" href="/glossary#glossary-term-twin-center">Twin centers</a> mark where twin primes occur. Read <a class="inline-link" href="/why-twin-centers-matter">Why Twin Centers Matter</a> for the short explanation.</p>
         </div>
       </div>
       <div class="lab-visual-tools">
@@ -130,7 +214,7 @@ LAB_PAGE = PageDefinition(
     </article>
     <article class="metric-box">
       <h3>Need structured interpretation?</h3>
-      <p>Use Analysis for modular patterns, gaps, factor signals, density, and heuristic comparisons.</p>
+      <p>Use Analysis for modular patterns, gaps, factor signals, density, and rough benchmarks.</p>
       <p><a class="inline-link" href="/analysis">Open Analysis</a></p>
     </article>
   </div>
@@ -143,6 +227,7 @@ EXPLORER_PAGE = PageDefinition(
     title="Twin Prime Exploration Lab | Explorer",
     nav_label="Explorer",
     active_route="explorer",
+    meta_description="Inspect primes, twin-prime structure, divisors, and prime neighborhoods one number at a time across a selected range.",
     hero_html="""<section class="hero-block hero-grid">
   <div class="hero-copy">
     <p class="eyebrow">Explorer</p>
@@ -278,7 +363,7 @@ EXPLORER_PAGE = PageDefinition(
 <section class="panel">
   <div class="panel-heading">
     <div>
-      <h2>Analysis Page</h2>
+      <h2>Need More Interpretation?</h2>
       <p>Detailed modular, gap, factor, density, and expected-count views now live on their own page.</p>
     </div>
   </div>
@@ -298,6 +383,7 @@ ANALYSIS_PAGE = PageDefinition(
     title="Twin Prime Exploration Lab | Analysis",
     nav_label="Analysis",
     active_route="analysis",
+    meta_description="Read twin-prime ranges through modular structure, gaps, factors, density, and rough expected-versus-observed benchmarks.",
     hero_html="""<section class="hero-block hero-grid">
   <div class="hero-copy">
     <p class="eyebrow">Analysis</p>
@@ -353,7 +439,7 @@ ANALYSIS_PAGE = PageDefinition(
     </article>
     <article class="metric-box">
       <h3>If terms feel unfamiliar</h3>
-      <p>Start with Modular or Gaps for the clearest pattern read. If terms like Mod 6, twin center, or heuristic feel unfamiliar, use the <a class="inline-link" href="/glossary">Glossary</a> for quick definitions or the guide for a fuller read.</p>
+      <p>Start with Modular or Gaps for the clearest pattern read. If terms like Mod 6, twin center, or heuristic feel unfamiliar, use the <a class="inline-link" href="/glossary">Glossary</a> for quick definitions, read <a class="inline-link" href="/why-mod-6-shows-up-so-often">Why Mod 6 Shows Up So Often</a> for a short modular refresher, or use the guide for a slightly fuller read.</p>
       <p><a class="inline-link" href="/analysis-guide" target="_blank" rel="noopener noreferrer">Open the full analysis guide in a new tab</a></p>
     </article>
   </div>
@@ -390,6 +476,7 @@ ANALYSIS_GUIDE_PAGE = PageDefinition(
     title="Twin Prime Exploration Lab | Analysis Guide",
     nav_label="Analysis Guide",
     active_route="analysis",
+    meta_description="A practical guide to reading the Analysis page, including modular patterns, prime gaps, factor views, density, and expected counts.",
     hero_html="""<section class="hero-block theory-hero">
   <div class="hero-copy theory-copy">
     <p class="eyebrow">Analysis Guide</p>
@@ -431,7 +518,7 @@ ANALYSIS_GUIDE_PAGE = PageDefinition(
     </article>
     <article class="theory-section">
       <h3>Expected view</h3>
-      <p>Open Expected when your question is, how does the observed count compare with a rough benchmark? The Expected tab compares observed twin-prime counts to N divided by log squared N. Treat it as a supporting heuristic, not as proof or as a full explanation of the range.</p>
+      <p>Open Expected when your question is, how does the observed count compare with a rough benchmark? The Expected tab compares observed twin-prime counts to N divided by log squared N. Treat it as a supporting benchmark, not as proof or as a full explanation of the range.</p>
     </article>
     <article class="theory-section">
       <h3>Recommended reading order</h3>
@@ -439,7 +526,7 @@ ANALYSIS_GUIDE_PAGE = PageDefinition(
     </article>
     <article class="theory-section">
       <h3>How to read the tabs together</h3>
-      <p>A useful pattern is to move from structural questions to comparative questions. Start with Modular and Gaps to see visible patterns, then move to Factors, Density, and Expected to test whether those patterns also show up in aggregate measurements and heuristic comparisons.</p>
+      <p>A useful pattern is to move from structural questions to comparative questions. Start with Modular and Gaps to see visible patterns, then move to Factors, Density, and Expected to test whether those patterns also show up in the broader summaries.</p>
       <p><a class="inline-link" href="/analysis">Return to the Analysis page</a></p>
     </article>
   </div>
@@ -454,11 +541,12 @@ GLOSSARY_PAGE = PageDefinition(
     title="Twin Prime Exploration Lab | Glossary",
     nav_label="Glossary",
     active_route="glossary",
+    meta_description="Quick definitions for twin-prime, modular, gap, divisor, and theory terms used across the Twin Prime Exploration Lab.",
     hero_html="""<section class="hero-block theory-hero">
   <div class="hero-copy theory-copy">
     <p class="eyebrow">Glossary</p>
     <h1>A shared vocabulary for exploring twin primes.</h1>
-    <p class="hero-text">Quick, reliable definitions for the mathematical and product terms that appear across the Lab, Explorer, Analysis, and Theory pages.</p>
+    <p class="hero-text">Quick, reliable definitions for the mathematical and site terms that appear across the Lab, Explorer, Analysis, and Theory pages.</p>
   </div>
 </section>""",
     main_html="""<section class="panel glossary-panel">
@@ -484,6 +572,7 @@ THEORY_PAGE = PageDefinition(
     title="Twin Prime Exploration Lab | Theory",
     nav_label="Theory",
     active_route="theory",
+    meta_description="Reference notes on the twin prime conjecture, modern progress, research approaches, and why the problem remains difficult.",
     hero_html="""<section class="hero-block theory-hero">
   <div class="hero-copy theory-copy">
     <p class="eyebrow">Theory</p>
@@ -495,7 +584,7 @@ THEORY_PAGE = PageDefinition(
   <div class="panel-heading theory-heading">
     <div>
       <h2>Theory</h2>
-      <p>A concise guide to the twin prime problem, organized as product-style reference notes rather than a long article.</p>
+      <p>A concise guide to the twin prime problem, organized as readable reference notes rather than a long article.</p>
     </div>
   </div>
   <div class="glossary-jump-shell">
@@ -510,7 +599,7 @@ THEORY_PAGE = PageDefinition(
     </div>
   </div>
   <section class="theory-block">
-    <h3>Choose your next product surface</h3>
+    <h3>Explore the site next</h3>
     <div class="metric-grid theory-path-grid">
       <article class="metric-box theory-path-card">
         <h4>Lab</h4>
@@ -524,7 +613,7 @@ THEORY_PAGE = PageDefinition(
       </article>
       <article class="metric-box theory-path-card">
         <h4>Analysis</h4>
-        <p>The same range interpreted through modular structure, gaps, density, and heuristics.</p>
+        <p>The same range interpreted through modular structure, gaps, density, and rough benchmarks.</p>
         <p><a class="inline-link" href="/analysis#analysis-views-title">Open Analysis</a></p>
       </article>
     </div>
@@ -546,6 +635,7 @@ ABOUT_PAGE = PageDefinition(
     title="Twin Prime Exploration Lab | About",
     nav_label="About",
     active_route="about",
+    meta_description="About Twin Prime Exploration Lab, a small independent site for exploring primes, twin primes, twin centers, and related patterns.",
     hero_html="""<section class="hero-block theory-hero">
   <div class="hero-copy theory-copy">
     <p class="eyebrow">About</p>
@@ -600,13 +690,13 @@ ABOUT_PAGE = PageDefinition(
     </article>
     <article class="metric-box theory-path-card">
       <h3>Analysis</h3>
-      <p>Read the range through modular patterns, gaps, factors, density, and rough heuristics.</p>
+      <p>Read the range through modular patterns, gaps, factors, density, and rough benchmarks.</p>
       <p><a class="inline-link" href="/analysis">Open Analysis</a></p>
     </article>
     <article class="metric-box theory-path-card">
       <h3>Theory and Glossary</h3>
       <p>Use the reference pages when you want concept support or a quick definition.</p>
-      <p><a class="inline-link" href="/theory">Open Theory</a> ? <a class="inline-link" href="/glossary">Open Glossary</a></p>
+      <p><a class="inline-link" href="/theory">Open Theory</a> or <a class="inline-link" href="/glossary">Open Glossary</a></p>
     </article>
   </div>
 </section>""",
@@ -619,6 +709,7 @@ CONTACT_PAGE = PageDefinition(
     title="Twin Prime Exploration Lab | Contact",
     nav_label="Contact",
     active_route="contact",
+    meta_description="Contact information, scope notes, and feedback expectations for the Twin Prime Exploration Lab site.",
     hero_html="""<section class="hero-block theory-hero">
   <div class="hero-copy theory-copy">
     <p class="eyebrow">Contact</p>
@@ -661,6 +752,7 @@ PRIVACY_PAGE = PageDefinition(
     title="Twin Prime Exploration Lab | Privacy Policy",
     nav_label="Privacy Policy",
     active_route="privacy",
+    meta_description="Privacy policy for Twin Prime Exploration Lab, including the site's current handling of technical data, cookies, and future advertising changes.",
     hero_html="""<section class="hero-block theory-hero">
   <div class="hero-copy theory-copy">
     <p class="eyebrow">Privacy Policy</p>
@@ -719,6 +811,7 @@ EXPERIMENTS_PAGE = PageDefinition(
     title="Twin Prime Exploration Lab | Experiments",
     nav_label="Experiments",
     active_route="experiments",
+    meta_description="A structured hypothesis workbench for testing bounded twin-prime rules and reading verdicts, evidence, and next steps.",
     hero_html="""<section class="hero-block theory-hero">
   <div class="hero-copy theory-copy">
     <p class="eyebrow">Experiments</p>
@@ -778,7 +871,7 @@ EXPERIMENTS_PAGE = PageDefinition(
           </div>
         </div>
         <div id="experiment-template-summary" class="lab-experiment-summary active">Testing whether twin-prime centers above 4 land in residue 0 mod 6.</div>
-        <p class="section-copy">This first workbench keeps the interaction structured: choose an experiment type, adjust only the parameters that matter, and let the page return a verdict plus evidence.</p>
+        <p class="section-copy">Keep the interaction structured: choose an experiment type, adjust only the parameters that matter, and let the page return a verdict plus evidence.</p>
       </div>
       <p id="status-text" class="section-copy">Ready to test a range.</p>
       <p class="section-copy">Web ranges are capped at {MAX_WEB_RANGE_SIZE:,} numbers and an end value of {MAX_WEB_END:,}.</p>
@@ -790,7 +883,7 @@ EXPERIMENTS_PAGE = PageDefinition(
       </div>
       <div id="summary-cards" class="summary-cards"></div>
       <div id="experiment-results" class="analysis-layout">
-        <div class="empty-note">Run an experiment to populate this workbench.</div>
+        <div class="empty-note">Run an experiment to populate these results.</div>
       </div>
     </section>
   </div>
@@ -799,6 +892,8 @@ EXPERIMENTS_PAGE = PageDefinition(
     include_in_nav=False,
 )
 
-PAGE_DEFINITIONS = [LAB_PAGE, EXPLORER_PAGE, ANALYSIS_PAGE, ANALYSIS_GUIDE_PAGE, GLOSSARY_PAGE, THEORY_PAGE, ABOUT_PAGE, CONTACT_PAGE, PRIVACY_PAGE, EXPERIMENTS_PAGE]
+EXPLANATORY_PAGE_DEFINITIONS = [_build_explanatory_page(content) for content in EXPLANATORY_PAGES]
+
+PAGE_DEFINITIONS = [LAB_PAGE, EXPLORER_PAGE, ANALYSIS_PAGE, ANALYSIS_GUIDE_PAGE, GLOSSARY_PAGE, THEORY_PAGE, *EXPLANATORY_PAGE_DEFINITIONS, ABOUT_PAGE, CONTACT_PAGE, PRIVACY_PAGE, EXPERIMENTS_PAGE]
 PAGE_BY_ROUTE = {page.route: page for page in PAGE_DEFINITIONS}
 PAGE_BY_ACTIVE_ROUTE = {page.active_route: page for page in PAGE_DEFINITIONS}
