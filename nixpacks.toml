@@ -1,0 +1,5 @@
+[variables]
+NIXPACKS_PYTHON_PACKAGE_MANAGER = "skip"
+
+[start]
+cmd = "PYTHONPATH=src python -m dual_prime_explorer --serve --host 0.0.0.0 --port $PORT"
