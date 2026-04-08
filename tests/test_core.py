@@ -216,6 +216,14 @@ def test_route_registry_is_ready_for_more_pages() -> None:
     assert set(PAGE_BY_ROUTE) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/about", "/contact", "/privacy", "/experiments", *explanatory_routes}
     rendered_pages = build_page_registry()
     assert "/analysis" in rendered_pages
+    assert rendered_pages["/lab"].count('aria-label="Advertisement"') == 1
+    assert rendered_pages["/explorer"].count('aria-label="Advertisement"') == 1
+    assert rendered_pages["/analysis"].count('aria-label="Advertisement"') == 1
+    assert rendered_pages["/theory"].count('aria-label="Advertisement"') == 2
+    assert rendered_pages["/what-are-twin-primes"].count('aria-label="Advertisement"') == 2
+    assert 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6401940195640064' in rendered_pages["/lab"]
+    assert rendered_pages["/lab"].count('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js') == 1
+    assert 'Ad space reserved' in rendered_pages["/lab"]
     assert "href=\"/analysis\"" in rendered_pages["/explorer"]
     assert "Analysis Views" in rendered_pages["/analysis"]
     assert "Hypothesis Workbench" in rendered_pages["/experiments"]
@@ -228,6 +236,8 @@ def test_route_registry_is_ready_for_more_pages() -> None:
     assert "Why the twin prime problem is hard" in rendered_pages["/why-the-twin-prime-problem-is-hard"]
     assert "How mathematicians study twin primes" in rendered_pages["/how-mathematicians-study-twin-primes"]
     assert '<meta name="description" content="A clear introduction to twin primes, why gap 2 matters, and how TwinPrimeExplorer.com helps you explore the pattern.">' in rendered_pages["/what-are-twin-primes"]
+    assert '<link rel="canonical" href="https://www.twinprimeexplorer.com/lab">' in rendered_pages["/lab"]
+    assert '<meta name="robots" content="noindex,follow">' in rendered_pages["/experiments"]
     assert "Read: What are twin primes?" in rendered_pages["/theory"]
     assert "Read more: Why Mod 6 Shows Up So Often" in rendered_pages["/glossary"]
     assert "Read more: Has The Twin Prime Conjecture Been Solved?" in rendered_pages["/glossary"]

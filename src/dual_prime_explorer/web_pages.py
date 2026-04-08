@@ -20,6 +20,7 @@ class PageDefinition:
     script_name: str
     meta_description: str | None = None
     include_in_nav: bool = True
+    robots_directive: str | None = None
 
 
 def _render_explanatory_links(items: list[dict[str, str]]) -> str:
@@ -714,24 +715,25 @@ CONTACT_PAGE = PageDefinition(
   <div class="hero-copy theory-copy">
     <p class="eyebrow">Contact</p>
     <h1>Questions, corrections, and general feedback.</h1>
-    <p class="hero-text">This is a small independent site. If a public contact method is offered with the live release, this page is where it should be listed clearly.</p>
+    <p class="hero-text">TwinPrimeExplorer.com is independently maintained. The best public contact route is email, especially for corrections, broken links, or site issues.</p>
   </div>
 </section>""",
     main_html="""<section class="panel theory-panel">
   <div class="panel-heading theory-heading">
     <div>
       <h2>Contact</h2>
-      <p>This page is here to make the site feel transparent and reachable, even though it is a small independently maintained project.</p>
+      <p>Use email for questions about the site, corrections, or reports about something that is not working as expected.</p>
     </div>
   </div>
   <div class="metric-grid">
     <article class="metric-box">
-      <h3>General questions</h3>
-      <p>If you want to ask about the site, suggest a correction, or point out something unclear, use the contact method published with the live version of the site.</p>
+      <h3>Email</h3>
+      <p><a class="inline-link" href="mailto:contact@twinprimeexplorer.com">contact@twinprimeexplorer.com</a></p>
+      <p>This is the best public contact route for TwinPrimeExplorer.com.</p>
     </article>
     <article class="metric-box">
-      <h3>Site issues</h3>
-      <p>If you notice a broken page, incorrect link, or behavior that does not match what the page says it should do, that is the most useful kind of feedback to send first.</p>
+      <h3>Best reasons to reach out</h3>
+      <p>Broken pages, incorrect links, factual corrections, and places where the site feels unclear are the most useful messages to send first.</p>
     </article>
     <article class="metric-box">
       <h3>Scope</h3>
@@ -739,7 +741,7 @@ CONTACT_PAGE = PageDefinition(
     </article>
     <article class="metric-box">
       <h3>Response expectations</h3>
-      <p>Because the site is independently maintained, replies may be limited or slow. The contact route listed with the live release should be treated as the current best path.</p>
+      <p>Because the site is independently maintained, replies may be limited or slow, but email is the active public contact path.</p>
     </article>
   </div>
 </section>""",
@@ -752,19 +754,19 @@ PRIVACY_PAGE = PageDefinition(
     title="TwinPrimeExplorer.com | Privacy Policy",
     nav_label="Privacy Policy",
     active_route="privacy",
-    meta_description="Privacy policy for TwinPrimeExplorer.com, including the site's current handling of technical data, cookies, and future advertising changes.",
+    meta_description="Privacy policy for TwinPrimeExplorer.com, including the site's current handling of technical data, telemetry, cookies, and future advertising changes.",
     hero_html="""<section class="hero-block theory-hero">
   <div class="hero-copy theory-copy">
     <p class="eyebrow">Privacy Policy</p>
     <h1>How this site currently handles information.</h1>
-    <p class="hero-text">This policy is written to match the current state of the site and should be updated again before advertising, analytics, or other third-party services go live.</p>
+    <p class="hero-text">This policy is written to match the site's current live behavior, including basic hosting telemetry, and should be updated again before advertising or additional tracking tools go live.</p>
   </div>
 </section>""",
     main_html="""<section class="panel theory-panel">
   <div class="panel-heading theory-heading">
     <div>
       <h2>Privacy Policy</h2>
-      <p>Last updated: April 7, 2026</p>
+      <p>Last updated: April 8, 2026</p>
     </div>
   </div>
   <div class="section-stack">
@@ -774,19 +776,23 @@ PRIVACY_PAGE = PageDefinition(
     </article>
     <article class="theory-section">
       <h3>Information you actively provide</h3>
-      <p>The site does not currently provide user accounts, comments, uploads, or on-site contact forms. If a direct contact method is added later, this policy should be updated to explain what information may be shared through that route.</p>
+      <p>The site does not currently provide user accounts, comments, uploads, or on-site contact forms. If you email the site directly, the information you choose to send is used only to read and respond to that message.</p>
     </article>
     <article class="theory-section">
       <h3>Technical data and server logs</h3>
-      <p>Like most websites, hosting or delivery infrastructure may record basic technical information such as IP address, browser type, referring pages, timestamps, and requested URLs for security, diagnostics, and normal site operations.</p>
+      <p>Like most websites, hosting and delivery infrastructure may record basic technical information such as IP address, browser type, referring pages, timestamps, and requested URLs for security, diagnostics, performance, and normal site operations.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Telemetry and basic analytics</h3>
+      <p>The live site currently uses Cloudflare services, including a Cloudflare Insights beacon, to measure basic traffic and site performance. This is used for lightweight operational insight rather than a full user-account or on-site profile system.</p>
     </article>
     <article class="theory-section">
       <h3>Cookies and tracking</h3>
-      <p>The site does not currently present itself as using advertising cookies, user accounts, or a broader tracking stack. If analytics, advertising, consent tools, or other tracking technologies are added later, this policy should be updated before they are enabled.</p>
+      <p>This site does not currently present itself as using advertising cookies or account-based personalization. However, hosting, security, or telemetry services may process limited technical data as part of normal delivery and measurement.</p>
     </article>
     <article class="theory-section">
       <h3>Advertising</h3>
-      <p>Google Ads or other advertising services are not described here as active unless they are actually deployed. If advertising is enabled in the future, this policy should be updated to describe those services, any related cookies or personalization behavior, and any consent choices offered to users.</p>
+      <p>Google Ads or other advertising services are not described here as active unless they are actually deployed. If advertising is enabled in the future, this policy should be updated before those services go live to describe any related cookies, personalization behavior, and consent choices.</p>
     </article>
     <article class="theory-section">
       <h3>Third-party links</h3>
@@ -794,11 +800,11 @@ PRIVACY_PAGE = PageDefinition(
     </article>
     <article class="theory-section">
       <h3>Policy updates</h3>
-      <p>This page should be reviewed and updated whenever the site's data practices materially change, especially before analytics, ad technology, contact forms, or account features are introduced.</p>
+      <p>This page should be reviewed and updated whenever the site's data practices materially change, especially before analytics changes, ad technology, contact forms, or account features are introduced.</p>
     </article>
     <article class="theory-section">
       <h3>Questions about this policy</h3>
-      <p>Use the <a class="inline-link" href="/contact">Contact page</a> for the currently supported public contact routes.</p>
+      <p>Use the <a class="inline-link" href="/contact">Contact page</a> for the current public contact route.</p>
     </article>
   </div>
 </section>""",
@@ -811,26 +817,26 @@ EXPERIMENTS_PAGE = PageDefinition(
     title="TwinPrimeExplorer.com | Experiments",
     nav_label="Experiments",
     active_route="experiments",
-    meta_description="A structured hypothesis workbench for testing bounded twin-prime rules and reading verdicts, evidence, and next steps.",
+    meta_description="An archived twin-prime experiments workbench kept available as a limited reference surface.",
     hero_html="""<section class="hero-block theory-hero">
   <div class="hero-copy theory-copy">
     <p class="eyebrow">Experiments</p>
-    <h1>Test one structured rule against a live range.</h1>
-    <p class="hero-text">Choose an experiment type, adjust a few meaningful parameters, and see whether the current twin-prime structure supports the rule you want to test.</p>
+    <h1>Archived structured experiments.</h1>
+    <p class="hero-text">This page remains available as a limited workbench reference, but the main public TwinPrimeExplorer.com experience is centered on Lab, Explorer, Analysis, Theory, and Glossary.</p>
   </div>
 </section>""",
     main_html=f'''<section class="panel experiments-panel">
   <div class="panel-heading">
     <div>
       <h2>Hypothesis Workbench</h2>
-      <p>Pick a range, choose a structured experiment type, and read the evidence before deciding what to inspect next.</p>
+      <p>This archived workbench is still available for limited testing, but it is no longer part of the site's main guided flow.</p>
     </div>
   </div>
   <div class="experiments-layout">
     <form id="analysis-form" class="control-panel experiments-controls">
       <div class="lab-card-copy">
         <h3>Experiment Setup</h3>
-        <p>Use a bounded rule template so the result stays testable, readable, and grounded in twin-prime structure.</p>
+        <p>Use a bounded rule template if you want to inspect this archived surface, but start with Lab, Explorer, or Analysis for the main product flow.</p>
       </div>
       <label>
         <span>Range Start</span>
@@ -890,6 +896,7 @@ EXPERIMENTS_PAGE = PageDefinition(
 </section>''',
     script_name="experiments.js",
     include_in_nav=False,
+    robots_directive="noindex,follow",
 )
 
 EXPLANATORY_PAGE_DEFINITIONS = [_build_explanatory_page(content) for content in EXPLANATORY_PAGES]
