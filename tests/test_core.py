@@ -231,24 +231,35 @@ def test_route_registry_is_ready_for_more_pages() -> None:
     assert "Analysis Views" in rendered_pages["/analysis"]
     assert "Hypothesis Workbench" in rendered_pages["/experiments"]
     assert "What are twin primes?" in rendered_pages["/what-are-twin-primes"]
+    assert "What is known and what is still conjectured" in rendered_pages["/what-are-twin-primes"]
+    assert "Prime numbers explained" in rendered_pages["/prime-numbers"]
+    assert "Twin prime conjecture explained" in rendered_pages["/twin-prime-conjecture"]
+    assert "How to find twin primes" in rendered_pages["/how-to-find-twin-primes"]
+    assert "What are prime gaps?" in rendered_pages["/prime-gaps"]
     assert "What did Yitang Zhang prove?" in rendered_pages["/what-did-yitang-zhang-prove"]
+    assert "The theorem in notation and in English" in rendered_pages["/what-did-yitang-zhang-prove"]
+    assert "What happened after Zhang" in rendered_pages["/what-did-yitang-zhang-prove"]
     assert "Why Mod 6 shows up so often" in rendered_pages["/why-mod-6-shows-up-so-often"]
     assert "Why twin centers matter" in rendered_pages["/why-twin-centers-matter"]
     assert "Has the twin prime conjecture been solved?" in rendered_pages["/has-the-twin-prime-conjecture-been-solved"]
     assert "What bounded gaps between primes actually proved" in rendered_pages["/what-bounded-gaps-between-primes-actually-proved"]
     assert "Why the twin prime problem is hard" in rendered_pages["/why-the-twin-prime-problem-is-hard"]
     assert "How mathematicians study twin primes" in rendered_pages["/how-mathematicians-study-twin-primes"]
-    assert '<meta name="description" content="A clear introduction to twin primes, why gap 2 matters, and how TwinPrimeExplorer.com helps you explore the pattern.">' in rendered_pages["/what-are-twin-primes"]
+    assert '<meta name="description" content="A fuller introduction to twin primes, including examples, structure, what is known versus conjectured, and how to explore the pattern on TwinPrimeExplorer.com.">' in rendered_pages["/what-are-twin-primes"]
     assert '<link rel="canonical" href="https://www.twinprimeexplorer.com/lab">' in rendered_pages["/lab"]
     assert '<meta name="robots" content="noindex,follow">' in rendered_pages["/experiments"]
     assert "Read: What are twin primes?" in rendered_pages["/theory"]
     assert "Take the theory back into the tools" in rendered_pages["/theory"]
     assert "This guide explains how to read the site's structured analysis outputs" in rendered_pages["/analysis-guide"]
+    assert "Keep these terms nearby" in rendered_pages["/analysis-guide"]
+    assert "Three quick reading recipes" in rendered_pages["/analysis-guide"]
     assert "Take this back into the tools" in rendered_pages["/analysis-guide"]
     assert "This glossary collects the core terms used throughout TwinPrimeExplorer.com" in rendered_pages["/glossary"]
     assert "Where to use these terms next" in rendered_pages["/glossary"]
     assert "Read more: Why Mod 6 Shows Up So Often" in rendered_pages["/glossary"]
-    assert "Read more: Has The Twin Prime Conjecture Been Solved?" in rendered_pages["/glossary"]
+    assert "Read more: Twin Prime Conjecture Explained" in rendered_pages["/glossary"]
+    assert "Read more: Prime Numbers Explained" in rendered_pages["/glossary"]
+    assert "Read more: What Are Prime Gaps?" in rendered_pages["/glossary"]
     assert "Read more: How Mathematicians Study Twin Primes" in rendered_pages["/glossary"]
     assert "About This Site" in rendered_pages["/about"]
     assert "<h2>Contact</h2>" in rendered_pages["/contact"]
@@ -258,6 +269,12 @@ def test_route_registry_is_ready_for_more_pages() -> None:
 def test_theory_tab_configuration_is_present() -> None:
     tab_ids = [tab["id"] for tab in THEORY_TABS]
     assert tab_ids == ["history", "approaches", "progress", "why-its-hard"]
+    approaches_tab = next(tab for tab in THEORY_TABS if tab["id"] == "approaches")
+    progress_tab = next(tab for tab in THEORY_TABS if tab["id"] == "progress")
+    why_hard_tab = next(tab for tab in THEORY_TABS if tab["id"] == "why-its-hard")
+    assert any(section["title"] == "What each approach is really trying to control" for section in approaches_tab["sections"])
+    assert any(section["title"] == "What the theorem literally says" for section in progress_tab["sections"])
+    assert any(section["title"] == "The parity barrier" for section in why_hard_tab["sections"])
     history_tab = THEORY_TABS[0]
     assert history_tab["updated"] == "Last reviewed: April 2026"
     assert any("twin prime conjecture" in section["body"].lower() for section in history_tab["sections"])
