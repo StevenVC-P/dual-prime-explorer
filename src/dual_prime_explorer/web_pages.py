@@ -615,7 +615,7 @@ GLOSSARY_PAGE = PageDefinition(
   <div class="section-stack">
     <article class="theory-section">
       <h3>Where to use these terms next</h3>
-      <p>Open the <a class="inline-link" href="/lab">Lab</a> if you want to see terms like twin center and Mod 6 in a live range, move to <a class="inline-link" href="/analysis">Analysis</a> for structured interpretation, or read <a class="inline-link" href="/what-are-twin-primes">What Are Twin Primes?</a> if you want the shortest educational entry page.</p>
+      <p>Open <a class="inline-link" href="/start-here">Start Here</a> if you want a guided reading path first, move to the <a class="inline-link" href="/lab">Lab</a> if you want to see terms like twin center and Mod 6 in a live range, continue to <a class="inline-link" href="/analysis">Analysis</a> for structured interpretation, or read <a class="inline-link" href="/what-are-twin-primes">What Are Twin Primes?</a> if you want the quickest educational entry page.</p>
     </article>
   </div>
 </section>""",
@@ -653,6 +653,37 @@ THEORY_PAGE = PageDefinition(
       <a class="insight-pill glossary-inline-link" href="/glossary#glossary-term-hardy-littlewood-conjecture" title="Open glossary entry: Hardy-Littlewood Conjecture">Hardy-Littlewood Conjecture</a>
     </div>
   </div>
+  <section class="theory-block">
+    <h3>Start reading here</h3>
+    <div class="metric-grid theory-path-grid">
+      <article class="metric-box theory-path-card">
+        <h4>Reading Guide</h4>
+        <p>Use one page to map a clear educational route through the site before you branch into tools or deeper theory.</p>
+        <p><a class="inline-link" href="/start-here">Open Start Here</a></p>
+      </article>
+      <article class="metric-box theory-path-card">
+        <h4>Prime Numbers</h4>
+        <p>Begin with the basic prime-versus-composite split if you want the cleanest foundation for everything else.</p>
+        <p><a class="inline-link" href="/prime-numbers">Read Prime Numbers Explained</a></p>
+      </article>
+      <article class="metric-box theory-path-card">
+        <h4>Prime Gaps</h4>
+        <p>Use the gap page when you want spacing language before bounded gaps or the conjecture.</p>
+        <p><a class="inline-link" href="/prime-gaps">Read What Are Prime Gaps?</a></p>
+      </article>
+      <article class="metric-box theory-path-card">
+        <h4>Twin Prime Conjecture</h4>
+        <p>Use the conjecture page for the shortest clear statement of the big open question behind the site.</p>
+        <p><a class="inline-link" href="/twin-prime-conjecture">Read Twin Prime Conjecture Explained</a></p>
+      </article>
+      <article class="metric-box theory-path-card">
+        <h4>Finding Twin Primes</h4>
+        <p>Use the finding guide when you want a practical bridge from definitions and residues back to concrete examples.</p>
+        <p><a class="inline-link" href="/how-to-find-twin-primes">Read How To Find Twin Primes</a></p>
+      </article>
+    </div>
+  </section>
+
   <section class="theory-block">
     <h3>Explore the site next</h3>
     <div class="metric-grid theory-path-grid">
@@ -758,6 +789,11 @@ ABOUT_PAGE = PageDefinition(
       <h3>Theory and Glossary</h3>
       <p>Use the reference pages when you want concept support or a quick definition.</p>
       <p><a class="inline-link" href="/theory">Open Theory</a> or <a class="inline-link" href="/glossary">Open Glossary</a></p>
+    </article>
+    <article class="metric-box theory-path-card">
+      <h3>Start Reading</h3>
+      <p>Use the educational reading guide if you want a clear order for learning the site's main ideas.</p>
+      <p><a class="inline-link" href="/start-here">Open Start Here</a></p>
     </article>
   </div>
 </section>""",
