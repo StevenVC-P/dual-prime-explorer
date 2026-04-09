@@ -3067,7 +3067,8 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
     canonical_url = f"https://www.twinprimeexplorer.com{page.route}"
     canonical_html = f'  <link rel="canonical" href="{html.escape(canonical_url, quote=True)}">\n'
     meta_description = f'  <meta name="description" content="{html.escape(page.meta_description, quote=True)}">\n' if page.meta_description else ""
-    robots_meta = f'  <meta name="robots" content="{html.escape(page.robots_directive, quote=True)}">\n' if page.robots_directive else ""
+    robots_directive = page.robots_directive or "index,follow"
+    robots_meta = f'  <meta name="robots" content="{html.escape(robots_directive, quote=True)}">\n'
     adsense_script = ""
     adsense_init = ""
     if ADSENSE_CLIENT:
@@ -3131,5 +3132,77 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
 def build_page_registry() -> dict[str, str]:
     asset_version = build_asset_version()
     return {page.route: render_page(page, asset_version=asset_version) for page in PAGE_DEFINITIONS}
+
+
+def build_sitemap_xml() -> str:
+    public_pages = [
+        page for page in PAGE_DEFINITIONS
+        if not (page.robots_directive or "index,follow").lower().startswith("noindex")
+    ]
+    urls = "".join(
+        '  <url><loc>https://www.twinprimeexplorer.com{}</loc></url>\n'.format(html.escape(page.route))
+        for page in public_pages
+    )
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f'{urls}'
+        '</urlset>\n'
+    )
+
+
+def build_robots_txt() -> str:
+    return "User-agent: *\nAllow: /\n\nSitemap: https://www.twinprimeexplorer.com/sitemap.xml\n"
+
+
+def render_not_found_page(asset_version: str | None = None) -> str:
+    asset_version = asset_version or build_asset_version()
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Not Found | TwinPrimeExplorer.com</title>
+  <meta name="description" content="The requested page could not be found on TwinPrimeExplorer.com.">
+  <meta name="robots" content="noindex,follow">
+  <link rel="canonical" href="https://www.twinprimeexplorer.com/404">
+  <link rel="stylesheet" href="/styles.css?v={asset_version}">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand-mark" href="/lab">
+        <span class="brand-kicker">TwinPrimeExplorer.com</span>
+        <span class="brand-title">Twin-prime analysis and reference</span>
+      </a>
+      <nav class="top-nav" aria-label="Primary">
+        <a class="nav-link" href="/lab">Lab</a>
+        <a class="nav-link" href="/explorer">Explorer</a>
+        <a class="nav-link" href="/analysis">Analysis</a>
+        <a class="nav-link" href="/theory">Theory</a>
+        <a class="nav-link" href="/glossary">Glossary</a>
+      </nav>
+    </header>
+    <main class="content-stack">
+      <section class="panel theory-panel">
+        <div class="panel-heading theory-heading">
+          <div>
+            <h1>Page not found</h1>
+            <p>The page you requested could not be found. It may have moved, been removed, or never been part of the public TwinPrimeExplorer.com site.</p>
+          </div>
+        </div>
+        <div class="section-stack">
+          <article class="theory-section">
+            <h2>Where to go next</h2>
+            <p>Use the links below to return to the main exploration and reference pages.</p>
+            <p><a class="inline-link" href="/lab">Open the Lab</a> | <a class="inline-link" href="/explorer">Open Explorer</a> | <a class="inline-link" href="/analysis">Open Analysis</a> | <a class="inline-link" href="/theory">Open Theory</a> | <a class="inline-link" href="/glossary">Open the Glossary</a></p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
+"""
 
 

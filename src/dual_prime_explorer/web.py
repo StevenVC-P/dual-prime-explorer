@@ -56,7 +56,7 @@ class DualPrimeRequestHandler(BaseHTTPRequestHandler):
         runtime = load_web_runtime(self._is_dev_mode())
 
         if parsed.path == "/":
-            self._redirect("/lab")
+            self._redirect("/lab", status=HTTPStatus.PERMANENT_REDIRECT)
             return
         if parsed.path in runtime["page_by_route"]:
             self._send_response(runtime["page_registry"][parsed.path], content_type="text/html; charset=utf-8")
@@ -66,6 +66,12 @@ class DualPrimeRequestHandler(BaseHTTPRequestHandler):
             return
         if parsed.path == "/ads.txt":
             self._send_response(runtime["ads_txt"], content_type="text/plain; charset=utf-8")
+            return
+        if parsed.path == "/robots.txt":
+            self._send_response(runtime["robots_txt"], content_type="text/plain; charset=utf-8")
+            return
+        if parsed.path == "/sitemap.xml":
+            self._send_response(runtime["sitemap_xml"], content_type="application/xml; charset=utf-8")
             return
         if parsed.path == "/favicon.ico":
             self.send_response(HTTPStatus.NO_CONTENT)
@@ -87,7 +93,7 @@ class DualPrimeRequestHandler(BaseHTTPRequestHandler):
         if parsed.path == "/api/analyze":
             self._handle_analyze_request(parse_qs(parsed.query))
             return
-        self._send_json({"error": "Not found"}, status=HTTPStatus.NOT_FOUND)
+        self._send_response(runtime["not_found_html"], content_type="text/html; charset=utf-8", status=HTTPStatus.NOT_FOUND)
 
     def log_message(self, format: str, *args: object) -> None:  # noqa: A003
         return
@@ -128,10 +134,10 @@ class DualPrimeRequestHandler(BaseHTTPRequestHandler):
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError):
             return
 
-    def _send_response(self, body: str, *, content_type: str) -> None:
+    def _send_response(self, body: str, *, content_type: str, status: HTTPStatus = HTTPStatus.OK) -> None:
         encoded = body.encode("utf-8")
         try:
-            self.send_response(HTTPStatus.OK)
+            self.send_response(status)
             self.send_header("Content-Type", content_type)
             self.send_header("Content-Length", str(len(encoded)))
             self._set_cache_headers()
@@ -140,9 +146,9 @@ class DualPrimeRequestHandler(BaseHTTPRequestHandler):
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError):
             return
 
-    def _redirect(self, location: str) -> None:
+    def _redirect(self, location: str, *, status: HTTPStatus = HTTPStatus.PERMANENT_REDIRECT) -> None:
         try:
-            self.send_response(HTTPStatus.FOUND)
+            self.send_response(status)
             self.send_header("Location", location)
             self._set_cache_headers()
             self.end_headers()
