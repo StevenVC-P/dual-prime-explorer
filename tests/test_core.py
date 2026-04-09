@@ -1,10 +1,12 @@
+from http import HTTPStatus
+from io import BytesIO
 from math import isclose, log
 
 from dual_prime_explorer import web
 from dual_prime_explorer.__main__ import build_parser
 from dual_prime_explorer.core import analyze_primes_up_to, primes_up_to, twin_primes_up_to
 from dual_prime_explorer.web import build_analysis_payload, load_web_runtime
-from dual_prime_explorer.web_assets import build_page_registry
+from dual_prime_explorer.web_assets import build_page_registry, build_robots_txt, build_sitemap_xml
 from dual_prime_explorer.web_content import EXPLANATORY_PAGES, THEORY_TABS
 from dual_prime_explorer.web_limits import MAX_WEB_END, MAX_WEB_RANGE_SIZE
 from dual_prime_explorer.web_pages import PAGE_BY_ROUTE
@@ -247,6 +249,7 @@ def test_route_registry_is_ready_for_more_pages() -> None:
     assert "How mathematicians study twin primes" in rendered_pages["/how-mathematicians-study-twin-primes"]
     assert '<meta name="description" content="A fuller introduction to twin primes, including examples, structure, what is known versus conjectured, and how to explore the pattern on TwinPrimeExplorer.com.">' in rendered_pages["/what-are-twin-primes"]
     assert '<link rel="canonical" href="https://www.twinprimeexplorer.com/lab">' in rendered_pages["/lab"]
+    assert '<meta name="robots" content="index,follow">' in rendered_pages["/lab"]
     assert '<meta name="robots" content="noindex,follow">' in rendered_pages["/experiments"]
     assert "Read: What are twin primes?" in rendered_pages["/theory"]
     assert "Take the theory back into the tools" in rendered_pages["/theory"]
@@ -299,6 +302,68 @@ def test_theory_tab_configuration_is_present() -> None:
     assert "DualPrimeRequestHandler" in dir(web)
 
 
+def test_robots_and_sitemap_are_generated() -> None:
+    robots_txt = build_robots_txt()
+    sitemap_xml = build_sitemap_xml()
+
+    assert robots_txt == "User-agent: *\nAllow: /\n\nSitemap: https://www.twinprimeexplorer.com/sitemap.xml\n"
+    assert "<loc>https://www.twinprimeexplorer.com/lab</loc>" in sitemap_xml
+    assert "<loc>https://www.twinprimeexplorer.com/theory</loc>" in sitemap_xml
+    assert "<loc>https://www.twinprimeexplorer.com/what-are-twin-primes</loc>" in sitemap_xml
+    assert "/experiments" not in sitemap_xml
+
+
+class _DummyServer:
+    def __init__(self, dev_mode: bool = False) -> None:
+        self.dev_mode = dev_mode
+
+
+class _TestableHandler(web.DualPrimeRequestHandler):
+    def __init__(self, path: str) -> None:
+        self.path = path
+        self.server = _DummyServer(False)
+        self.headers = {}
+        self.wfile = BytesIO()
+        self.responses: list[int] = []
+        self.sent_headers: list[tuple[str, str]] = []
+
+    def send_response(self, code: int, message: str | None = None) -> None:
+        self.responses.append(code)
+
+    def send_header(self, keyword: str, value: str) -> None:
+        self.sent_headers.append((keyword, value))
+
+    def end_headers(self) -> None:
+        return
+
+
+def test_request_handler_uses_crawlable_status_codes() -> None:
+    root_handler = _TestableHandler('/')
+    root_handler.do_GET()
+    assert root_handler.responses[-1] == HTTPStatus.PERMANENT_REDIRECT
+    assert ('Location', '/lab') in root_handler.sent_headers
+
+    page_handler = _TestableHandler('/theory')
+    page_handler.do_GET()
+    assert page_handler.responses[-1] == HTTPStatus.OK
+    assert b'The mathematical context behind twin-prime exploration.' in page_handler.wfile.getvalue()
+
+    robots_handler = _TestableHandler('/robots.txt')
+    robots_handler.do_GET()
+    assert robots_handler.responses[-1] == HTTPStatus.OK
+    assert b'Sitemap: https://www.twinprimeexplorer.com/sitemap.xml' in robots_handler.wfile.getvalue()
+
+    sitemap_handler = _TestableHandler('/sitemap.xml')
+    sitemap_handler.do_GET()
+    assert sitemap_handler.responses[-1] == HTTPStatus.OK
+    assert b'https://www.twinprimeexplorer.com/theory' in sitemap_handler.wfile.getvalue()
+
+    not_found_handler = _TestableHandler('/missing-page')
+    not_found_handler.do_GET()
+    assert not_found_handler.responses[-1] == HTTPStatus.NOT_FOUND
+    assert b'<h1>Page not found</h1>' in not_found_handler.wfile.getvalue()
+
+
 def test_load_web_runtime_supports_dev_mode() -> None:
     runtime = load_web_runtime(dev_mode=True)
 
@@ -308,6 +373,9 @@ def test_load_web_runtime_supports_dev_mode() -> None:
     assert "visualization-stage" in runtime["page_registry"]["/lab"]
     assert "visualization-pagination" in runtime["page_registry"]["/lab"]
     assert runtime["ads_txt"].strip() == "google.com, pub-6401940195640064, DIRECT, f08c47fec0942fa0"
+    assert runtime["robots_txt"] == "User-agent: *\nAllow: /\n\nSitemap: https://www.twinprimeexplorer.com/sitemap.xml\n"
+    assert "<loc>https://www.twinprimeexplorer.com/lab</loc>" in runtime["sitemap_xml"]
+    assert "Page not found" in runtime["not_found_html"]
     assert "mod-base-input" in runtime["page_registry"]["/lab"]
     assert "mod-residue-options" in runtime["page_registry"]["/lab"]
     assert "max=\"60\"" in runtime["page_registry"]["/lab"]

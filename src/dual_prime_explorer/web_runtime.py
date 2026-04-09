@@ -20,6 +20,9 @@ class WebRuntime(TypedDict):
     theory_js: str
     experiments_js: str
     ads_txt: str
+    robots_txt: str
+    sitemap_xml: str
+    not_found_html: str
 
 
 def _load_core_module(dev_mode: bool = False) -> Any:
@@ -265,4 +268,7 @@ def load_web_runtime(dev_mode: bool = False) -> WebRuntime:
         "theory_js": web_assets.build_theory_js(),
         "experiments_js": web_assets.EXPERIMENTS_JS,
         "ads_txt": web_assets.ADS_TXT,
+        "robots_txt": web_assets.build_robots_txt(),
+        "sitemap_xml": web_assets.build_sitemap_xml(),
+        "not_found_html": web_assets.render_not_found_page(),
     }
