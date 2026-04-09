@@ -533,6 +533,10 @@ ANALYSIS_GUIDE_PAGE = PageDefinition(
       <p>The Analysis page takes one selected range and reuses the same twin-prime dataset across multiple views. That means the tabs are not separate calculations with separate inputs. They are coordinated interpretations of the same analyzed range.</p>
     </article>
     <article class="theory-section">
+      <h3>Keep these terms nearby</h3>
+      <p><strong>Residue</strong> means the remainder a number leaves after division by a chosen modulus. <strong>Prime gap</strong> means the difference between one prime and the next. <strong>Twin center</strong> means the number between two twin primes. <strong>Expected</strong> on this site means a rough benchmark, not a theorem and not a promise that the selected range must behave a certain way.</p>
+    </article>
+    <article class="theory-section">
       <h3>Which tab should you open first?</h3>
       <p>Start with the question you are asking. If you want structural rules, begin with Modular. If you want spacing behavior, begin with Gaps. If you want to compare centers against other numbers, begin with Factors. If you want local clustering, begin with Density. If you want a rough heuristic benchmark, begin with Expected.</p>
     </article>
@@ -555,10 +559,15 @@ ANALYSIS_GUIDE_PAGE = PageDefinition(
     <article class="theory-section">
       <h3>Expected view</h3>
       <p>Open Expected when your question is, how does the observed count compare with a rough benchmark? The Expected tab compares observed twin-prime counts to N divided by log squared N. Treat it as a supporting benchmark, not as proof or as a full explanation of the range.</p>
+      <p>The rough idea behind that expression is that primes thin out as numbers grow, and the chance of seeing two prime-like events together is much smaller than the chance of seeing one. That is why log terms keep appearing in prime-density discussions. On this site, Expected is intentionally framed as a quick comparison layer, not as a full Hardy-Littlewood model and not as a proof-backed prediction for every interval.</p>
     </article>
     <article class="theory-section">
       <h3>Recommended reading order</h3>
       <p>If you are exploring a new range for the first time, start with Modular, then Gaps, then Factors. Move to Density when you want to test whether the local environment around pairs looks special, and use Expected last when you want a coarse benchmark instead of a structural explanation.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Three quick reading recipes</h3>
+      <p>If your question is <em>why does Mod 6 keep appearing?</em>, start with Modular and then compare the same range in the Lab. If your question is <em>are twin-prime pairs clumping or spreading out?</em>, start with Gaps and then use Density to see whether local neighborhoods also look unusual. If your question is <em>does this range look high or low for twin primes?</em>, start with Expected, then move back to Gaps and Modular so the benchmark does not float free of the actual structure.</p>
     </article>
     <article class="theory-section">
       <h3>How to read the tabs together</h3>
