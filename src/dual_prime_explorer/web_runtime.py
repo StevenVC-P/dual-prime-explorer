@@ -22,6 +22,7 @@ class WebRuntime(TypedDict):
     ads_txt: str
     robots_txt: str
     sitemap_xml: str
+    google_site_verification_html: str
     not_found_html: str
 
 
@@ -270,5 +271,6 @@ def load_web_runtime(dev_mode: bool = False) -> WebRuntime:
         "ads_txt": web_assets.ADS_TXT,
         "robots_txt": web_assets.build_robots_txt(),
         "sitemap_xml": web_assets.build_sitemap_xml(),
+        "google_site_verification_html": web_assets.build_google_site_verification_html(),
         "not_found_html": web_assets.render_not_found_page(),
     }

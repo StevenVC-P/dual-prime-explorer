@@ -250,6 +250,7 @@ def test_route_registry_is_ready_for_more_pages() -> None:
     assert '<meta name="description" content="A fuller introduction to twin primes, including examples, structure, what is known versus conjectured, and how to explore the pattern on TwinPrimeExplorer.com.">' in rendered_pages["/what-are-twin-primes"]
     assert '<link rel="canonical" href="https://www.twinprimeexplorer.com/lab">' in rendered_pages["/lab"]
     assert '<meta name="robots" content="index,follow">' in rendered_pages["/lab"]
+    assert '<meta name="google-site-verification" content="P5ztEswC64A4UpUuAYabSTnEr0irws9YZ6OO34-4uOs">' in rendered_pages["/lab"]
     assert '<meta name="robots" content="noindex,follow">' in rendered_pages["/experiments"]
     assert "Read: What are twin primes?" in rendered_pages["/theory"]
     assert "Take the theory back into the tools" in rendered_pages["/theory"]
@@ -357,6 +358,11 @@ def test_request_handler_uses_crawlable_status_codes() -> None:
     sitemap_handler.do_GET()
     assert sitemap_handler.responses[-1] == HTTPStatus.OK
     assert b'https://www.twinprimeexplorer.com/theory' in sitemap_handler.wfile.getvalue()
+
+    verification_handler = _TestableHandler('/googlee310ecf193a6916e.html')
+    verification_handler.do_GET()
+    assert verification_handler.responses[-1] == HTTPStatus.OK
+    assert b'google-site-verification: googlee310ecf193a6916e.html' in verification_handler.wfile.getvalue()
 
     not_found_handler = _TestableHandler('/missing-page')
     not_found_handler.do_GET()
