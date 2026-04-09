@@ -3005,6 +3005,7 @@ INTERACTIVE_ACTIVE_ROUTES = {"lab", "explorer", "analysis", "experiments"}
 
 
 ADS_TXT = os.getenv("ADS_TXT_CONTENT", "google.com, pub-6401940195640064, DIRECT, f08c47fec0942fa0").strip() + "\n"
+GOOGLE_SITE_VERIFICATION_META = "P5ztEswC64A4UpUuAYabSTnEr0irws9YZ6OO34-4uOs"
 
 
 def _page_ad_mode(page: PageDefinition) -> str:
@@ -3091,13 +3092,15 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
     });
   </script>
 """
+    google_site_verification_meta = html.escape(GOOGLE_SITE_VERIFICATION_META, quote=True)
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{page.title}</title>
-{meta_description}{robots_meta}{canonical_html}{adsense_script}  <link rel="stylesheet" href="/styles.css?v={asset_version}">
+{meta_description}{robots_meta}{canonical_html}  <meta name="google-site-verification" content="{google_site_verification_meta}">
+{adsense_script}  <link rel="stylesheet" href="/styles.css?v={asset_version}">
 </head>
 <body>
   <div class="page-shell">
@@ -3153,6 +3156,10 @@ def build_sitemap_xml() -> str:
 
 def build_robots_txt() -> str:
     return "User-agent: *\nAllow: /\n\nSitemap: https://www.twinprimeexplorer.com/sitemap.xml\n"
+
+
+def build_google_site_verification_html() -> str:
+    return "google-site-verification: googlee310ecf193a6916e.html"
 
 
 def render_not_found_page(asset_version: str | None = None) -> str:

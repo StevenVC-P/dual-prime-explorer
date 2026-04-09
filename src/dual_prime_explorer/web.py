@@ -73,6 +73,9 @@ class DualPrimeRequestHandler(BaseHTTPRequestHandler):
         if parsed.path == "/sitemap.xml":
             self._send_response(runtime["sitemap_xml"], content_type="application/xml; charset=utf-8")
             return
+        if parsed.path == "/googlee310ecf193a6916e.html":
+            self._send_response(runtime["google_site_verification_html"], content_type="text/html; charset=utf-8")
+            return
         if parsed.path == "/favicon.ico":
             self.send_response(HTTPStatus.NO_CONTENT)
             self._set_cache_headers()
