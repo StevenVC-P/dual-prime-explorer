@@ -378,6 +378,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "If you are new to TwinPrimeExplorer.com, this page gives you a clean route into the educational side of the site before you decide which tool or topic to open next.",
         "intro_title": "A simple reading path",
         "intro_text": "This guide is for first-time visitors and returning readers who want the information side of the site in a sensible order. It points to the strongest foundation pages first, then shows how those ideas connect back to the Lab, Explorer, and Analysis surfaces. If you only want a quick plan, think in three steps: basics first, the twin-prime pattern second, then the conjecture and progress pages once the pattern feels familiar.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "Start with prime numbers if you want the basics",
@@ -400,6 +401,11 @@ EXPLANATORY_PAGES = [
                 "body": "The Lab is best for seeing the pattern first, Explorer is best for checking exact numbers and neighborhood roles, and Analysis is best for structured summaries such as modular counts, gap behavior, density, and rough expectation comparisons. Theory and Glossary stay available as reference companions while you do that. A common reading loop on this site is: learn one concept, open a live range, then come back to the explanation with concrete examples in mind.",
             },
         ],
+        "references": [
+            {"label": "Britannica: prime numbers", "href": "https://www.britannica.com/story/prime-numbers", "note": "General background for the basic prime-number reading path."},
+            {"label": "MathWorld: Twin Primes", "href": "https://mathworld.wolfram.com/TwinPrimes.html", "note": "Compact reference for the site's central pattern."},
+            {"label": "Britannica: prime number theorem", "href": "https://www.britannica.com/science/number-theory/Prime-number-theorem", "note": "Background for the average-density pages in the reading path."},
+        ],
         "related_links": [
             {"title": "Begin with prime numbers", "body": "Use the basic page first if you want the cleanest foundation for the rest of the site.", "href": "/prime-numbers", "label": "Read Prime Numbers Explained"},
             {"title": "See why primes thin out", "body": "The prime number theorem page explains the average thinning pattern that sits behind later density and expected-count language.", "href": "/prime-number-theorem", "label": "Read The Prime Number Theorem In Plain Language"},
@@ -421,6 +427,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "Prime numbers are the basic building blocks of arithmetic. They are easy to define, surprisingly hard to predict, and the starting point for understanding twin primes, prime gaps, and much of elementary number theory.",
         "intro_title": "Start with the basics",
         "intro_text": "This page is the site's foundational introduction to prime numbers. It explains what primes are, how they differ from composite numbers, why mathematicians care about them, and how they connect naturally to the twin-prime and prime-gap pages elsewhere on TwinPrimeExplorer.com.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "What a prime number is",
@@ -447,6 +454,11 @@ EXPLANATORY_PAGES = [
                 "body": "Use the Lab when you want to see primes and twin centers appear across a live range. Use Explorer when you want exact row-by-row inspection of individual numbers and divisors. Use Analysis when you want structured summaries of gaps, modular patterns, and density. Theory gives the larger mathematical story, while the Glossary keeps the core terms short when you do not want a full article every time.",
             },
         ],
+        "references": [
+            {"label": "Britannica: prime number", "href": "https://www.britannica.com/science/prime-number", "note": "Clear definition and basic number-theory context."},
+            {"label": "Britannica: number theory", "href": "https://www.britannica.com/science/number-theory", "note": "Broader context for why primes matter in mathematics."},
+            {"label": "Britannica: prime number theorem", "href": "https://www.britannica.com/science/number-theory/Prime-number-theorem", "note": "Useful companion for the distribution side of the page."},
+        ],
         "related_links": [
             {"title": "Continue to twin primes", "body": "Use the twin-primes page once you want to move from basic primes into the simplest major gap pattern on the site.", "href": "/what-are-twin-primes", "label": "Read What Are Twin Primes?"},
             {"title": "Step into prime gaps", "body": "Use the prime-gaps page when you want the broader spacing story that sits between basic primes and the twin-prime conjecture.", "href": "/prime-gaps", "label": "Read What Are Prime Gaps?"},
@@ -465,6 +477,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "The twin prime conjecture asks whether there are infinitely many pairs of prime numbers that differ by exactly 2. The statement is short enough to explain in one sentence. Proving it has turned out to be one of the most persistent open problems in number theory.",
         "intro_title": "The big question behind the site",
         "intro_text": "This page gives the cleanest nontechnical overview of the conjecture itself: the exact statement, what infinity means in this context, why the problem is so hard, what nearby progress has been proved, and what still remains outside theorem territory.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "What the conjecture says",
@@ -488,12 +501,17 @@ EXPLANATORY_PAGES = [
             },
             {
                 "title": "Why mathematicians still expect the conjecture to be true",
-                "body": "The expectation comes from strong heuristics, statistical models, and enormous finite computation, not from a finished proof. Twin primes appear often enough in practice to make endless continuation plausible, and conjectural models such as Hardy-Littlewood predict that they should keep appearing, although more rarely, as numbers grow. On this site that expectation is always treated as heuristic or conjectural, not as established theorem-level fact.",
+                "body": "The expectation comes from strong heuristics, statistical models, and enormous finite computation, not from a theorem that settles the conjecture. Twin primes appear often enough in practice to make endless continuation plausible, and conjectural models such as Hardy-Littlewood predict that they should keep appearing, although more rarely, as numbers grow. On this site that expectation is always treated as heuristic or conjectural, not as established theorem-level fact.",
             },
             {
                 "title": "How this connects to the tools",
                 "body": "The site cannot prove or disprove the conjecture, but it can help you see why the pattern is compelling and why finite evidence is not the same thing as a proof. The Lab makes gap-2 structure visible, Explorer lets you inspect concrete examples row by row, and Analysis summarizes how pairs, centers, and gaps behave in a chosen range. Theory and the Zhang page then connect those observations back to the larger mathematical story.",
             },
+        ],
+        "references": [
+            {"label": "PrimePages: Twin Primes", "href": "https://primes.utm.edu/glossary/page.php?sort=TwinPrime", "note": "Concise reference on twin primes and the open conjecture."},
+            {"label": "Yitang Zhang, Bounded gaps between primes", "href": "https://annals.math.princeton.edu/2014/179-3/p07", "note": "Primary theorem showing some bounded prime gap recurs infinitely often."},
+            {"label": "Polymath8: bounded gaps between primes", "href": "https://michaelnielsen.org/polymath/index.php?title=Bounded_gaps_between_primes", "note": "Context for later bound improvements and current bounded-gap framing."},
         ],
         "related_links": [
             {"title": "Need the short answer?", "body": "Use the shorter page when you want a clean yes-or-no explanation before reading the larger conjecture context.", "href": "/has-the-twin-prime-conjecture-been-solved", "label": "Read the short answer"},
@@ -513,6 +531,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "Finding a twin-prime pair is straightforward in small ranges: look for two prime numbers that differ by exactly 2. The deeper challenge is learning which candidates are worth checking, which shortcuts are only filters, and how to move from quick spotting to real inspection.",
         "intro_title": "A practical pattern guide",
         "intro_text": "This page is about procedure rather than proof. It shows how to recognize twin-prime candidates, what quick filters help, where false candidates come from, and how the site's tools let you move from a simple search idea to richer structural inspection.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "Start with the definition",
@@ -539,6 +558,11 @@ EXPLANATORY_PAGES = [
                 "body": "Use Explorer when you want the most direct working surface: row-by-row values, prime roles, twin centers, and divisor details. Use the Lab when you want to scan visually first and notice likely clusters. Then move into Analysis if you want to understand how the examples you found fit into larger spacing or modular patterns. The Mod 6 page, prime-gaps page, and twin-prime page all help explain why the candidates you see behave the way they do.",
             },
         ],
+        "references": [
+            {"label": "MathWorld: Twin Primes", "href": "https://mathworld.wolfram.com/TwinPrimes.html", "note": "Definition, examples, and the 6n ? 1 pattern."},
+            {"label": "Britannica: modular arithmetic", "href": "https://www.britannica.com/science/modular-arithmetic", "note": "Background for residue-based candidate filtering."},
+            {"label": "Britannica: prime number", "href": "https://www.britannica.com/science/prime-number", "note": "Basic reference for primality checks and examples."},
+        ],
         "related_links": [
             {"title": "Use Explorer for exact inspection", "body": "Explorer is the clearest place to test candidate pairs and inspect neighborhood roles one row at a time.", "href": "/explorer#number-table-title", "label": "Open Explorer"},
             {"title": "Need the residue-class shortcut?", "body": "Use the modular explainer if you want the residue filter idea in plain language first.", "href": "/why-mod-6-shows-up-so-often", "label": "Read Why Mod 6 Shows Up So Often"},
@@ -556,6 +580,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "A prime gap is the difference between one prime number and the next. Some gaps are very small, some eventually become much larger, and the special case of gap 2 is exactly where twin primes live.",
         "intro_title": "A bridge concept for the site",
         "intro_text": "Prime gaps connect the site's basic prime pages to its deeper twin-prime and bounded-gap pages. This page explains the basic definition, shows how small and large gaps differ, and clarifies why bounded-gap theorems matter without overstating what they prove.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "The basic definition",
@@ -582,6 +607,11 @@ EXPLANATORY_PAGES = [
                 "body": "Analysis is the best place to study gap structure directly because it summarizes repeated spacing across a chosen range. Explorer helps when you want exact examples and exact neighboring primes, while the Lab helps when you want to see clusters and separation before reading structured summaries. The twin-primes page, the Zhang page, and the conjecture page then connect those visible gap patterns back to the broader mathematical story.",
             },
         ],
+        "references": [
+            {"label": "MathWorld: Prime Gaps", "href": "https://mathworld.wolfram.com/PrimeGaps.html", "note": "Direct reference for prime-gap definitions and larger-gap context."},
+            {"label": "Yitang Zhang, Bounded gaps between primes", "href": "https://annals.math.princeton.edu/2014/179-3/p07", "note": "Primary bounded-gaps theorem."},
+            {"label": "Britannica: prime number theorem", "href": "https://www.britannica.com/science/number-theory/Prime-number-theorem", "note": "Average-density background for why gaps grow on average."},
+        ],
         "related_links": [
             {"title": "Start with the gap-2 case", "body": "Use the twin-primes page when you want the special gap-2 pattern explained before the broader gap story.", "href": "/what-are-twin-primes", "label": "Read What Are Twin Primes?"},
             {"title": "Read the bounded-gap breakthrough", "body": "The Zhang page explains how modern theorems turned small prime gaps into a proof-level result.", "href": "/what-did-yitang-zhang-prove", "label": "Read about Zhang"},
@@ -600,6 +630,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "Twin primes are pairs of prime numbers that differ by exactly 2. They are simple to state, easy to spot in small ranges, and still connected to one of the best-known open questions in number theory.",
         "intro_title": "Start with the core pattern",
         "intro_text": "This page is the plain-language entry point for the site's central idea. It explains what twin primes are, why they matter mathematically, what is known versus still unproved, and how to follow the pattern through the live tools.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "The basic definition",
@@ -623,12 +654,17 @@ EXPLANATORY_PAGES = [
             },
             {
                 "title": "What is known and what is still conjectured",
-                "body": "Some important facts are already proven. Brun's theorem shows that twin primes are sparse enough that the sum of their reciprocals converges, and bounded-gap results show that primes come within some fixed finite distance infinitely often. But neither of those results proves that gap 2 itself repeats forever. The expectation that infinitely many twin primes exist comes from strong heuristics and extensive computation, not from a completed proof. This is why the conjecture page, the short solved-or-not page, and the bounded-gap pages all sit close to this one in the site's reading path.",
+                "body": "Some important facts are already proven. Brun's theorem shows that twin primes are sparse enough that the sum of their reciprocals converges, and bounded-gap results show that primes come within some fixed finite distance infinitely often. But neither of those results proves that gap 2 itself repeats forever. The expectation that infinitely many twin primes exist comes from strong heuristics and extensive computation, not from a theorem that settles the conjecture. This is why the conjecture page, the short solved-or-not page, and the bounded-gap pages all sit close to this one in the site's reading path.",
             },
             {
                 "title": "How to explore twin primes on this site",
                 "body": "TwinPrimeExplorer.com treats twin primes as something you can see, inspect, and interpret from several angles. Open the Lab when you want the pattern field first, especially with twin centers and Mod 6 structure visible at the same time. Use Explorer when you want exact examples row by row. Use Analysis when you want modular summaries, spacing behavior, density, and a rough expected-count benchmark. Use Theory when you want the broader research story around the same pattern. A useful next step after this page is often to compare the visible gap-2 pattern in the tools with the more careful theorem-versus-conjecture language on the conjecture and Zhang pages.",
             },
+        ],
+        "references": [
+            {"label": "MathWorld: Twin Primes", "href": "https://mathworld.wolfram.com/TwinPrimes.html", "note": "Definition, examples, and 6n ? 1 structure."},
+            {"label": "MathWorld: Twin Prime Conjecture", "href": "https://mathworld.wolfram.com/TwinPrimeConjecture.html", "note": "Reference for the open conjecture status."},
+            {"label": "Yitang Zhang, Bounded gaps between primes", "href": "https://annals.math.princeton.edu/2014/179-3/p07", "note": "Nearby theorem-level progress that still stops short of gap 2."},
         ],
         "related_links": [
             {"title": "See the pattern in the Lab", "body": "Start with a live range and watch twin primes and twin centers appear together.", "href": "/lab#visualization-title", "label": "Open the Lab"},
@@ -650,6 +686,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "In 2013, Yitang Zhang proved that there is some fixed finite bound B such that infinitely many pairs of primes differ by at most B. It was a major breakthrough, but it did not prove the twin prime conjecture.",
         "intro_title": "What this page clarifies",
         "intro_text": "Zhang's breakthrough is often mentioned in one sentence and misunderstood in the next. This page separates the theorem itself, why it mattered so much, what later work changed, and why bounded gaps still does not mean twin primes were proved.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "The theorem in plain language",
@@ -677,12 +714,17 @@ EXPLANATORY_PAGES = [
             },
             {
                 "title": "Why the result still belongs in the twin-prime story",
-                "body": "The theorem showed that prime clustering is not just a heuristic guess. It established that small prime gaps recur across infinitely many scales, which is one of the strongest pieces of progress connected to the twin prime problem.",
+                "body": "The theorem showed that prime clustering is not just a heuristic expectation. It established that small prime gaps recur across infinitely many scales, which is one of the strongest pieces of progress connected to the twin prime problem.",
             },
             {
                 "title": "How to see the idea in TwinPrimeExplorer",
                 "body": "The site cannot reproduce the proof, but it can help you build intuition for what bounded gaps are about. In Analysis, the Gaps tab lets you inspect repeated small spacings in a selected range. In the Lab, you can watch clusters of twin-prime candidates and centers appear rather than treating prime gaps as an abstract theorem statement. That shift from theorem language to visible structure is exactly why this page belongs next to the tools.",
             },
+        ],
+        "references": [
+            {"label": "Yitang Zhang, Bounded gaps between primes", "href": "https://annals.math.princeton.edu/2014/179-3/p07", "note": "Primary source for the original bounded-gaps theorem."},
+            {"label": "James Maynard, Small gaps between primes", "href": "https://annals.math.princeton.edu/2015/181-1/p07", "note": "Major follow-on theorem that broadened the bounded-gaps picture."},
+            {"label": "Polymath8: bounded gaps between primes", "href": "https://michaelnielsen.org/polymath/index.php?title=Bounded_gaps_between_primes", "note": "Collaborative retrospective and bound-improvement timeline."},
         ],
         "related_links": [
             {"title": "See the broader progress picture", "body": "Theory puts Zhang, Polymath, and Maynard-Tao into the same timeline.", "href": "/theory#progress", "label": "Open Theory: Current Progress"},
@@ -702,6 +744,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "When people study primes greater than 3, mod 6 keeps appearing because divisibility by 2 and 3 removes most residue classes immediately. That leaves a much narrower structure to inspect.",
         "intro_title": "Why this helps",
         "intro_text": "You do not need a long lesson in modular arithmetic to get the basic idea. This page gives the shortest useful explanation, then points you back to the visual and analytical views where the pattern becomes easier to see.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "What mod 6 means",
@@ -732,6 +775,11 @@ EXPLANATORY_PAGES = [
                 "body": "Use the Lab when you want the quickest visual impression of how residue classes narrow the field. Use Analysis when you want counts and summaries for the same structure. Use the Glossary when you only need short definitions for modulus, residue class, or arithmetic progression instead of a fuller article.",
             },
         ],
+        "references": [
+            {"label": "Britannica: modular arithmetic", "href": "https://www.britannica.com/science/modular-arithmetic", "note": "Background for residues and congruence classes."},
+            {"label": "MathWorld: Twin Primes", "href": "https://mathworld.wolfram.com/TwinPrimes.html", "note": "Reference for the 6n ? 1 twin-prime pattern above (3, 5)."},
+            {"label": "Britannica: prime number", "href": "https://www.britannica.com/science/prime-number", "note": "General prime-number background for the filtering discussion."},
+        ],
         "related_links": [
             {"title": "See it in the Lab", "body": "Use the Mod 6 view to see the residue pattern rather than only reading about it.", "href": "/lab#visualization-title", "label": "Open the Lab"},
             {"title": "Read the modular interpretation", "body": "Analysis summarizes the pair and center residue counts across the selected range, so you can compare the article idea with live data.", "href": "/analysis#analysis-views-title", "label": "Open Analysis"},
@@ -749,6 +797,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "Twin centers are the numbers exactly between twin-prime pairs. They are not prime themselves, but they often make the surrounding pair structure easier to see, compare, and talk about.",
         "intro_title": "Why this page exists",
         "intro_text": "Twin centers are one of the site's distinctive ideas. This page explains why they are useful without turning them into a bigger theory than they need to be, and why the midpoint can sometimes be the clearest way to study the same twin-prime pattern.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "What a twin center is",
@@ -779,6 +828,11 @@ EXPLANATORY_PAGES = [
                 "body": "Twin centers help translate a two-number pattern into a simpler explanatory story. Instead of repeatedly saying 'the prime on the left and the prime on the right,' you can talk about the midpoint that ties the pair together. That makes the visual, structural, and explanatory layers of the site line up more naturally, which is exactly why twin centers are worth treating as a concept rather than only as a display convenience.",
             },
         ],
+        "references": [
+            {"label": "MathWorld: Twin Primes", "href": "https://mathworld.wolfram.com/TwinPrimes.html", "note": "Supports the gap-2 pair structure summarized by twin centers."},
+            {"label": "Britannica: modular arithmetic", "href": "https://www.britannica.com/science/modular-arithmetic", "note": "Background for the midpoint and residue-class discussion."},
+            {"label": "MathWorld: Twin Prime Conjecture", "href": "https://mathworld.wolfram.com/TwinPrimeConjecture.html", "note": "Broader context for why the pair pattern matters mathematically."},
+        ],
         "related_links": [
             {"title": "See twin centers visually", "body": "The Lab makes centers easy to spot inside a live number field.", "href": "/lab#visualization-title", "label": "Open the Lab"},
             {"title": "Inspect exact center rows", "body": "Explorer shows the number-by-number detail behind each center and its neighbors.", "href": "/explorer#number-table-title", "label": "Open Explorer"},
@@ -797,6 +851,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "No. The twin prime conjecture remains unsolved. Modern progress shows that primes come within some bounded distance infinitely often, but that is not the same as proving infinitely many gap-2 pairs.",
         "intro_title": "The short answer",
         "intro_text": "If you only need the answer in one line, it is no. This page exists to make the next sentence clear too: important progress has happened, but the exact twin-prime claim still has not been proved, and that last distinction is where many summaries become misleading.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "What the conjecture actually says",
@@ -819,6 +874,11 @@ EXPLANATORY_PAGES = [
                 "body": "If you want the longer explanation of the open problem itself, move next to Twin Prime Conjecture Explained. If you want the best-known modern breakthrough nearby, go to the Zhang page. If you want to see why the distinction between finite evidence and proof matters visually, open the Lab or Analysis and compare what a real finite range can show with what a theorem about infinity would need to establish.",
             },
         ],
+        "references": [
+            {"label": "MathWorld: Twin Prime Conjecture", "href": "https://mathworld.wolfram.com/TwinPrimeConjecture.html", "note": "Direct reference that the conjecture remains open."},
+            {"label": "Yitang Zhang, Bounded gaps between primes", "href": "https://annals.math.princeton.edu/2014/179-3/p07", "note": "Primary source for nearby bounded-gap progress."},
+            {"label": "Polymath8: bounded gaps between primes", "href": "https://michaelnielsen.org/polymath/index.php?title=Bounded_gaps_between_primes", "note": "Helpful context for why bounded gaps still does not mean gap 2."},
+        ],
         "related_links": [
             {"title": "Read the full conjecture page", "body": "Use the longer conjecture explainer when you want the exact statement, what infinity means here, and what remains unproved.", "href": "/twin-prime-conjecture", "label": "Read Twin Prime Conjecture Explained"},
             {"title": "Read the bounded-gap breakthrough", "body": "Use the Zhang page when you want the cleanest explanation of what bounded gaps actually proved.", "href": "/what-did-yitang-zhang-prove", "label": "Read about Zhang"},
@@ -836,6 +896,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "Bounded-gap results proved that primes come within some fixed finite distance infinitely often. That is a major structural theorem about prime clustering, but it is still not the same as proving infinitely many twin primes.",
         "intro_title": "Why this page helps",
         "intro_text": "Bounded gaps is one of the most important phrases in the modern twin-prime story, but it is also one of the easiest to blur into something it does not say. This page keeps the claim precise and connects it back to the broader conjecture and gap story.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "What bounded gaps means",
@@ -866,6 +927,11 @@ EXPLANATORY_PAGES = [
                 "body": "This page works best as a precision tool. Use it when headlines or summaries make progress sound closer to a completed proof than it really is. Then move back to the twin-prime conjecture page, the Zhang page, Theory, or the prime-gaps page to place the bounded-gap statement inside the larger research story. Analysis can then help you compare the explanatory idea with real spacing patterns in a chosen finite range.",
             },
         ],
+        "references": [
+            {"label": "Yitang Zhang, Bounded gaps between primes", "href": "https://annals.math.princeton.edu/2014/179-3/p07", "note": "Original bounded-gaps theorem."},
+            {"label": "James Maynard, Small gaps between primes", "href": "https://annals.math.princeton.edu/2015/181-1/p07", "note": "Follow-on bounded-gaps breakthrough."},
+            {"label": "Polymath8: bounded gaps between primes", "href": "https://michaelnielsen.org/polymath/index.php?title=Bounded_gaps_between_primes", "note": "Bound-improvement context and current best-known range story."},
+        ],
         "related_links": [
             {"title": "Read the Zhang milestone", "body": "Use the Zhang page when you want the breakthrough framed around the person and the 2013 result.", "href": "/what-did-yitang-zhang-prove", "label": "Read about Zhang"},
             {"title": "See how Theory summarizes the progress", "body": "The Current Progress tab keeps the wider bounded-gap picture connected to the conjecture itself.", "href": "/theory#progress", "label": "Open Theory: Current Progress"},
@@ -884,6 +950,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "The twin prime problem sounds simple because the statement is short. The difficulty is that any proof has to control both the large-scale distribution of primes and the exact local conditions that produce gap-2 pairs.",
         "intro_title": "The short version",
         "intro_text": "This problem is hard because primes look partly irregular but obey strict arithmetic rules at the same time. A proof has to manage both sides at once, and it has to do so across infinitely many scales rather than just inside a large computed range.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "Exact gaps are harder than small gaps",
@@ -910,6 +977,11 @@ EXPLANATORY_PAGES = [
                 "body": "Use this page when the conjecture seems easy to state but mysteriously hard to finish. Then move to Twin Prime Conjecture Explained for the clean statement of the problem, to the Zhang page for the biggest nearby theorem, or to Explorer and Analysis if you want to compare theorem language with concrete local patterns in a chosen range.",
             },
         ],
+        "references": [
+            {"label": "MathWorld: Twin Prime Conjecture", "href": "https://mathworld.wolfram.com/TwinPrimeConjecture.html", "note": "Reference for the exact conjecture that remains open."},
+            {"label": "Yitang Zhang, Bounded gaps between primes", "href": "https://annals.math.princeton.edu/2014/179-3/p07", "note": "Shows the strongest nearby theorem-level progress."},
+            {"label": "James Maynard, Small gaps between primes", "href": "https://annals.math.princeton.edu/2015/181-1/p07", "note": "Follow-on bounded-gaps context for the modern difficulty discussion."},
+        ],
         "related_links": [
             {"title": "Read the conjecture page", "body": "The full conjecture explainer gives the clearest statement of the exact gap-2 claim this page is discussing.", "href": "/twin-prime-conjecture", "label": "Read Twin Prime Conjecture Explained"},
             {"title": "See the nearby theorem", "body": "The Zhang page shows what modern mathematics did manage to prove without finishing the twin prime problem.", "href": "/what-did-yitang-zhang-prove", "label": "Read about Zhang"},
@@ -928,6 +1000,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "There is no single method that solves the twin prime problem. Instead, mathematicians approach it from several angles, each of which captures part of the structure but not yet the final proof.",
         "intro_title": "Why there are several approaches",
         "intro_text": "The twin prime problem sits at the intersection of local arithmetic structure, global distribution, and repeated small gaps. That is why different methods each illuminate a different part of the picture.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "Sieve methods",
@@ -962,6 +1035,11 @@ EXPLANATORY_PAGES = [
                 "body": "This page is most useful when the site starts mentioning sieve methods, bounded gaps, heuristics, or modular structure and you want a compact overview of how those ideas fit together. It gives enough orientation that the Theory page, Zhang page, and conjecture page feel connected rather than like isolated references. Once the method names stop feeling abstract, the rest of the site's research and progress pages become much easier to follow.",
             },
         ],
+        "references": [
+            {"label": "Yitang Zhang, Bounded gaps between primes", "href": "https://annals.math.princeton.edu/2014/179-3/p07", "note": "Primary bounded-gaps source."},
+            {"label": "James Maynard, Small gaps between primes", "href": "https://annals.math.princeton.edu/2015/181-1/p07", "note": "Major follow-on theorem in the modern methods story."},
+            {"label": "Hardy and Littlewood, Some Problems of Partitio Numerorum (V)", "href": "https://academic.oup.com/plms/article-pdf/s2-22/1/46/4372641/s2-22-1-46.pdf", "note": "Classic heuristic framework behind prime-pair expectations."},
+        ],
         "related_links": [
             {"title": "Read the Theory approaches tab", "body": "Theory keeps the method-level overview together in one reference surface.", "href": "/theory#approaches", "label": "Open Theory: Approaches"},
             {"title": "Follow the progress story", "body": "The Zhang page shows what one of the biggest modern advances looked like in theorem form.", "href": "/what-did-yitang-zhang-prove", "label": "Read about Zhang"},
@@ -981,6 +1059,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "The prime number theorem explains the average large-scale behavior of primes. It does not tell you exactly where the next prime will appear, but it does explain why primes thin out as numbers grow.",
         "intro_title": "What this theorem is really about",
         "intro_text": "This page gives a plain-language version of one of the central background results in number theory. The theorem describes the average density of prime numbers, which helps explain why large gaps become more common, why logarithms keep appearing in prime discussions, and why the site's expected-count language is framed as an average guide rather than an exact rule.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "What the prime number theorem says",
@@ -1007,6 +1086,11 @@ EXPLANATORY_PAGES = [
                 "body": "The Analysis page includes an Expected view that compares observed twin-prime counts with a rough benchmark. That benchmark is not the prime number theorem itself, but it lives in the same family of average-density thinking. The theorem helps explain why log terms appear in these comparisons, while the Analysis Guide explains why such comparisons must stay rough and should never be confused with proof.",
             },
         ],
+        "references": [
+            {"label": "Prime Number Theorem", "href": "https://mathworld.wolfram.com/PrimeNumberTheorem.html", "note": "Compact reference for the asymptotic density statement."},
+            {"label": "Britannica: number theory overview", "href": "https://www.britannica.com/science/number-theory", "note": "General reference context for prime-number distribution within number theory."},
+            {"label": "PrimePages: twin prime constant", "href": "https://primes.utm.edu/glossary/page.php?sort=TwinPrimeConstant", "note": "Useful companion for understanding why twin-prime heuristics add more than one log term."},
+        ],
         "related_links": [
             {"title": "Start from the basic definition of primes", "body": "Use the prime-numbers page first if you want the cleanest foundation before moving into average distribution questions.", "href": "/prime-numbers", "label": "Read Prime Numbers Explained"},
             {"title": "See how spacing changes", "body": "The prime-gaps page turns the same thinning idea into a direct discussion of spacing between consecutive primes.", "href": "/prime-gaps", "label": "Read What Are Prime Gaps?"},
@@ -1024,6 +1108,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "No one has proved it yet, but many mathematicians expect the answer is yes. That mix of strong expectation and missing proof is exactly why the twin prime conjecture matters.",
         "intro_title": "The short answer and the careful answer",
         "intro_text": "If you ask whether there are infinitely many twin primes, the careful answer is: this is strongly expected, but still unproved. This page is written for the direct search-style version of the question, so it separates the short answer, the mathematical expectation, and the theorem-level situation without assuming you already know the formal conjecture language.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "The short answer",
@@ -1050,6 +1135,11 @@ EXPLANATORY_PAGES = [
                 "body": "If you want the formal mathematical statement, move next to Twin Prime Conjecture Explained. If you want the direct solved-or-not clarification, use the short-answer page. If you want to see the visible finite pattern before returning to the theory, open the Lab or Explorer and look at real twin-prime examples in a selected range.",
             },
         ],
+        "references": [
+            {"label": "MathWorld: Twin Prime Conjecture", "href": "https://mathworld.wolfram.com/TwinPrimeConjecture.html", "note": "Direct source for the conjecture's open status."},
+            {"label": "MathWorld: Twin Primes", "href": "https://mathworld.wolfram.com/TwinPrimes.html", "note": "Reference for finite examples and the broader twin-prime pattern."},
+            {"label": "Yitang Zhang, Bounded gaps between primes", "href": "https://annals.math.princeton.edu/2014/179-3/p07", "note": "Nearby theorem-level progress that does not settle infinitude of gap 2."},
+        ],
         "related_links": [
             {"title": "Read the formal conjecture page", "body": "Use the full conjecture explainer for the exact statement, what infinity means here, and what remains unproved.", "href": "/twin-prime-conjecture", "label": "Read Twin Prime Conjecture Explained"},
             {"title": "Read the direct solved-or-not page", "body": "Use the short-answer clarification when you want the proof-status question handled as directly as possible.", "href": "/has-the-twin-prime-conjecture-been-solved", "label": "Read the short answer"},
@@ -1067,6 +1157,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "Prime gaps and prime pairs are closely related, but they are not the same idea. The distinction matters whenever you move between twin primes, bounded gaps, and the site's Analysis views.",
         "intro_title": "Why this distinction helps",
         "intro_text": "This page is a clarification bridge. It explains the difference between talking about the distance between consecutive primes and talking about particular pairs of primes that fit a named pattern. That distinction makes several other pages on the site easier to read correctly.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "What a prime gap is",
@@ -1093,6 +1184,11 @@ EXPLANATORY_PAGES = [
                 "body": "Bounded-gap theorems say that some small prime gap recurs infinitely often, but they do not name one exact prime-pair pattern such as twin primes. The Analysis page also makes more sense when you keep this distinction clear: some tabs summarize spacing, while others help you interpret recurring pair structure. This page exists so those shifts in language feel intentional rather than confusing.",
             },
         ],
+        "references": [
+            {"label": "MathWorld: Prime Gaps", "href": "https://mathworld.wolfram.com/PrimeGaps.html", "note": "Reference for consecutive-prime spacing language."},
+            {"label": "MathWorld: Twin Primes", "href": "https://mathworld.wolfram.com/TwinPrimes.html", "note": "Reference for the named gap-2 pair pattern."},
+            {"label": "Yitang Zhang, Bounded gaps between primes", "href": "https://annals.math.princeton.edu/2014/179-3/p07", "note": "Useful for the bounded-gaps distinction discussed on the page."},
+        ],
         "related_links": [
             {"title": "Read the broader gap page", "body": "Use the prime-gaps page when you want the full spacing story rather than only the distinction itself.", "href": "/prime-gaps", "label": "Read What Are Prime Gaps?"},
             {"title": "Return to the twin-prime pattern", "body": "The twin-primes page shows the named pair pattern that motivates this whole comparison.", "href": "/what-are-twin-primes", "label": "Read What Are Twin Primes?"},
@@ -1110,6 +1206,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "The Hardy-Littlewood prime-pair conjecture is one of the main reasons mathematicians expect infinitely many twin primes. It gives a quantitative prediction for how often twin-prime pairs should appear, while still stopping short of proof.",
         "intro_title": "Why this heuristic matters",
         "intro_text": "This page explains the Hardy-Littlewood framework in plain language. It is not a theorem page. It is a heuristic page: it shows why mathematicians think twin primes should keep appearing, why a simple random model is not quite enough, and why the famous twin prime constant enters the story.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "What Hardy-Littlewood is trying to predict",
@@ -1133,12 +1230,17 @@ EXPLANATORY_PAGES = [
             },
             {
                 "title": "Why this is still not a proof",
-                "body": "A heuristic can be convincing, accurate, and mathematically useful without becoming a theorem. Hardy-Littlewood predicts what should happen on average. The twin prime conjecture asks for a proof that infinitely many exact gap-2 pairs really do occur. Bridging that gap from prediction to proof is exactly the hard part. This is why the site keeps Hardy-Littlewood language inside the expected or heuristic side of the story, not the proved side.",
+                "body": "A heuristic can be convincing, accurate, and mathematically useful without becoming a theorem. Hardy-Littlewood predicts what should happen on average. The twin prime conjecture asks for a proof that infinitely many exact gap-2 pairs really do occur. Bridging that gap from prediction to proof is exactly the hard part. This is why the site keeps Hardy-Littlewood language explicitly on the expected or heuristic side of the story, not the proved side.",
             },
             {
                 "title": "How this connects to the site",
                 "body": "This page helps connect several other parts of TwinPrimeExplorer.com. The prime number theorem page explains why log terms appear in average-density thinking, the conjecture pages explain what remains unproved, and the Analysis Guide explains why expected-count views are rough comparison tools rather than theorem engines. Once you know what Hardy-Littlewood is doing, those pages fit together more naturally.",
             },
+        ],
+        "references": [
+            {"label": "Hardy and Littlewood, Some Problems of Partitio Numerorum (V)", "href": "https://academic.oup.com/plms/article-pdf/s2-22/1/46/4372641/s2-22-1-46.pdf", "note": "Classic source for the prime-pair heuristic framework."},
+            {"label": "PrimePages: twin prime constant", "href": "https://primes.utm.edu/glossary/page.php?sort=TwinPrimeConstant", "note": "Compact reference for the constant that corrects the naive estimate."},
+            {"label": "PrimePages: Twin Primes", "href": "https://primes.utm.edu/glossary/page.php?sort=TwinPrime", "note": "Accessible summary of the heuristic and observed twin-prime pattern."},
         ],
         "related_links": [
             {"title": "Start from average prime density", "body": "The prime number theorem page explains the broad thinning pattern that sits behind Hardy-Littlewood style estimates.", "href": "/prime-number-theorem", "label": "Read The Prime Number Theorem In Plain Language"},
@@ -1157,6 +1259,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "Logarithms show up all over prime number theory because prime density changes slowly and average prime counts are tied to that slow thinning. The appearance of log n is not decorative notation. It is part of the structure of the subject.",
         "intro_title": "Why this symbol keeps returning",
         "intro_text": "This page is for readers who keep seeing log n on the site and want to know why. It explains, in plain language, why logarithms appear in average prime-density statements, why twin-prime heuristics often involve log squared n, and why those formulas should be read as rough guides rather than exact local predictions.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "Where log n first enters the story",
@@ -1183,6 +1286,11 @@ EXPLANATORY_PAGES = [
                 "body": "This page is useful whenever the site mentions expected counts, rough density, or heuristic predictions. It helps explain why the Analysis page compares observed behavior with a log-based benchmark, why the prime number theorem page matters for background, and why Hardy-Littlewood style predictions for twin primes use stronger log terms without becoming proofs.",
             },
         ],
+        "references": [
+            {"label": "Britannica: prime number theorem", "href": "https://www.britannica.com/science/number-theory/Prime-number-theorem", "note": "Background for the x/log x density statement."},
+            {"label": "PrimePages: twin prime constant", "href": "https://primes.utm.edu/glossary/page.php?sort=TwinPrimeConstant", "note": "Companion reference for the extra log factor in twin-prime heuristics."},
+            {"label": "Hardy and Littlewood, Some Problems of Partitio Numerorum (V)", "href": "https://academic.oup.com/plms/article-pdf/s2-22/1/46/4372641/s2-22-1-46.pdf", "note": "Classic source behind the heuristic side of the page."},
+        ],
         "related_links": [
             {"title": "Read the main theorem first", "body": "The prime number theorem page is the clearest starting point for the average-density story that produces log terms.", "href": "/prime-number-theorem", "label": "Read The Prime Number Theorem In Plain Language"},
             {"title": "See the twin-prime heuristic side", "body": "The Hardy-Littlewood page explains why twin-prime expectations add more structure on top of the basic log pattern.", "href": "/hardy-littlewood-twin-primes", "label": "Read Hardy-Littlewood For Twin Primes"},
@@ -1200,6 +1308,7 @@ EXPLANATORY_PAGES = [
         "hero_text": "The Lab is easiest to use when you treat it as a pattern-reading surface instead of a proof machine. This page gives a simple workflow for seeing structure first, then using Explorer and Analysis when you need more detail.",
         "intro_title": "A practical first-pass workflow",
         "intro_text": "This page is for readers who can open the Lab but are not yet sure what to look for. It shows how to start with one visual question, use twin centers and modular structure as anchors, and know when to switch from a visual pattern to a more exact tool.",
+        "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
                 "title": "Start with one visual question",
@@ -1229,6 +1338,11 @@ EXPLANATORY_PAGES = [
                 "title": "A good first-visit workflow",
                 "body": "A simple first route is: open the Lab, look for twin centers first, check the Mod 6 pattern second, then switch to Explorer or Analysis once one concrete question emerges. That keeps the Lab from feeling like a wall of information. It also matches the larger philosophy of the site: explanation first, then structured inspection, then broader theory if the pattern raises a deeper question.",
             },
+        ],
+        "references": [
+            {"label": "MathWorld: Twin Primes", "href": "https://mathworld.wolfram.com/TwinPrimes.html", "note": "Reference for the gap-2 structure the Lab highlights."},
+            {"label": "Britannica: modular arithmetic", "href": "https://www.britannica.com/science/modular-arithmetic", "note": "Background for the Mod 6 reading cues."},
+            {"label": "MathWorld: Prime Gaps", "href": "https://mathworld.wolfram.com/PrimeGaps.html", "note": "Useful for the spacing-versus-pattern distinction in the guide."},
         ],
         "related_links": [
             {"title": "Open the Lab", "body": "Use the live visualization first, then come back to this guide once you have one pattern question in mind.", "href": "/lab#visualization-title", "label": "Open the Lab"},

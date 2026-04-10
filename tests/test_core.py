@@ -247,9 +247,13 @@ def test_route_registry_is_ready_for_more_pages() -> None:
     assert "The prime number theorem in plain language" in rendered_pages["/prime-number-theorem"]
     assert "How this connects to the Analysis page" in rendered_pages["/prime-number-theorem"]
     assert "Read the Analysis Guide" in rendered_pages["/prime-number-theorem"]
+    assert "Last reviewed: April 2026" in rendered_pages["/prime-number-theorem"]
+    assert "References and further reading" in rendered_pages["/prime-number-theorem"]
+    assert "Prime Number Theorem" in rendered_pages["/prime-number-theorem"]
     assert "Twin prime conjecture explained" in rendered_pages["/twin-prime-conjecture"]
     assert "What has not been proved" in rendered_pages["/twin-prime-conjecture"]
     assert "Open Explorer" in rendered_pages["/twin-prime-conjecture"]
+    assert "Polymath8: bounded gaps between primes" in rendered_pages["/twin-prime-conjecture"]
     assert "How to find twin primes" in rendered_pages["/how-to-find-twin-primes"]
     assert "What finding twin primes does and does not tell you" in rendered_pages["/how-to-find-twin-primes"]
     assert "Read What Are Twin Primes?" in rendered_pages["/how-to-find-twin-primes"]
@@ -259,6 +263,7 @@ def test_route_registry_is_ready_for_more_pages() -> None:
     assert "What did Yitang Zhang prove?" in rendered_pages["/what-did-yitang-zhang-prove"]
     assert "The theorem in notation and in English" in rendered_pages["/what-did-yitang-zhang-prove"]
     assert "What happened after Zhang" in rendered_pages["/what-did-yitang-zhang-prove"]
+    assert "Yitang Zhang, Bounded gaps between primes" in rendered_pages["/what-did-yitang-zhang-prove"]
     assert "Why Mod 6 shows up so often" in rendered_pages["/why-mod-6-shows-up-so-often"]
     assert "Why this is a filter rather than a proof" in rendered_pages["/why-mod-6-shows-up-so-often"]
     assert "Why twin centers matter" in rendered_pages["/why-twin-centers-matter"]
@@ -277,6 +282,7 @@ def test_route_registry_is_ready_for_more_pages() -> None:
     assert "Hardy-Littlewood for twin primes" in rendered_pages["/hardy-littlewood-twin-primes"]
     assert "Where the twin prime constant enters" in rendered_pages["/hardy-littlewood-twin-primes"]
     assert "Read The Prime Number Theorem In Plain Language" in rendered_pages["/hardy-littlewood-twin-primes"]
+    assert "Hardy and Littlewood, Some Problems of Partitio Numerorum (V)" in rendered_pages["/hardy-littlewood-twin-primes"]
     assert "Why log n appears in prime number theory" in rendered_pages["/why-log-n-appears-in-prime-number-theory"]
     assert "Why twin-prime heuristics use log squared n" in rendered_pages["/why-log-n-appears-in-prime-number-theory"]
     assert "Read Hardy-Littlewood For Twin Primes" in rendered_pages["/why-log-n-appears-in-prime-number-theory"]
@@ -286,6 +292,7 @@ def test_route_registry_is_ready_for_more_pages() -> None:
     assert "What bounded gaps between primes actually proved" in rendered_pages["/what-bounded-gaps-between-primes-actually-proved"]
     assert "What the theorem does and does not name" in rendered_pages["/what-bounded-gaps-between-primes-actually-proved"]
     assert "Compare bounded gaps to the conjecture" in rendered_pages["/what-bounded-gaps-between-primes-actually-proved"]
+    assert "James Maynard, Small gaps between primes" in rendered_pages["/what-bounded-gaps-between-primes-actually-proved"]
     assert "Why the twin prime problem is hard" in rendered_pages["/why-the-twin-prime-problem-is-hard"]
     assert "Finite evidence is not the same as an infinite proof" in rendered_pages["/why-the-twin-prime-problem-is-hard"]
     assert "Read about Zhang" in rendered_pages["/why-the-twin-prime-problem-is-hard"]
@@ -302,11 +309,15 @@ def test_route_registry_is_ready_for_more_pages() -> None:
     assert "Open Start Here" in rendered_pages["/theory"]
     assert "Read Prime Numbers Explained" in rendered_pages["/theory"]
     assert "Read Twin Prime Conjecture Explained" in rendered_pages["/theory"]
+    assert "Selected references" in rendered_pages["/theory"]
+    assert "Yitang Zhang, Bounded gaps between primes" in rendered_pages["/theory"]
     assert "Take the theory back into the tools" in rendered_pages["/theory"]
     assert "This guide explains how to read the site's structured analysis outputs" in rendered_pages["/analysis-guide"]
     assert "Keep these terms nearby" in rendered_pages["/analysis-guide"]
     assert "Three quick reading recipes" in rendered_pages["/analysis-guide"]
     assert "Take this back into the tools" in rendered_pages["/analysis-guide"]
+    assert "Last reviewed: April 2026" in rendered_pages["/analysis-guide"]
+    assert "Hardy and Littlewood, Some Problems of Partitio Numerorum (V)" in rendered_pages["/analysis-guide"]
     assert "This glossary collects the core terms used throughout TwinPrimeExplorer.com" in rendered_pages["/glossary"]
     assert "Where to use these terms next" in rendered_pages["/glossary"]
     assert 'href="/start-here"' in rendered_pages["/glossary"]
@@ -315,10 +326,18 @@ def test_route_registry_is_ready_for_more_pages() -> None:
     assert "Read more: Prime Numbers Explained" in rendered_pages["/glossary"]
     assert "Read more: What Are Prime Gaps?" in rendered_pages["/glossary"]
     assert "Read more: Hardy-Littlewood For Twin Primes" in rendered_pages["/glossary"]
+    assert "Selected references" in rendered_pages["/glossary"]
+    assert "Yitang Zhang, Bounded gaps between primes" in rendered_pages["/glossary"]
     assert "About This Site" in rendered_pages["/about"]
     assert "Open Start Here" in rendered_pages["/about"]
     assert "<h2>Contact</h2>" in rendered_pages["/contact"]
     assert "Privacy Policy" in rendered_pages["/privacy"]
+
+
+def test_all_explanatory_pages_now_carry_review_and_reference_metadata() -> None:
+    for page in EXPLANATORY_PAGES:
+        assert page.get("reviewed") == "Last reviewed: April 2026"
+        assert len(page.get("references", [])) >= 3
 
 
 def test_theory_tab_configuration_is_present() -> None:
