@@ -685,6 +685,7 @@ GLOSSARY_PAGE = PageDefinition(
     <article class="theory-section">
       <h3>Where to use these terms next</h3>
       <p>Open <a class="inline-link" href="/start-here">Start Here</a> if you want a guided reading path first, move to the <a class="inline-link" href="/lab">Lab</a> if you want to see terms like twin center and Mod 6 in a live range, continue to <a class="inline-link" href="/analysis">Analysis</a> for structured interpretation, or read <a class="inline-link" href="/what-are-twin-primes">What Are Twin Primes?</a> if you want the quickest educational entry page.</p>
+      <p>For newer background clusters, move from <a class="inline-link" href="/prime-number-theorem">The Prime Number Theorem In Plain Language</a> to <a class="inline-link" href="/why-log-n-appears-in-prime-number-theory">Why log n Appears In Prime Number Theory</a> when you want average-density context, use <a class="inline-link" href="/hardy-littlewood-twin-primes">Hardy-Littlewood For Twin Primes</a> when you want the heuristic side of the twin-prime story, or use <a class="inline-link" href="/how-to-read-prime-patterns-in-the-lab">How To Read Prime Patterns In The Lab</a> if you want the educational pages to feed more directly into the live tools.</p>
     </article>
   </div>
 </section>""",
@@ -750,6 +751,47 @@ THEORY_PAGE = PageDefinition(
         <h4>Finding Twin Primes</h4>
         <p>Use the finding guide when you want a practical bridge from definitions and residues back to concrete examples.</p>
         <p><a class="inline-link" href="/how-to-find-twin-primes">Read How To Find Twin Primes</a></p>
+      </article>
+      <article class="metric-box theory-path-card">
+        <h4>Prime Number Theorem</h4>
+        <p>Use the average-density page when you want the background theorem behind thinning primes, log terms, and expected-count language.</p>
+        <p><a class="inline-link" href="/prime-number-theorem">Read The Prime Number Theorem In Plain Language</a></p>
+      </article>
+      <article class="metric-box theory-path-card">
+        <h4>Infinitely Many Twin Primes?</h4>
+        <p>Use the search-style question page when you want the shortest careful answer about expectation versus proof.</p>
+        <p><a class="inline-link" href="/are-there-infinitely-many-twin-primes">Read Are There Infinitely Many Twin Primes?</a></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="theory-block">
+    <h3>Go deeper by question type</h3>
+    <div class="metric-grid theory-path-grid">
+      <article class="metric-box theory-path-card">
+        <h4>Heuristic Background</h4>
+        <p>Hardy-Littlewood, the softer expectation page, and the log n background pages explain why mathematicians expect continuing twin-prime structure without calling that expectation a proof.</p>
+        <p><a class="inline-link" href="/hardy-littlewood-twin-primes">Read Hardy-Littlewood For Twin Primes</a> or <a class="inline-link" href="/why-twin-primes-are-expected-to-continue-forever">Read Why Twin Primes Are Expected To Continue Forever</a></p>
+      </article>
+      <article class="metric-box theory-path-card">
+        <h4>Progress Near Misses</h4>
+        <p>Use Chen's theorem and bounded-gap pages when you want theorem-level progress that comes close to twin primes without crossing the exact gap-2 line.</p>
+        <p><a class="inline-link" href="/chens-theorem">Read Chen's Theorem Explained</a></p>
+      </article>
+      <article class="metric-box theory-path-card">
+        <h4>Research Background</h4>
+        <p>Arithmetic progressions and modular structure help explain why the site's residue-class language belongs to real prime-number research rather than only visualization shortcuts.</p>
+        <p><a class="inline-link" href="/arithmetic-progressions-primes">Read Arithmetic Progressions Explained For Prime Patterns</a></p>
+      </article>
+      <article class="metric-box theory-path-card">
+        <h4>Clarify Similar Ideas</h4>
+        <p>Use the bridge pages when prime gaps, prime pairs, bounded gaps, and related terms are starting to blur together.</p>
+        <p><a class="inline-link" href="/prime-gaps-vs-prime-pairs">Read Prime Gaps vs Prime Pairs</a></p>
+      </article>
+      <article class="metric-box theory-path-card">
+        <h4>Read The Tools Better</h4>
+        <p>Use the Lab-reading guide when you want the educational pages to feed back into the live visual and analysis surfaces more deliberately.</p>
+        <p><a class="inline-link" href="/how-to-read-prime-patterns-in-the-lab">Read How To Read Prime Patterns In The Lab</a></p>
       </article>
     </div>
   </section>

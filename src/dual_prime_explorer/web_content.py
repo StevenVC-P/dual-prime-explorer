@@ -375,9 +375,9 @@ EXPLANATORY_PAGES = [
         "meta_description": "A reading guide to the most important TwinPrimeExplorer.com pages, including where to start with prime numbers, twin primes, conjectures, and the interactive tools.",
         "eyebrow": "Reading Guide",
         "hero_title": "Start here",
-        "hero_text": "If you are new to TwinPrimeExplorer.com, this page gives you a clean route into the educational side of the site before you decide which tool or topic to open next.",
+        "hero_text": "If you are new to TwinPrimeExplorer.com, this page gives you a clean route into the educational side of the site before you decide which tool, background topic, or theory path to open next.",
         "intro_title": "A simple reading path",
-        "intro_text": "This guide is for first-time visitors and returning readers who want the information side of the site in a sensible order. It points to the strongest foundation pages first, then shows how those ideas connect back to the Lab, Explorer, and Analysis surfaces. If you only want a quick plan, think in three steps: basics first, the twin-prime pattern second, then the conjecture and progress pages once the pattern feels familiar.",
+        "intro_text": "This guide is for first-time visitors and returning readers who want the information side of the site in a sensible order. It points to the strongest foundation pages first, then helps you branch toward conjecture and progress pages, or toward the shorter pattern-reading pages that connect directly back to the tools. If you only want a quick plan, think in three steps: basics first, the twin-prime pattern second, then either theory progress or tool-reading pages once the pattern feels familiar.",
         "reviewed": "Last reviewed: April 2026",
         "sections": [
             {
@@ -394,7 +394,11 @@ EXPLANATORY_PAGES = [
             },
             {
                 "title": "Use the shorter explainers when you want one idea at a time",
-                "body": "Pages such as Why Mod 6 Shows Up So Often, Why Twin Centers Matter, and What Bounded Gaps Between Primes Actually Proved are meant to answer one question clearly without forcing you through a longer theory overview. They work well when one concept keeps showing up in the tools and you want it unpacked quickly. They are best treated as short side paths that sharpen one idea before you return to the main reading flow.",
+                "body": "Pages such as Why Mod 6 Shows Up So Often, Why Twin Centers Matter, Prime Gaps vs Prime Pairs, and What Bounded Gaps Between Primes Actually Proved are meant to answer one question clearly without forcing you through a longer theory overview. They work well when one concept keeps showing up in the tools and you want it unpacked quickly. They are best treated as short side paths that sharpen one idea before you return to the main reading flow.",
+            },
+            {
+                "title": "Choose the branch that matches your next question",
+                "body": "If your next question is about background mathematics, go to The Prime Number Theorem In Plain Language or Why log n Appears In Prime Number Theory. If your next question is about progress on the open problem, go to Are There Infinitely Many Twin Primes?, Twin Prime Conjecture Explained, or Hardy-Littlewood For Twin Primes. If your next question is about how to read what the tools are showing, go to How To Read Prime Patterns In The Lab or the Analysis Guide.",
             },
             {
                 "title": "Then bring the ideas back into the tools",
@@ -413,6 +417,9 @@ EXPLANATORY_PAGES = [
             {"title": "See the broader spacing story", "body": "Open the prime-gaps page when you want the twin-prime pattern placed inside the larger question of spacing between consecutive primes.", "href": "/prime-gaps", "label": "Read What Are Prime Gaps?"},
             {"title": "See the larger open question", "body": "Use the conjecture page when you want the strongest plain-language statement of what remains unproved.", "href": "/twin-prime-conjecture", "label": "Read Twin Prime Conjecture Explained"},
             {"title": "Ask the big yes-or-no question", "body": "Use the direct infinite-question page when you want the most search-friendly answer to whether twin primes keep going forever.", "href": "/are-there-infinitely-many-twin-primes", "label": "Read Are There Infinitely Many Twin Primes?"},
+            {"title": "See the heuristic side of the expectation", "body": "Hardy-Littlewood is the clearest next page if you want to know why mathematicians expect infinitely many twin primes without calling that expectation a proof.", "href": "/hardy-littlewood-twin-primes", "label": "Read Hardy-Littlewood For Twin Primes"},
+            {"title": "See why log n keeps returning", "body": "This background page explains why logarithms appear in prime-density and twin-prime heuristic language across the site.", "href": "/why-log-n-appears-in-prime-number-theory", "label": "Read Why log n Appears In Prime Number Theory"},
+            {"title": "Separate spacing language from pair language", "body": "Use this clarification page when prime gaps, named prime pairs, and bounded-gap language are starting to blur together.", "href": "/prime-gaps-vs-prime-pairs", "label": "Read Prime Gaps vs Prime Pairs"},
             {"title": "Bring the reading into the tools", "body": "Open the Lab when you are ready to move from explanation back to a live range.", "href": "/lab#visualization-title", "label": "Open the Lab"},
             {"title": "Learn how to read the Lab", "body": "Use the Lab-reading page if you want a more deliberate first-pass workflow for interpreting the visual patterns.", "href": "/how-to-read-prime-patterns-in-the-lab", "label": "Read How To Read Prime Patterns In The Lab"},
         ],
@@ -936,6 +943,7 @@ EXPLANATORY_PAGES = [
             {"title": "Read the Zhang milestone", "body": "Use the Zhang page when you want the breakthrough framed around the person and the 2013 result.", "href": "/what-did-yitang-zhang-prove", "label": "Read about Zhang"},
             {"title": "See how Theory summarizes the progress", "body": "The Current Progress tab keeps the wider bounded-gap picture connected to the conjecture itself.", "href": "/theory#progress", "label": "Open Theory: Current Progress"},
             {"title": "Compare bounded gaps to the conjecture", "body": "The conjecture page keeps the exact gap-2 question separate from nearby theorem progress.", "href": "/twin-prime-conjecture", "label": "Read Twin Prime Conjecture Explained"},
+            {"title": "See Chen's theorem as another near miss", "body": "Chen's theorem is another major theorem-level result that gets very close to twin primes without proving them.", "href": "/chens-theorem", "label": "Read Chen's Theorem Explained"},
             {"title": "Use Analysis for gap structure", "body": "Analysis lets you compare the article idea with gap patterns in a concrete finite range.", "href": "/analysis#analysis-views-title", "label": "Open Analysis"},
             {"title": "Step back to the broader gap story", "body": "The prime-gaps page gives the larger spacing framework around the bounded-gap breakthrough.", "href": "/prime-gaps", "label": "Read What Are Prime Gaps?"},
         ],
@@ -1045,6 +1053,7 @@ EXPLANATORY_PAGES = [
             {"title": "Follow the progress story", "body": "The Zhang page shows what one of the biggest modern advances looked like in theorem form.", "href": "/what-did-yitang-zhang-prove", "label": "Read about Zhang"},
             {"title": "See Mod 6 in the Lab", "body": "Use the visual mode that makes arithmetic-progression structure easier to spot quickly.", "href": "/lab#visualization-title", "label": "Open the Lab"},
             {"title": "Read the modular explainer", "body": "Use the standalone Mod 6 page when you want the shortest clear explanation of why residue classes matter here.", "href": "/why-mod-6-shows-up-so-often", "label": "Read the Mod 6 page"},
+            {"title": "Go deeper into arithmetic progressions", "body": "This background page explains why residue classes and arithmetic progressions matter beyond the quick Mod 6 shortcut.", "href": "/arithmetic-progressions-primes", "label": "Read Arithmetic Progressions Explained For Prime Patterns"},
             {"title": "Compare methods with the conjecture itself", "body": "The conjecture page gives the cleanest statement of the problem these methods are trying to solve.", "href": "/twin-prime-conjecture", "label": "Read Twin Prime Conjecture Explained"},
             {"title": "See the difficulty summary", "body": "Use the difficulty page when you want the gap between these methods and a finished proof stated directly.", "href": "/why-the-twin-prime-problem-is-hard", "label": "Read Why The Twin Prime Problem Is Hard"},
         ],
@@ -1144,6 +1153,7 @@ EXPLANATORY_PAGES = [
             {"title": "Read the formal conjecture page", "body": "Use the full conjecture explainer for the exact statement, what infinity means here, and what remains unproved.", "href": "/twin-prime-conjecture", "label": "Read Twin Prime Conjecture Explained"},
             {"title": "Read the direct solved-or-not page", "body": "Use the short-answer clarification when you want the proof-status question handled as directly as possible.", "href": "/has-the-twin-prime-conjecture-been-solved", "label": "Read the short answer"},
             {"title": "Return to the main pattern", "body": "The twin-primes page gives the best plain-language introduction to the pattern itself before you think about the infinite question.", "href": "/what-are-twin-primes", "label": "Read What Are Twin Primes?"},
+            {"title": "See why mathematicians still expect yes", "body": "The Hardy-Littlewood page is the clearest next stop if you want the heuristic case for expecting infinitely many twin primes.", "href": "/hardy-littlewood-twin-primes", "label": "Read Hardy-Littlewood For Twin Primes"},
             {"title": "See the broader theory context", "body": "Theory keeps the conjecture, research approaches, and current progress in one place.", "href": "/theory#history", "label": "Open Theory"},
         ],
     },
@@ -1193,6 +1203,7 @@ EXPLANATORY_PAGES = [
             {"title": "Read the broader gap page", "body": "Use the prime-gaps page when you want the full spacing story rather than only the distinction itself.", "href": "/prime-gaps", "label": "Read What Are Prime Gaps?"},
             {"title": "Return to the twin-prime pattern", "body": "The twin-primes page shows the named pair pattern that motivates this whole comparison.", "href": "/what-are-twin-primes", "label": "Read What Are Twin Primes?"},
             {"title": "Compare the bounded-gap result", "body": "This page helps you see why bounded-gap progress is close to, but not the same as, a twin-prime proof.", "href": "/what-bounded-gaps-between-primes-actually-proved", "label": "Read What Bounded Gaps Between Primes Actually Proved"},
+            {"title": "See the direct infinite-question page", "body": "This page helps connect the pair-versus-gap distinction back to the search-style question about infinitely many twin primes.", "href": "/are-there-infinitely-many-twin-primes", "label": "Read Are There Infinitely Many Twin Primes?"},
             {"title": "Use the Analysis Guide", "body": "The guide explains how the site's analysis views shift between structural and spacing questions.", "href": "/analysis-guide", "label": "Read the Analysis Guide"},
         ],
     },
@@ -1244,7 +1255,9 @@ EXPLANATORY_PAGES = [
         ],
         "related_links": [
             {"title": "Start from average prime density", "body": "The prime number theorem page explains the broad thinning pattern that sits behind Hardy-Littlewood style estimates.", "href": "/prime-number-theorem", "label": "Read The Prime Number Theorem In Plain Language"},
+            {"title": "See why log n keeps showing up", "body": "This background page is the shortest route from prime-density language to the repeated log terms inside twin-prime heuristics.", "href": "/why-log-n-appears-in-prime-number-theory", "label": "Read Why log n Appears In Prime Number Theory"},
             {"title": "Return to the formal conjecture", "body": "Use the conjecture page when you want the exact problem statement that this heuristic is trying to predict.", "href": "/twin-prime-conjecture", "label": "Read Twin Prime Conjecture Explained"},
+            {"title": "Read the softer expectation page", "body": "Use the expectation page if you want the same idea explained more conversationally before the full Hardy-Littlewood framework.", "href": "/why-twin-primes-are-expected-to-continue-forever", "label": "Read Why Twin Primes Are Expected To Continue Forever"},
             {"title": "Compare proof and expectation", "body": "The bounded-gaps page helps keep theorem-level progress separate from heuristic prediction.", "href": "/what-bounded-gaps-between-primes-actually-proved", "label": "Read What Bounded Gaps Between Primes Actually Proved"},
             {"title": "See how expected views are used on the site", "body": "The Analysis Guide explains why expected-count comparisons are rough interpretive tools rather than proofs.", "href": "/analysis-guide", "label": "Read the Analysis Guide"},
         ],
@@ -1348,9 +1361,107 @@ EXPLANATORY_PAGES = [
             {"title": "Open the Lab", "body": "Use the live visualization first, then come back to this guide once you have one pattern question in mind.", "href": "/lab#visualization-title", "label": "Open the Lab"},
             {"title": "Read the twin-centers explainer", "body": "This page helps explain why the Lab uses centers as such a strong structural cue.", "href": "/why-twin-centers-matter", "label": "Read Why Twin Centers Matter"},
             {"title": "Read the Mod 6 explainer", "body": "Use the modular page when you want the fastest plain-language explanation of the residue pattern behind the Lab.", "href": "/why-mod-6-shows-up-so-often", "label": "Read Why Mod 6 Shows Up So Often"},
+            {"title": "Clarify spacing versus named patterns", "body": "This bridge page helps when what you noticed visually needs to be separated into prime-gap language versus prime-pair language.", "href": "/prime-gaps-vs-prime-pairs", "label": "Read Prime Gaps vs Prime Pairs"},
             {"title": "Move into structured interpretation", "body": "The Analysis Guide explains how to read the summary views once the visual pattern is no longer the main question.", "href": "/analysis-guide", "label": "Read the Analysis Guide"},
         ],
     },
+    {
+        "route": "/chens-theorem",
+        "nav_label": "Chen's Theorem Explained",
+        "title": "TwinPrimeExplorer.com | Chen's Theorem Explained",
+        "meta_description": "A plain-language explanation of Chen's theorem, why it is a major near-miss result in the twin-prime story, and why it still stops short of a proof of infinitely many twin primes.",
+        "eyebrow": "Progress Result",
+        "hero_title": "Chen's theorem explained",
+        "hero_text": "Chen's theorem is one of the strongest theorem-level near misses in the twin-prime story. It proves that infinitely many primes sit 2 away from a number that is either prime or semiprime.",
+        "intro_title": "Why this theorem matters",
+        "intro_text": "This page explains Chen's theorem in plain language: what it says, why mathematicians treat it as serious progress, and why the result is close to twin primes without actually becoming a twin-prime proof.",
+        "reviewed": "Last reviewed: April 2026",
+        "sections": [
+            {"title": "What Chen's theorem says", "body": "In twin-prime language, Chen's theorem says that there are infinitely many primes p such that p + 2 is either also prime or else a semiprime, meaning a product of two primes. So the theorem does not guarantee infinitely many pairs (p, p + 2) where both entries are prime. It guarantees infinitely many cases where the second number is only one step away from that exact target."},
+            {"title": "Why semiprime matters here", "body": "A semiprime is simpler than a general composite number because it still has very limited factor structure. For example, 91 = 7 x 13 is semiprime. So Chen's theorem is not saying p + 2 can be any composite at all. It says p + 2 is forced into a narrow almost-prime category. That is why the theorem feels much closer to twin primes than a loose statement about composites would."},
+            {"title": "Why mathematicians view it as a near miss", "body": "Twin primes ask for exact gap-2 pairs where both numbers are prime. Chen's theorem gets one side exactly right and constrains the other side very strongly, but it still leaves open the possibility that p + 2 has two prime factors instead of one. In plain language, the theorem comes extremely close to the twin-prime pattern while still stopping just short of it."},
+            {"title": "A concrete comparison", "body": "A true twin-prime example is (11, 13). A Chen-type outcome could look like a prime p where p + 2 behaves more like 91, which is 7 x 13. Both situations preserve the same shift by 2, but only the first gives an exact twin-prime pair. This comparison helps explain why Chen's theorem is celebrated without being mistaken for a proof of infinitely many twin primes."},
+            {"title": "Why this was important before bounded gaps", "body": "Chen's theorem was already a major achievement because it showed that sieve methods could force prime patterns into a remarkably tight near-twin shape. Long before bounded-gap results, it gave the field one of its clearest theorem-level signs that the twin-prime problem could be approached by proving strong nearby statements first."},
+            {"title": "How this fits with the modern progress story", "body": "The modern twin-prime story includes several kinds of progress: Chen's theorem, bounded gaps, heuristic predictions, and better control of primes in arithmetic progressions. Chen's theorem belongs to the near-miss side of that story. It shows how close theorem-level progress can come to the exact twin-prime pattern without actually settling gap 2."},
+            {"title": "How to use this page on the site", "body": "Use this page when you want a stronger sense of what mathematicians mean by progress that is substantial but still incomplete. It works especially well beside the bounded-gaps page, the difficulty page, and the broader conjecture explainer. Together, those pages make it easier to understand why modern results are impressive without overstating what has been proved."}
+        ],
+        "references": [
+            {"label": "MathWorld: Chen's Theorem", "href": "https://mathworld.wolfram.com/ChensTheorem.html", "note": "Compact statement of the theorem and its classical references."},
+            {"label": "MathWorld: Chen Prime", "href": "https://mathworld.wolfram.com/ChenPrime.html", "note": "Accessible route into the prime-or-semiprime condition discussed on the page."},
+            {"label": "MathWorld: Twin Prime Conjecture", "href": "https://mathworld.wolfram.com/TwinPrimeConjecture.html", "note": "Reference for the exact gap-2 conjecture Chen's theorem approaches but does not settle."}
+        ],
+        "related_links": [
+            {"title": "Compare Chen to bounded gaps", "body": "Use the bounded-gaps page when you want another major near-miss theorem stated in plain language.", "href": "/what-bounded-gaps-between-primes-actually-proved", "label": "Read What Bounded Gaps Between Primes Actually Proved"},
+            {"title": "See why the exact last step is hard", "body": "The difficulty page explains why the final move from near misses to exact twin primes is so resistant.", "href": "/why-the-twin-prime-problem-is-hard", "label": "Read Why The Twin Prime Problem Is Hard"},
+            {"title": "Return to the formal open problem", "body": "Use the conjecture page when you want the exact gap-2 claim that Chen's theorem does not yet prove.", "href": "/twin-prime-conjecture", "label": "Read Twin Prime Conjecture Explained"},
+            {"title": "See the wider progress cluster", "body": "Theory keeps Chen, bounded gaps, and other progress pages in a broader research frame.", "href": "/theory#progress", "label": "Open Theory: Current Progress"}
+        ]
+    }
+    ,
+    {
+        "route": "/why-twin-primes-are-expected-to-continue-forever",
+        "nav_label": "Why Twin Primes Are Expected To Continue Forever",
+        "title": "TwinPrimeExplorer.com | Why Twin Primes Are Expected To Continue Forever",
+        "meta_description": "A plain-language explanation of why mathematicians expect twin primes to continue forever, even though that expectation is still not a proof.",
+        "eyebrow": "Heuristic Expectation",
+        "hero_title": "Why twin primes are expected to continue forever",
+        "hero_text": "Mathematicians do not have a proof that twin primes continue forever, but they do have strong reasons to expect that they do. This page explains that expectation without blurring it into a theorem.",
+        "intro_title": "Why expectation is not the same as proof",
+        "intro_text": "This page is the softer companion to the more technical Hardy-Littlewood explainer. It answers the natural question of why mathematicians keep expecting more twin primes while still being careful about what has and has not been proved.",
+        "reviewed": "Last reviewed: April 2026",
+        "sections": [
+            {"title": "The pattern keeps surviving larger searches", "body": "Twin primes appear early, and they continue to appear in very large computed ranges. That does not prove they go on forever, but it does remove the feeling that the pattern is only a small-number accident. The basic shape keeps recurring instead of dying out quickly."},
+            {"title": "Average-density models still leave room for them", "body": "Primes thin out on average, but they do not disappear. Heuristic models suggest that the thinning is slow enough that gap-2 pairs should still keep showing up from time to time. In other words, twin primes should become rarer on average, not impossible."},
+            {"title": "Arithmetic constraints are built into the expectation", "body": "A serious expectation about twin primes does not pretend numbers are random in a naive way. It takes divisibility constraints seriously. For example, primes greater than 3 must avoid many residue classes, and good heuristic models correct for those restrictions rather than ignoring them. That is one reason mathematicians trust the expectation more than a simple coin-flip picture."},
+            {"title": "A concrete way to think about it", "body": "Compare two claims. One claim says, 'I can point to many finite examples such as (11, 13), (17, 19), and (29, 31).' The stronger claim says, 'I expect this pattern never runs out.' The first is visible evidence. The second comes from combining that evidence with long-run heuristic models about prime density and local divisibility. The page exists to keep those two kinds of support separate."},
+            {"title": "Why this still stops short of theorem status", "body": "Expectation is not enough in number theory. A proof has to show that exact gap 2 recurs infinitely often, not merely that the pattern seems persistent and mathematically plausible. This is why the site keeps expectation language and theorem language in different lanes. One can be strong without turning into the other."},
+            {"title": "How this relates to Hardy-Littlewood", "body": "Hardy-Littlewood gives the more quantitative heuristic framework behind this expectation. This page is the shorter, more conversational version. It explains why mathematicians expect continuing twin primes without requiring you to absorb the full constant-and-logarithm machinery first."},
+            {"title": "How this fits into the site's reading path", "body": "Use this page if you want the expectation side of the story before you move into the more formal conjecture and heuristic pages. Then go to Are There Infinitely Many Twin Primes?, Twin Prime Conjecture Explained, or Hardy-Littlewood For Twin Primes depending on whether you want the short answer, the formal statement, or the more detailed heuristic background."}
+        ],
+        "references": [
+            {"label": "MathWorld: Twin Prime Conjecture", "href": "https://mathworld.wolfram.com/TwinPrimeConjecture.html", "note": "Compact reference for the open status of the conjecture and the strength of mathematical expectation around it."},
+            {"label": "MathWorld: Twin Primes", "href": "https://mathworld.wolfram.com/TwinPrimes.html", "note": "Reference for the recurring finite pattern and the strong heuristic form of the conjecture."},
+            {"label": "Hardy and Littlewood, Some Problems of Partitio Numerorum (V)", "href": "https://academic.oup.com/plms/article-pdf/s2-22/1/46/4372641/s2-22-1-46.pdf", "note": "Classic heuristic source behind the expectation that twin primes should continue."}
+        ],
+        "related_links": [
+            {"title": "Read the search-style answer first", "body": "Use the direct infinite-question page when you want the shortest careful answer before the fuller heuristic explanation.", "href": "/are-there-infinitely-many-twin-primes", "label": "Read Are There Infinitely Many Twin Primes?"},
+            {"title": "See the full heuristic framework", "body": "Hardy-Littlewood is the more detailed page for why mathematicians expect continuing twin-prime structure.", "href": "/hardy-littlewood-twin-primes", "label": "Read Hardy-Littlewood For Twin Primes"},
+            {"title": "Return to the formal conjecture", "body": "Use the conjecture page when you want expectation separated from the exact statement that still needs proof.", "href": "/twin-prime-conjecture", "label": "Read Twin Prime Conjecture Explained"},
+            {"title": "Return to the main pattern", "body": "The core twin-primes page stays the best place to see the pattern itself before you think about why it should continue.", "href": "/what-are-twin-primes", "label": "Read What Are Twin Primes?"}
+        ]
+    },
+    {
+        "route": "/arithmetic-progressions-primes",
+        "nav_label": "Arithmetic Progressions Explained For Prime Patterns",
+        "title": "TwinPrimeExplorer.com | Arithmetic Progressions Explained For Prime Patterns",
+        "meta_description": "A plain-language explanation of arithmetic progressions in prime-number study, including why residue classes, Dirichlet's theorem, and Green-Tao matter for reading prime patterns.",
+        "eyebrow": "Research Background",
+        "hero_title": "Arithmetic progressions explained for prime patterns",
+        "hero_text": "Arithmetic progressions sound like a simple school-math idea, but they play a serious role in prime-number research. They help explain why modular structure matters and why primes are studied inside patterned numerical lanes.",
+        "intro_title": "Why this background helps on the site",
+        "intro_text": "This page explains why arithmetic progressions matter for prime patterns on TwinPrimeExplorer.com. It connects the site's Mod 6 and residue-class language to deeper mathematical ideas about how primes distribute inside allowed progressions.",
+        "reviewed": "Last reviewed: April 2026",
+        "sections": [
+            {"title": "What an arithmetic progression is", "body": "An arithmetic progression is a sequence that moves by a constant step size, such as 5, 11, 17, 23 or 1, 7, 13, 19. The pattern is simple: each term differs from the next by the same amount. That simplicity is exactly why arithmetic progressions are so useful in prime-number study. They let mathematicians ask whether primes keep showing up inside a structured lane instead of inside the integers all at once."},
+            {"title": "Why primes in progressions matter", "body": "Once you think in terms of residue classes, prime patterns stop looking like isolated accidents. For example, primes greater than 3 must live in the 1 or 5 classes mod 6. That means much of the site's modular structure can be rephrased as a statement about which arithmetic progressions primes are allowed to occupy. The progression viewpoint turns a visual pattern into a research-level distribution question."},
+            {"title": "Dirichlet's theorem is the first big result here", "body": "Dirichlet's theorem says that if the starting term and step size share no common factor, then the progression contains infinitely many primes. So sequences like 6n + 1 and 6n + 5 do not merely happen to contain primes early on. They contain infinitely many primes. This helps explain why modular filters on the site are more than visual tricks: they reflect serious mathematical structure."},
+            {"title": "Green-Tao shows the pattern can be much richer", "body": "The Green-Tao theorem goes further by proving that the prime numbers contain arbitrarily long arithmetic progressions. In other words, primes do not merely appear infinitely often inside some allowed lanes. They can themselves line up in long evenly spaced strings. That result is not about twin primes directly, but it shows how structured prime patterns can be at theorem strength."},
+            {"title": "A concrete way to connect this to mod 6", "body": "If you look at numbers of the form 6n + 1, you get 7, 13, 19, 25, 31, 37, and so on. Some entries are prime and some are composite, but the progression itself captures one of the allowed lanes where large primes can live. The same is true for 6n + 5. This is one reason the Lab's Mod 6 view and the theory of primes in arithmetic progressions fit together so naturally."},
+            {"title": "Why this still does not solve twin primes", "body": "Knowing that primes distribute richly inside arithmetic progressions is not the same as proving that exact gap-2 pairs occur infinitely often. Arithmetic progressions control where primes may appear and how they can spread across residue classes. Twin primes ask for a much more specific local pairing condition. So this background is important, but it is only one part of the larger puzzle."},
+            {"title": "How to use this page on the site", "body": "Use this page when Mod 6, residue classes, or primes in arithmetic progressions start appearing across the Theory, Glossary, and Analysis surfaces and you want them to feel like one idea instead of scattered vocabulary. It pairs especially well with the Mod 6 explainer, the methods overview, and the Theory approaches material."}
+        ],
+        "references": [
+            {"label": "Britannica: Dirichlet's theorem", "href": "https://www.britannica.com/science/Dirichlets-theorem", "note": "Plain-language reference for infinitely many primes in coprime arithmetic progressions."},
+            {"label": "MathWorld: Dirichlet's Theorem", "href": "https://mathworld.wolfram.com/DirichletsTheorem.html", "note": "Compact reference for the arithmetic-progression theorem behind many modular patterns."},
+            {"label": "Annals of Mathematics: The primes contain arbitrarily long arithmetic progressions", "href": "https://annals.math.princeton.edu/2008/167-2/p03", "note": "Green-Tao theorem source for long arithmetic progressions of primes."}
+        ],
+        "related_links": [
+            {"title": "Read the Mod 6 explainer", "body": "Use the short modular page first if you want the quickest route from residues to visible prime structure.", "href": "/why-mod-6-shows-up-so-often", "label": "Read Why Mod 6 Shows Up So Often"},
+            {"title": "See the methods overview", "body": "The methods page shows how arithmetic progressions fit beside sieves, heuristics, and bounded-gap work.", "href": "/how-mathematicians-study-twin-primes", "label": "Read How Mathematicians Study Twin Primes"},
+            {"title": "Open Theory: Approaches", "body": "Theory keeps the arithmetic-progression idea inside the broader research picture.", "href": "/theory#approaches", "label": "Open Theory: Approaches"},
+            {"title": "Use the Glossary alongside it", "body": "Glossary is still the fastest route when you only need a term like residue class or arithmetic progression defined briefly.", "href": "/glossary", "label": "Open Glossary"}
+        ]
+    }
 ]
 
 
@@ -1464,6 +1575,10 @@ GLOSSARY_SECTIONS = [
                 "term": "Arithmetic Progression",
                 "summary": "An arithmetic progression is a sequence of numbers with a constant step size between consecutive terms.",
                 "detail": "Examples include 1, 7, 13, 19 and 5, 11, 17, 23. Studying primes inside arithmetic progressions helps explain why certain modular structures matter for twin primes.",
+                "article_link": {
+                    "label": "Read more: Arithmetic Progressions Explained For Prime Patterns",
+                    "href": "/arithmetic-progressions-primes",
+                },
             },
         ],
     },
