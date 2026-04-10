@@ -1462,6 +1462,39 @@ EXPLANATORY_PAGES = [
             {"title": "Use the Glossary alongside it", "body": "Glossary is still the fastest route when you only need a term like residue class or arithmetic progression defined briefly.", "href": "/glossary", "label": "Open Glossary"}
         ]
     }
+    ,
+    {
+        "route": "/how-to-read-analysis",
+        "nav_label": "How To Read The Analysis Page",
+        "title": "TwinPrimeExplorer.com | How To Read The Analysis Page",
+        "meta_description": "A plain-language guide to reading the Analysis page on TwinPrimeExplorer.com, including which tab to open first and how to connect Modular, Gaps, Factors, Density, and Expected.",
+        "eyebrow": "Analysis Companion",
+        "hero_title": "How to read the Analysis page",
+        "hero_text": "The Analysis page is easiest to use when you begin with one question and let that question choose the tab. This page gives the short, practical route before the fuller guide takes over.",
+        "intro_title": "A practical way to enter Analysis",
+        "intro_text": "This page is the shorter companion to the full Analysis Guide. It is meant for visitors who want a fast, plain-language answer to what each Analysis tab is for, which one to open first, and how to move from one tab to the next without treating every metric as equally important at once.",
+        "reviewed": "Last reviewed: April 2026",
+        "sections": [
+            {"title": "Start with your question, not with all five tabs", "body": "The Analysis page becomes much easier once you decide what you are asking. If you want structural rules, start with Modular. If you want spacing behavior, start with Gaps. If you want center arithmetic, start with Factors. If you want local clustering, start with Density. If you only want a rough benchmark, open Expected last rather than first."},
+            {"title": "Modular is the best first tab for visible structure", "body": "Use Modular when you want the quickest explanation of why the same residue-class patterns keep appearing. It is usually the cleanest first stop because it turns the range into a small number of structural buckets rather than a long list of counts. If the site keeps mentioning Mod 6 or residue classes, this is the fastest tab to make that language feel concrete."},
+            {"title": "Gaps is the best first tab for spacing questions", "body": "Use Gaps when your question is about how twin-prime pairs are spread across the range. This tab helps separate close clustering from wider separation and works especially well after the prime-gaps pages. It is the right entry point when the question in your head sounds like, 'Are the pairs bunching up or spreading out here?'"},
+            {"title": "Factors is really about centers, not about every number", "body": "Factors is most useful when you want to compare twin-prime centers with other nearby even numbers. It is less about generic factor tables and more about whether centers look structurally unusual. If twin centers are still a fuzzy idea, this tab makes more sense after Why Twin Centers Matter or after a quick pass through Explorer."},
+            {"title": "Density and Expected should usually come later", "body": "Density and Expected are comparison tabs rather than entry tabs. Density asks whether twin-prime neighborhoods look locally richer than the surrounding range. Expected asks how the observed count compares with a rough benchmark. Both are more useful once you already know what the range looks like structurally, because otherwise the summaries can float free of the actual pattern."},
+            {"title": "A concrete reading sequence that works well", "body": "A reliable sequence is: start with Modular for structure, move to Gaps for spacing, then use Factors if twin centers are part of the question. After that, open Density if you want neighborhood comparison and Expected if you want a rough benchmark. This order keeps the more interpretive tabs from arriving before the underlying pattern is clear."},
+            {"title": "How this page fits with the rest of the site", "body": "Use this page as the quick companion when you land on Analysis and want orientation fast. Use the full Analysis Guide when you want the longer walkthrough. Move back to the live Analysis page when you are ready to test a real range, and use the Lab or Explorer if the numbers still need a more visual or row-by-row reading first."}
+        ],
+        "references": [
+            {"label": "Britannica: modular arithmetic", "href": "https://www.britannica.com/science/modular-arithmetic", "note": "Background for the modular reading path used by the page."},
+            {"label": "MathWorld: Prime Gaps", "href": "https://mathworld.wolfram.com/PrimeGaps.html", "note": "Reference for the spacing language behind the Gaps tab."},
+            {"label": "Hardy and Littlewood, Some Problems of Partitio Numerorum (V)", "href": "https://academic.oup.com/plms/article-pdf/s2-22/1/46/4372641/s2-22-1-46.pdf", "note": "Background for the rough benchmark framing used in the Expected tab."}
+        ],
+        "related_links": [
+            {"title": "Open the live Analysis page", "body": "Use the actual Analysis surface once you know which question you want the tabs to answer.", "href": "/analysis#analysis-views-title", "label": "Open Analysis"},
+            {"title": "Read the full Analysis Guide", "body": "The longer guide explains each tab in more depth and works better when you want the fuller walkthrough.", "href": "/analysis-guide", "label": "Read the Analysis Guide"},
+            {"title": "Step back to prime gaps", "body": "The prime-gaps page helps when your Analysis question is really about spacing language first.", "href": "/prime-gaps", "label": "Read What Are Prime Gaps?"},
+            {"title": "Connect it to bounded-gap reading", "body": "The bounded-gaps explainer helps when the Gaps and Expected tabs raise theory questions about near misses versus exact twin primes.", "href": "/what-bounded-gaps-between-primes-actually-proved", "label": "Read What Bounded Gaps Between Primes Actually Proved"}
+        ]
+    }
 ]
 
 
