@@ -516,6 +516,7 @@ ANALYSIS_PAGE = PageDefinition(
     <article class="metric-box">
       <h3>If terms feel unfamiliar</h3>
       <p>Start with Modular or Gaps for the clearest pattern read. If terms like Mod 6, twin center, or heuristic feel unfamiliar, use the <a class="inline-link" href="/glossary">Glossary</a> for quick definitions, read <a class="inline-link" href="/why-mod-6-shows-up-so-often">Why Mod 6 Shows Up So Often</a> for a short modular refresher, or use the guide for a slightly fuller read.</p>
+      <p><a class="inline-link" href="/how-to-read-analysis">Open the shorter analysis companion page</a></p>
       <p><a class="inline-link" href="/analysis-guide" target="_blank" rel="noopener noreferrer">Open the full analysis guide in a new tab</a></p>
     </article>
   </div>
@@ -613,6 +614,7 @@ ANALYSIS_GUIDE_PAGE = PageDefinition(
     <article class="theory-section">
       <h3>How to read the tabs together</h3>
       <p>A useful pattern is to move from structural questions to comparative questions. Start with Modular and Gaps to see visible patterns, then move to Factors, Density, and Expected to test whether those patterns also show up in the broader summaries.</p>
+      <p><a class="inline-link" href="/how-to-read-analysis">Use the shorter companion page</a> if you want a faster entry route before returning to the longer guide.</p>
       <p><a class="inline-link" href="/analysis">Return to the Analysis page</a></p>
     </article>
     <article class="theory-section">
