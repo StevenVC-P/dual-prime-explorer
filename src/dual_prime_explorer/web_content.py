@@ -1,4 +1,4 @@
-"""Structured content used by the web UI."""
+﻿"""Structured content used by the web UI."""
 
 from __future__ import annotations
 
@@ -389,7 +389,7 @@ EXPLANATORY_PAGES = [
             },
             {
                 "title": "Use prime gaps and the conjecture pages for context",
-                "body": "Prime gaps gives the broader spacing story, while Twin Prime Conjecture Explained gives the larger unresolved question behind the site. Those two pages help connect a concrete visible pattern to the deeper mathematical problem that makes twin primes so interesting. A good rule is: read prime gaps when you want the surrounding spacing language, and read the conjecture page when you want the biggest open question stated cleanly.",
+                "body": "Prime gaps gives the broader spacing story, while Twin Prime Conjecture Explained gives the larger unresolved question behind the site. Those two pages help connect a concrete visible pattern to the deeper mathematical problem that makes twin primes so interesting. A good rule is: read prime gaps when you want the surrounding spacing language, read the conjecture page when you want the biggest open question stated cleanly, and use Prime Gaps vs Prime Pairs if those two ideas are starting to blur together.",
             },
             {
                 "title": "Use the shorter explainers when you want one idea at a time",
@@ -402,10 +402,13 @@ EXPLANATORY_PAGES = [
         ],
         "related_links": [
             {"title": "Begin with prime numbers", "body": "Use the basic page first if you want the cleanest foundation for the rest of the site.", "href": "/prime-numbers", "label": "Read Prime Numbers Explained"},
+            {"title": "See why primes thin out", "body": "The prime number theorem page explains the average thinning pattern that sits behind later density and expected-count language.", "href": "/prime-number-theorem", "label": "Read The Prime Number Theorem In Plain Language"},
             {"title": "Move to the main pattern", "body": "Go next to the twin-primes page if you want the core idea behind the whole site.", "href": "/what-are-twin-primes", "label": "Read What Are Twin Primes?"},
             {"title": "See the broader spacing story", "body": "Open the prime-gaps page when you want the twin-prime pattern placed inside the larger question of spacing between consecutive primes.", "href": "/prime-gaps", "label": "Read What Are Prime Gaps?"},
             {"title": "See the larger open question", "body": "Use the conjecture page when you want the strongest plain-language statement of what remains unproved.", "href": "/twin-prime-conjecture", "label": "Read Twin Prime Conjecture Explained"},
+            {"title": "Ask the big yes-or-no question", "body": "Use the direct infinite-question page when you want the most search-friendly answer to whether twin primes keep going forever.", "href": "/are-there-infinitely-many-twin-primes", "label": "Read Are There Infinitely Many Twin Primes?"},
             {"title": "Bring the reading into the tools", "body": "Open the Lab when you are ready to move from explanation back to a live range.", "href": "/lab#visualization-title", "label": "Open the Lab"},
+            {"title": "Learn how to read the Lab", "body": "Use the Lab-reading page if you want a more deliberate first-pass workflow for interpreting the visual patterns.", "href": "/how-to-read-prime-patterns-in-the-lab", "label": "Read How To Read Prime Patterns In The Lab"},
         ],
     },
     {
@@ -968,6 +971,272 @@ EXPLANATORY_PAGES = [
             {"title": "See the difficulty summary", "body": "Use the difficulty page when you want the gap between these methods and a finished proof stated directly.", "href": "/why-the-twin-prime-problem-is-hard", "label": "Read Why The Twin Prime Problem Is Hard"},
         ],
     },
+    {
+        "route": "/prime-number-theorem",
+        "nav_label": "The Prime Number Theorem In Plain Language",
+        "title": "TwinPrimeExplorer.com | The Prime Number Theorem In Plain Language",
+        "meta_description": "A plain-language explanation of the prime number theorem, why primes thin out on average, and how this connects to expected counts on TwinPrimeExplorer.com.",
+        "eyebrow": "Prime Distribution",
+        "hero_title": "The prime number theorem in plain language",
+        "hero_text": "The prime number theorem explains the average large-scale behavior of primes. It does not tell you exactly where the next prime will appear, but it does explain why primes thin out as numbers grow.",
+        "intro_title": "What this theorem is really about",
+        "intro_text": "This page gives a plain-language version of one of the central background results in number theory. The theorem describes the average density of prime numbers, which helps explain why large gaps become more common, why logarithms keep appearing in prime discussions, and why the site's expected-count language is framed as an average guide rather than an exact rule.",
+        "sections": [
+            {
+                "title": "What the prime number theorem says",
+                "body": "In rough language, the prime number theorem says that primes become less common in a predictable average way as numbers grow. More precisely, the number of primes up to a large number N is approximately N divided by log N. The theorem is not telling you that every block of numbers contains exactly that many primes. It is describing the long-run average trend.",
+            },
+            {
+                "title": "Why primes thin out on average",
+                "body": "Early on, primes appear fairly often: 2, 3, 5, 7, and 11 arrive quickly. Later on, you still find primes, but they are spread across larger stretches of numbers. The prime number theorem captures that gradual thinning. For example, the average prime density near 100 is much higher than the average prime density near one million. The theorem explains the trend, not the exact local pattern.",
+            },
+            {
+                "title": "Why this does not make primes predictable",
+                "body": "A common misunderstanding is that an average law should let you predict the next prime exactly. It does not. The theorem says that primes thin out in a broad statistical sense, but the local behavior is still jagged. One range can contain several primes close together, while the next range may contain a noticeably larger gap. That is why the theorem is powerful without behaving like a recipe.",
+            },
+            {
+                "title": "A concrete way to read the formula",
+                "body": "Suppose you compare two large cutoffs, one moderate and one much larger. N divided by log N grows, so the total number of primes keeps increasing. But the ratio also shows that the fraction of numbers that are prime becomes smaller. That is the core idea: primes never stop, but they become rarer on average. This is exactly the kind of average-density statement that later supports prime-gaps discussions and expected-count heuristics.",
+            },
+            {
+                "title": "Why the theorem matters for this site",
+                "body": "TwinPrimeExplorer.com often talks about prime density, prime gaps, and rough expected counts. The prime number theorem is one of the main reasons that language makes sense. It gives the background for why primes thin out, why larger gaps become more plausible on average, and why any rough benchmark involving log terms must be treated as a large-scale guide rather than as an exact prediction for one chosen interval.",
+            },
+            {
+                "title": "How this connects to the Analysis page",
+                "body": "The Analysis page includes an Expected view that compares observed twin-prime counts with a rough benchmark. That benchmark is not the prime number theorem itself, but it lives in the same family of average-density thinking. The theorem helps explain why log terms appear in these comparisons, while the Analysis Guide explains why such comparisons must stay rough and should never be confused with proof.",
+            },
+        ],
+        "related_links": [
+            {"title": "Start from the basic definition of primes", "body": "Use the prime-numbers page first if you want the cleanest foundation before moving into average distribution questions.", "href": "/prime-numbers", "label": "Read Prime Numbers Explained"},
+            {"title": "See how spacing changes", "body": "The prime-gaps page turns the same thinning idea into a direct discussion of spacing between consecutive primes.", "href": "/prime-gaps", "label": "Read What Are Prime Gaps?"},
+            {"title": "Connect it to expected-count language", "body": "The Analysis Guide explains how rough expected benchmarks are used on the site and why they are not theorem-level predictions for each range.", "href": "/analysis-guide", "label": "Read the Analysis Guide"},
+            {"title": "Open the live Analysis view", "body": "Use Analysis when you want to compare average-density ideas with a real selected range.", "href": "/analysis#analysis-views-title", "label": "Open Analysis"},
+        ],
+    },
+    {
+        "route": "/are-there-infinitely-many-twin-primes",
+        "nav_label": "Are There Infinitely Many Twin Primes?",
+        "title": "TwinPrimeExplorer.com | Are There Infinitely Many Twin Primes?",
+        "meta_description": "A plain-language answer to whether there are infinitely many twin primes, including what mathematicians expect, what is proved, and what remains unproved.",
+        "eyebrow": "Twin Prime Question",
+        "hero_title": "Are there infinitely many twin primes?",
+        "hero_text": "No one has proved it yet, but many mathematicians expect the answer is yes. That mix of strong expectation and missing proof is exactly why the twin prime conjecture matters.",
+        "intro_title": "The short answer and the careful answer",
+        "intro_text": "If you ask whether there are infinitely many twin primes, the careful answer is: this is strongly expected, but still unproved. This page is written for the direct search-style version of the question, so it separates the short answer, the mathematical expectation, and the theorem-level situation without assuming you already know the formal conjecture language.",
+        "sections": [
+            {
+                "title": "The short answer",
+                "body": "Mathematicians have not proved that infinitely many twin-prime pairs exist. So the fully honest answer is: it is unproved. At the same time, the dominant expectation is that twin primes do continue forever. This means the best short answer is not simply yes or no. It is unproved, but strongly expected to be true.",
+            },
+            {
+                "title": "What mathematicians expect",
+                "body": "The expectation comes from heuristics, large-scale computation, and the way twin-prime patterns keep appearing across many finite ranges. For example, pairs such as (11, 13), (17, 19), and (29, 31) show the basic pattern early, and much larger examples continue to appear as computation pushes farther out. None of this is a proof, but it is a major reason the conjecture remains plausible.",
+            },
+            {
+                "title": "What is proved and what is not",
+                "body": "Some nearby results are proved. Bounded-gap theorems show that primes come within some fixed finite distance infinitely often. Brun's theorem proves an important fact about the sparsity of twin primes if they continue. But no theorem currently proves that the exact gap 2 occurs infinitely many times. That final step from small bounded gaps to the specific twin-prime pattern is still missing.",
+            },
+            {
+                "title": "How this differs from 'has the conjecture been solved?'",
+                "body": "The solved-or-not page is built for the direct status question: was the conjecture proved? This page is answering a slightly different search-style question: what should I believe about infinitely many twin primes? The answer there is more nuanced. The conjecture is unsolved, but the expectation remains yes. Keeping those two page types separate helps avoid mixing up proof status with mathematical belief.",
+            },
+            {
+                "title": "How this relates to the formal conjecture page",
+                "body": "The formal conjecture page states the exact problem and explains what 'infinitely many' means with more precision. This page is the more conversational companion. It is meant to be the landing page for a reader who asks the obvious question first and only afterward wants the stricter theorem-versus-conjecture framing.",
+            },
+            {
+                "title": "How to use this site after reading this page",
+                "body": "If you want the formal mathematical statement, move next to Twin Prime Conjecture Explained. If you want the direct solved-or-not clarification, use the short-answer page. If you want to see the visible finite pattern before returning to the theory, open the Lab or Explorer and look at real twin-prime examples in a selected range.",
+            },
+        ],
+        "related_links": [
+            {"title": "Read the formal conjecture page", "body": "Use the full conjecture explainer for the exact statement, what infinity means here, and what remains unproved.", "href": "/twin-prime-conjecture", "label": "Read Twin Prime Conjecture Explained"},
+            {"title": "Read the direct solved-or-not page", "body": "Use the short-answer clarification when you want the proof-status question handled as directly as possible.", "href": "/has-the-twin-prime-conjecture-been-solved", "label": "Read the short answer"},
+            {"title": "Return to the main pattern", "body": "The twin-primes page gives the best plain-language introduction to the pattern itself before you think about the infinite question.", "href": "/what-are-twin-primes", "label": "Read What Are Twin Primes?"},
+            {"title": "See the broader theory context", "body": "Theory keeps the conjecture, research approaches, and current progress in one place.", "href": "/theory#history", "label": "Open Theory"},
+        ],
+    },
+    {
+        "route": "/prime-gaps-vs-prime-pairs",
+        "nav_label": "Prime Gaps vs Prime Pairs",
+        "title": "TwinPrimeExplorer.com | Prime Gaps vs Prime Pairs",
+        "meta_description": "A clear explanation of the difference between prime gaps and prime pairs, and why that distinction matters for twin primes, bounded gaps, and Analysis.",
+        "eyebrow": "Clarification",
+        "hero_title": "Prime gaps vs prime pairs",
+        "hero_text": "Prime gaps and prime pairs are closely related, but they are not the same idea. The distinction matters whenever you move between twin primes, bounded gaps, and the site's Analysis views.",
+        "intro_title": "Why this distinction helps",
+        "intro_text": "This page is a clarification bridge. It explains the difference between talking about the distance between consecutive primes and talking about particular pairs of primes that fit a named pattern. That distinction makes several other pages on the site easier to read correctly.",
+        "sections": [
+            {
+                "title": "What a prime gap is",
+                "body": "A prime gap is the difference between one prime and the next prime after it. If the primes are 11 and 13, the gap is 2. If the primes are 23 and 29, the gap is 6. Prime-gap language focuses on spacing between consecutive primes.",
+            },
+            {
+                "title": "What a prime pair is in this site's context",
+                "body": "A prime pair is a pair of primes being discussed as a recognizable pattern. On this site, the most important example is a twin-prime pair: two primes that differ by 2. In that sense, a prime pair is about a named relationship, while a prime gap is about a measured spacing value.",
+            },
+            {
+                "title": "Why twin primes are a special case rather than the whole story",
+                "body": "Twin primes are one especially famous prime-pair pattern, but prime-gap language is broader. Every pair of consecutive primes has a gap, but not every pair belongs to a named pattern people focus on. That is why the twin-prime story sits inside the larger study of prime gaps rather than replacing it.",
+            },
+            {
+                "title": "A concrete comparison",
+                "body": "Consider the primes 11, 13, 17, and 19. The pair (11, 13) is a twin-prime pair, and so is (17, 19). The gap from 13 to 17 is 4, but that gap is not itself a twin-prime pair. This is a good example of why gap language and pair language should not be collapsed into one thing. One is a spacing measurement, the other is a pattern name attached to a pair.",
+            },
+            {
+                "title": "Why people blur these ideas together",
+                "body": "The confusion is understandable because twin primes are literally the gap-2 case. So one page may talk about pairs and another about gaps while pointing to the same examples. But once you move into bounded gaps, Analysis summaries, or broader spacing questions, the distinction becomes important. Gap language supports the larger distribution story, while pair language highlights named special configurations inside it.",
+            },
+            {
+                "title": "Why this helps with bounded gaps and Analysis",
+                "body": "Bounded-gap theorems say that some small prime gap recurs infinitely often, but they do not name one exact prime-pair pattern such as twin primes. The Analysis page also makes more sense when you keep this distinction clear: some tabs summarize spacing, while others help you interpret recurring pair structure. This page exists so those shifts in language feel intentional rather than confusing.",
+            },
+        ],
+        "related_links": [
+            {"title": "Read the broader gap page", "body": "Use the prime-gaps page when you want the full spacing story rather than only the distinction itself.", "href": "/prime-gaps", "label": "Read What Are Prime Gaps?"},
+            {"title": "Return to the twin-prime pattern", "body": "The twin-primes page shows the named pair pattern that motivates this whole comparison.", "href": "/what-are-twin-primes", "label": "Read What Are Twin Primes?"},
+            {"title": "Compare the bounded-gap result", "body": "This page helps you see why bounded-gap progress is close to, but not the same as, a twin-prime proof.", "href": "/what-bounded-gaps-between-primes-actually-proved", "label": "Read What Bounded Gaps Between Primes Actually Proved"},
+            {"title": "Use the Analysis Guide", "body": "The guide explains how the site's analysis views shift between structural and spacing questions.", "href": "/analysis-guide", "label": "Read the Analysis Guide"},
+        ],
+    },
+    {
+        "route": "/hardy-littlewood-twin-primes",
+        "nav_label": "Hardy-Littlewood For Twin Primes",
+        "title": "TwinPrimeExplorer.com | Hardy-Littlewood For Twin Primes",
+        "meta_description": "A plain-language guide to the Hardy-Littlewood twin-prime heuristic, including why the twin prime constant matters and why the framework is persuasive but not a proof.",
+        "eyebrow": "Heuristic Framework",
+        "hero_title": "Hardy-Littlewood for twin primes",
+        "hero_text": "The Hardy-Littlewood prime-pair conjecture is one of the main reasons mathematicians expect infinitely many twin primes. It gives a quantitative prediction for how often twin-prime pairs should appear, while still stopping short of proof.",
+        "intro_title": "Why this heuristic matters",
+        "intro_text": "This page explains the Hardy-Littlewood framework in plain language. It is not a theorem page. It is a heuristic page: it shows why mathematicians think twin primes should keep appearing, why a simple random model is not quite enough, and why the famous twin prime constant enters the story.",
+        "sections": [
+            {
+                "title": "What Hardy-Littlewood is trying to predict",
+                "body": "The Hardy-Littlewood prime-pair conjecture gives an expected count for how often pairs of primes with a fixed spacing should occur. In the twin-prime case, it predicts how often primes p and p + 2 should both be prime as numbers grow. The point is not to say where the next twin-prime pair must be. The point is to describe the long-run frequency mathematicians expect on average.",
+            },
+            {
+                "title": "Why naive probability is not enough",
+                "body": "A first guess might say: if primes near a large number N appear with rough probability about 1 divided by log N, then maybe a twin-prime pair appears with rough probability about 1 divided by log squared N. That guess captures part of the story, but it misses a crucial detail. Two nearby numbers share divisibility constraints, so their chances are not independent in a clean random sense. Hardy-Littlewood corrects for that.",
+            },
+            {
+                "title": "Where the twin prime constant enters",
+                "body": "The twin prime constant is the correction factor that adjusts the naive estimate. It accounts for the fact that divisibility by small primes changes the expected frequency of twin-prime candidates. In plain language, the constant is the price of taking arithmetic structure seriously instead of pretending primes are random without constraints. That is why the constant belongs naturally to the heuristic.",
+            },
+            {
+                "title": "A concrete way to think about the correction",
+                "body": "Consider a potential twin-prime pair like N and N + 2. If N is divisible by 3, the pair immediately fails. If N is not divisible by 3, then N + 2 might still fail for another small-prime reason. The point is that small divisibility filters change how often gap-2 candidates survive. Hardy-Littlewood builds those filters into the long-run expectation instead of ignoring them.",
+            },
+            {
+                "title": "Why mathematicians find the heuristic persuasive",
+                "body": "The framework lines up well with large-scale computation and with the broader expectation that prime patterns behave regularly on average once arithmetic constraints are accounted for. It also fits naturally with the prime number theorem, which explains why primes thin out on average, and with the observed persistence of twin-prime pairs across large finite ranges. That combination makes the heuristic influential even though it is not a proof.",
+            },
+            {
+                "title": "Why this is still not a proof",
+                "body": "A heuristic can be convincing, accurate, and mathematically useful without becoming a theorem. Hardy-Littlewood predicts what should happen on average. The twin prime conjecture asks for a proof that infinitely many exact gap-2 pairs really do occur. Bridging that gap from prediction to proof is exactly the hard part. This is why the site keeps Hardy-Littlewood language inside the expected or heuristic side of the story, not the proved side.",
+            },
+            {
+                "title": "How this connects to the site",
+                "body": "This page helps connect several other parts of TwinPrimeExplorer.com. The prime number theorem page explains why log terms appear in average-density thinking, the conjecture pages explain what remains unproved, and the Analysis Guide explains why expected-count views are rough comparison tools rather than theorem engines. Once you know what Hardy-Littlewood is doing, those pages fit together more naturally.",
+            },
+        ],
+        "related_links": [
+            {"title": "Start from average prime density", "body": "The prime number theorem page explains the broad thinning pattern that sits behind Hardy-Littlewood style estimates.", "href": "/prime-number-theorem", "label": "Read The Prime Number Theorem In Plain Language"},
+            {"title": "Return to the formal conjecture", "body": "Use the conjecture page when you want the exact problem statement that this heuristic is trying to predict.", "href": "/twin-prime-conjecture", "label": "Read Twin Prime Conjecture Explained"},
+            {"title": "Compare proof and expectation", "body": "The bounded-gaps page helps keep theorem-level progress separate from heuristic prediction.", "href": "/what-bounded-gaps-between-primes-actually-proved", "label": "Read What Bounded Gaps Between Primes Actually Proved"},
+            {"title": "See how expected views are used on the site", "body": "The Analysis Guide explains why expected-count comparisons are rough interpretive tools rather than proofs.", "href": "/analysis-guide", "label": "Read the Analysis Guide"},
+        ],
+    },
+    {
+        "route": "/why-log-n-appears-in-prime-number-theory",
+        "nav_label": "Why log n Appears In Prime Number Theory",
+        "title": "TwinPrimeExplorer.com | Why log n Appears In Prime Number Theory",
+        "meta_description": "A plain-language explanation of why log n shows up so often in prime number theory, especially in density estimates, expected counts, and twin-prime heuristics.",
+        "eyebrow": "Prime Number Background",
+        "hero_title": "Why log n appears in prime number theory",
+        "hero_text": "Logarithms show up all over prime number theory because prime density changes slowly and average prime counts are tied to that slow thinning. The appearance of log n is not decorative notation. It is part of the structure of the subject.",
+        "intro_title": "Why this symbol keeps returning",
+        "intro_text": "This page is for readers who keep seeing log n on the site and want to know why. It explains, in plain language, why logarithms appear in average prime-density statements, why twin-prime heuristics often involve log squared n, and why those formulas should be read as rough guides rather than exact local predictions.",
+        "sections": [
+            {
+                "title": "Where log n first enters the story",
+                "body": "The prime number theorem says that the number of primes up to a large number N is approximately N divided by log N. That means the average density of primes near large values behaves like 1 divided by log N. So log N first appears because primes thin out slowly, not because someone arbitrarily chose a complicated symbol.",
+            },
+            {
+                "title": "Why slow thinning leads to logarithms",
+                "body": "Primes do not disappear quickly. They become rarer in a gradual way. A logarithm is one of the natural mathematical tools for describing a quantity that changes slowly across large scales. That is why log terms appear when mathematicians describe the broad average behavior of primes rather than the exact location of the next prime.",
+            },
+            {
+                "title": "A concrete way to read 1 over log n",
+                "body": "If you compare moderate numbers with much larger numbers, the value of log N increases, but slowly. So 1 divided by log N becomes smaller, also slowly. That matches the real picture of primes: they keep appearing, but the average share of numbers that are prime gradually drops. The formula is about trend, not exact prediction.",
+            },
+            {
+                "title": "Why twin-prime heuristics use log squared n",
+                "body": "If one prime near N behaves roughly like a 1 over log N event in an average-density model, then asking for two primes in a tightly related pattern naturally introduces a second log factor. That is why twin-prime heuristics often involve 1 over log squared N, together with an additional correction factor such as the twin prime constant. The squared log comes from asking for a more demanding pattern than a single prime.",
+            },
+            {
+                "title": "Why the formulas stay rough",
+                "body": "Even when log terms are structurally meaningful, they do not turn prime locations into clockwork. One selected interval may have more primes or twin-prime pairs than a rough log-based estimate suggests, while another may have fewer. The point of the formula is to describe average behavior across scale, not to promise a local count in every range.",
+            },
+            {
+                "title": "How this helps when reading the site",
+                "body": "This page is useful whenever the site mentions expected counts, rough density, or heuristic predictions. It helps explain why the Analysis page compares observed behavior with a log-based benchmark, why the prime number theorem page matters for background, and why Hardy-Littlewood style predictions for twin primes use stronger log terms without becoming proofs.",
+            },
+        ],
+        "related_links": [
+            {"title": "Read the main theorem first", "body": "The prime number theorem page is the clearest starting point for the average-density story that produces log terms.", "href": "/prime-number-theorem", "label": "Read The Prime Number Theorem In Plain Language"},
+            {"title": "See the twin-prime heuristic side", "body": "The Hardy-Littlewood page explains why twin-prime expectations add more structure on top of the basic log pattern.", "href": "/hardy-littlewood-twin-primes", "label": "Read Hardy-Littlewood For Twin Primes"},
+            {"title": "Connect it to expected-count reading", "body": "The Analysis Guide explains how rough benchmark language is used on the site without pretending to prove anything.", "href": "/analysis-guide", "label": "Read the Analysis Guide"},
+            {"title": "Open the Analysis page", "body": "Use Analysis when you want to compare the site's rough benchmark language with an actual selected range.", "href": "/analysis#analysis-views-title", "label": "Open Analysis"},
+        ],
+    },
+    {
+        "route": "/how-to-read-prime-patterns-in-the-lab",
+        "nav_label": "How To Read Prime Patterns In The Lab",
+        "title": "TwinPrimeExplorer.com | How To Read Prime Patterns In The Lab",
+        "meta_description": "A practical guide to reading the Lab view on TwinPrimeExplorer.com, including how to spot twin centers, use Mod 6 structure, and know when to switch to Explorer or Analysis.",
+        "eyebrow": "Lab Guide",
+        "hero_title": "How to read prime patterns in the Lab",
+        "hero_text": "The Lab is easiest to use when you treat it as a pattern-reading surface instead of a proof machine. This page gives a simple workflow for seeing structure first, then using Explorer and Analysis when you need more detail.",
+        "intro_title": "A practical first-pass workflow",
+        "intro_text": "This page is for readers who can open the Lab but are not yet sure what to look for. It shows how to start with one visual question, use twin centers and modular structure as anchors, and know when to switch from a visual pattern to a more exact tool.",
+        "sections": [
+            {
+                "title": "Start with one visual question",
+                "body": "Do not try to read every color and count at once. A better first step is to choose one question, such as: where are the twin-prime pairs, where are the twin centers, or how do the primes cluster in this range? The Lab becomes much easier once you decide what kind of pattern you are trying to notice first.",
+            },
+            {
+                "title": "Use twin centers as anchors",
+                "body": "Twin centers are often easier to spot and compare than the prime pairs themselves. If you can see where the centers line up, you can often recover the surrounding gap-2 structure mentally. That is why TwinPrimeExplorer.com highlights centers so strongly: they turn a pair-pattern question into a simpler structural anchor.",
+            },
+            {
+                "title": "Use Mod 6 when the field feels noisy",
+                "body": "If the full pattern feels visually busy, switch attention to the Mod 6 structure. Primes greater than 3 are forced into narrow residue classes, and that immediately removes much of the noise. Mod 6 is not a proof of anything by itself, but it is one of the fastest ways to make the visual field feel interpretable.",
+            },
+            {
+                "title": "Look for spacing and clustering separately",
+                "body": "One common mistake is to treat every nearby prime pair as the same kind of phenomenon. The Lab is better when you separate two questions: where do you see visible local clusters, and where do you see the specific gap-2 twin-prime pattern? That distinction prepares you for later pages about prime gaps, prime pairs, and bounded gaps.",
+            },
+            {
+                "title": "Move to Explorer when you want exact arithmetic",
+                "body": "The Lab is built for recognition, not for line-by-line verification. When you want to inspect the exact numbers, divisors, neighbors, or local classifications behind something you noticed visually, move to Explorer. That handoff keeps the Lab lightweight while still letting you verify what you think you saw.",
+            },
+            {
+                "title": "Move to Analysis when you want summaries",
+                "body": "If your question is no longer visual but comparative, Analysis is usually the better next step. It summarizes modular counts, prime-gap behavior, density patterns, and rough expected-count comparisons. In practice, a good workflow is: see something in the Lab, verify it in Explorer if needed, then use Analysis if you want a structured summary of the same range.",
+            },
+            {
+                "title": "A good first-visit workflow",
+                "body": "A simple first route is: open the Lab, look for twin centers first, check the Mod 6 pattern second, then switch to Explorer or Analysis once one concrete question emerges. That keeps the Lab from feeling like a wall of information. It also matches the larger philosophy of the site: explanation first, then structured inspection, then broader theory if the pattern raises a deeper question.",
+            },
+        ],
+        "related_links": [
+            {"title": "Open the Lab", "body": "Use the live visualization first, then come back to this guide once you have one pattern question in mind.", "href": "/lab#visualization-title", "label": "Open the Lab"},
+            {"title": "Read the twin-centers explainer", "body": "This page helps explain why the Lab uses centers as such a strong structural cue.", "href": "/why-twin-centers-matter", "label": "Read Why Twin Centers Matter"},
+            {"title": "Read the Mod 6 explainer", "body": "Use the modular page when you want the fastest plain-language explanation of the residue pattern behind the Lab.", "href": "/why-mod-6-shows-up-so-often", "label": "Read Why Mod 6 Shows Up So Often"},
+            {"title": "Move into structured interpretation", "body": "The Analysis Guide explains how to read the summary views once the visual pattern is no longer the main question.", "href": "/analysis-guide", "label": "Read the Analysis Guide"},
+        ],
+    },
 ]
 
 
@@ -1115,8 +1384,8 @@ GLOSSARY_SECTIONS = [
                 "summary": "The Hardy-Littlewood prime pair conjecture is a heuristic framework for predicting how often twin primes should occur.",
                 "detail": "It gives a quantitative expectation for twin-prime frequency and is one of the main reasons mathematicians expect infinitely many twin primes to exist.",
                 "article_link": {
-                    "label": "Read more: How Mathematicians Study Twin Primes",
-                    "href": "/how-mathematicians-study-twin-primes",
+                    "label": "Read more: Hardy-Littlewood For Twin Primes",
+                    "href": "/hardy-littlewood-twin-primes",
                 },
             },
             {
@@ -1127,3 +1396,4 @@ GLOSSARY_SECTIONS = [
         ],
     },
 ]
+
