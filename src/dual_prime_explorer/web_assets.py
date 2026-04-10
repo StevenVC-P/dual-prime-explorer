@@ -400,7 +400,25 @@ p { margin: 0; line-height: 1.65; }
 .theory-destination-badge { display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(20, 83, 45, 0.12); background: var(--accent-faint); color: var(--accent); font-size: 0.82rem; font-weight: 600; }
 .theory-action-card h4 { margin: 0 0 8px; font-size: 1rem; }
 .theory-action-card .inline-link { font-weight: 600; }
-.theory-reference-list { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.theory-reference-list {
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+.theory-reference-list li {
+  color: var(--muted);
+  line-height: 1.65;
+  padding-left: 0.15rem;
+}
+.theory-reference-list li::marker {
+  color: var(--accent);
+}
+.theory-reference-list .inline-link {
+  color: var(--accent);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
 .glossary-sections { gap: 18px; }
 .glossary-section { border: 1px solid var(--line); border-radius: 18px; background: var(--panel-soft); }
 .glossary-section-header { display: grid; gap: 8px; margin-bottom: 14px; }

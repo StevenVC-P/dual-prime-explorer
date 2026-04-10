@@ -39,6 +39,17 @@ def _render_explanatory_links(items: list[dict[str, str]]) -> str:
     )
 
 
+def _render_explanatory_references(items: list[dict[str, str]]) -> str:
+    return "".join(
+        """<li><a class="inline-link" href="{href}" target="_blank" rel="noopener noreferrer">{label}</a>{note}</li>""".format(
+            href=html.escape(item["href"], quote=True),
+            label=html.escape(item["label"]),
+            note=f" - {html.escape(item['note'])}" if item.get("note") else "",
+        )
+        for item in items
+    )
+
+
 def _build_explanatory_page(content: dict[str, object]) -> PageDefinition:
     sections = "".join(
         """<article class="theory-section">
@@ -51,6 +62,30 @@ def _build_explanatory_page(content: dict[str, object]) -> PageDefinition:
         for section in content["sections"]
     )
     related_links = _render_explanatory_links(content["related_links"])
+    reviewed_html = ""
+    if content.get("reviewed"):
+        reviewed_html = """<p class="section-copy">{reviewed}</p>""".format(
+            reviewed=html.escape(content["reviewed"])
+        )
+    references_html = ""
+    if content.get("references"):
+        references_html = """<section class="panel theory-panel">
+  <div class="panel-heading theory-heading">
+    <div>
+      <h2>References and further reading</h2>
+      <p>These links support the theorem, history, and heuristic claims summarized on this page.</p>
+    </div>
+  </div>
+  <div class="section-stack">
+    <article class="theory-section">
+      <ul class="theory-reference-list">
+        {references}
+      </ul>
+    </article>
+  </div>
+</section>""".format(
+            references=_render_explanatory_references(content["references"])
+        )
     hero_html = """<section class="hero-block theory-hero">
   <div class="hero-copy theory-copy">
     <p class="eyebrow">{eyebrow}</p>
@@ -67,12 +102,15 @@ def _build_explanatory_page(content: dict[str, object]) -> PageDefinition:
     <div>
       <h2>{intro_title}</h2>
       <p>{intro_text}</p>
+      {reviewed_html}
     </div>
   </div>
   <div class="section-stack">
     {sections}
   </div>
 </section>
+
+{references_html}
 
 <section class="panel theory-panel">
   <div class="panel-heading theory-heading">
@@ -87,7 +125,9 @@ def _build_explanatory_page(content: dict[str, object]) -> PageDefinition:
 </section>""".format(
         intro_title=html.escape(content["intro_title"]),
         intro_text=html.escape(content["intro_text"]),
+        reviewed_html=reviewed_html,
         sections=sections,
+        references_html=references_html,
         related_links=related_links,
     )
     return PageDefinition(
@@ -525,6 +565,7 @@ ANALYSIS_GUIDE_PAGE = PageDefinition(
     <div>
       <h2>Analysis Guide</h2>
       <p>This guide explains how to read the site's structured analysis outputs and how to interpret the mathematical signals they highlight. It is meant for visitors who want more than a tab label but less than a full theory article.</p>
+      <p class="section-copy">Last reviewed: April 2026</p>
     </div>
   </div>
   <div class="section-stack">
@@ -579,6 +620,24 @@ ANALYSIS_GUIDE_PAGE = PageDefinition(
       <p>Use the live <a class="inline-link" href="/analysis">Analysis page</a> when you want to compare a real range, then move into the <a class="inline-link" href="/lab">Lab</a> or <a class="inline-link" href="/explorer">Explorer</a> if you want to see the same idea from a visual or row-by-row angle.</p>
     </article>
   </div>
+</section>
+
+<section class="panel theory-panel">
+  <div class="panel-heading theory-heading">
+    <div>
+      <h2>References and further reading</h2>
+      <p>These links support the benchmark and heuristic framing used in the guide.</p>
+    </div>
+  </div>
+  <div class="section-stack">
+    <article class="theory-section">
+      <ul class="theory-reference-list">
+        <li><a class="inline-link" href="https://www.britannica.com/science/number-theory/Prime-number-theorem" target="_blank" rel="noopener noreferrer">Britannica: prime number theorem</a> - background for the average-density and log-term discussion.</li>
+        <li><a class="inline-link" href="https://primes.utm.edu/glossary/page.php?sort=TwinPrimeConstant" target="_blank" rel="noopener noreferrer">PrimePages: twin prime constant</a> - compact reference for the heuristic correction factor behind twin-prime expectations.</li>
+        <li><a class="inline-link" href="https://academic.oup.com/plms/article-pdf/s2-22/1/46/4372641/s2-22-1-46.pdf" target="_blank" rel="noopener noreferrer">Hardy and Littlewood, Some Problems of Partitio Numerorum (V)</a> - classic source for the prime-pair heuristic framework.</li>
+      </ul>
+    </article>
+  </div>
 </section>""",
     script_name="theory.js",
     include_in_nav=False,
@@ -603,6 +662,7 @@ GLOSSARY_PAGE = PageDefinition(
     <div>
       <h2>Glossary</h2>
       <p>This glossary collects the core terms used throughout TwinPrimeExplorer.com so visitors can move between the educational pages and interactive tools without losing context. Use it when a definition should stay short, clear, and tied to the rest of the site.</p>
+      <p class="section-copy">Last reviewed: April 2026</p>
     </div>
   </div>
   <div class="glossary-toolbar" aria-label="Glossary tools">
@@ -613,6 +673,15 @@ GLOSSARY_PAGE = PageDefinition(
   </div>
   <div id="glossary-sections"></div>
   <div class="section-stack">
+    <article class="theory-section">
+      <h3>Selected references</h3>
+      <ul class="theory-reference-list">
+        <li><a class="inline-link" href="https://www.britannica.com/science/prime-number" target="_blank" rel="noopener noreferrer">Britannica: prime number</a> - basic reference for the foundational number-theory terms used throughout the site.</li>
+        <li><a class="inline-link" href="https://mathworld.wolfram.com/TwinPrimeConjecture.html" target="_blank" rel="noopener noreferrer">MathWorld: Twin Prime Conjecture</a> - compact reference for the research-facing conjecture terms in the glossary.</li>
+        <li><a class="inline-link" href="https://annals.math.princeton.edu/2014/179-3/p07" target="_blank" rel="noopener noreferrer">Yitang Zhang, Bounded gaps between primes</a> - theorem-level source for the bounded-gaps glossary entry.</li>
+        <li><a class="inline-link" href="https://primes.utm.edu/glossary/page.php?sort=TwinPrimeConstant" target="_blank" rel="noopener noreferrer">PrimePages: twin prime constant</a> - compact reference for the Hardy-Littlewood and twin-prime-constant entries.</li>
+      </ul>
+    </article>
     <article class="theory-section">
       <h3>Where to use these terms next</h3>
       <p>Open <a class="inline-link" href="/start-here">Start Here</a> if you want a guided reading path first, move to the <a class="inline-link" href="/lab">Lab</a> if you want to see terms like twin center and Mod 6 in a live range, continue to <a class="inline-link" href="/analysis">Analysis</a> for structured interpretation, or read <a class="inline-link" href="/what-are-twin-primes">What Are Twin Primes?</a> if you want the quickest educational entry page.</p>
@@ -640,6 +709,7 @@ THEORY_PAGE = PageDefinition(
     <div>
       <h2>Theory</h2>
       <p>This section introduces the core ideas behind twin-prime exploration on this site. It is meant to help readers understand the patterns, questions, and terminology that appear throughout the Lab, Explorer, Analysis, and the standalone educational pages.</p>
+      <p class="section-copy">Last reviewed: April 2026</p>
     </div>
   </div>
   <div class="glossary-jump-shell">
@@ -712,6 +782,21 @@ THEORY_PAGE = PageDefinition(
       <div id="theory-tabpanel" class="theory-tabpanel" role="tabpanel" tabindex="0"></div>
     </div>
   </div>
+  <section class="theory-block">
+    <h3>Selected references</h3>
+    <div class="section-stack">
+      <article class="theory-section">
+        <ul class="theory-reference-list">
+          <li><a class="inline-link" href="https://annals.math.princeton.edu/2014/179-3/p07" target="_blank" rel="noopener noreferrer">Yitang Zhang, Bounded gaps between primes</a> - Annals of Mathematics, 2014.</li>
+          <li><a class="inline-link" href="https://annals.math.princeton.edu/2015/181-1/p07" target="_blank" rel="noopener noreferrer">James Maynard, Small gaps between primes</a> - Annals of Mathematics, 2015.</li>
+          <li><a class="inline-link" href="https://michaelnielsen.org/polymath/index.php?title=Bounded_gaps_between_primes" target="_blank" rel="noopener noreferrer">Polymath8 bounded-gaps retrospective and bounds timeline</a> - collaborative project overview.</li>
+          <li><a class="inline-link" href="https://mathworld.wolfram.com/PrimeNumberTheorem.html" target="_blank" rel="noopener noreferrer">Prime Number Theorem</a> - compact reference for the average prime-density statement.</li>
+          <li><a class="inline-link" href="https://primes.utm.edu/glossary/page.php?sort=TwinPrimeConstant" target="_blank" rel="noopener noreferrer">PrimePages: twin prime constant</a> - heuristic background for Hardy-Littlewood style predictions.</li>
+          <li><a class="inline-link" href="https://academic.oup.com/plms/article-pdf/s2-22/1/46/4372641/s2-22-1-46.pdf" target="_blank" rel="noopener noreferrer">Hardy and Littlewood, Some Problems of Partitio Numerorum (V)</a> - classic source for prime-pair heuristics.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
   <div class="section-stack">
     <article class="theory-section">
       <h3>Take the theory back into the tools</h3>
