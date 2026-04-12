@@ -531,7 +531,7 @@ EXPLANATORY_PAGES = [
     {
         "route": "/how-to-find-twin-primes",
         "nav_label": "How To Find Twin Primes",
-        "title": "TwinPrimeExplorer.com | How To Find Twin Primes",
+        "title": "TwinPrimeExplorer.com | How To Find Twin Primes - Examples, Filters, and Range Search",
         "meta_description": "A fuller practical guide to finding twin primes, checking gap-2 pairs, avoiding false candidates, and using TwinPrimeExplorer.com to inspect the pattern.",
         "eyebrow": "Finding Twin Primes",
         "hero_title": "How to find twin primes",
@@ -561,6 +561,10 @@ EXPLANATORY_PAGES = [
                 "body": "Finding examples is useful for building intuition, checking ranges, and understanding how twin-prime patterns appear in practice. But no matter how many examples you collect in finite ranges, you still have not proved that infinitely many twin-prime pairs exist. This is a good place to keep the difference between observing a pattern and proving an infinite statement clear.",
             },
             {
+                "title": "A quick examples workflow",
+                "body": "A simple examples-first workflow is: start with a small range such as 1 to 100, look for familiar pairs like (11, 13), (17, 19), and (29, 31), then widen the range and let Explorer or the Lab show you which new candidates survive. This keeps the search practical. You begin with real examples, then move into range search instead of trying to reason from abstract filters alone.",
+            },
+            {
                 "title": "How to do it on this site",
                 "body": "Use Explorer when you want the most direct working surface: row-by-row values, prime roles, twin centers, and divisor details. Use the Lab when you want to scan visually first and notice likely clusters. Then move into Analysis if you want to understand how the examples you found fit into larger spacing or modular patterns. The Mod 6 page, prime-gaps page, and twin-prime page all help explain why the candidates you see behave the way they do.",
             },
@@ -574,6 +578,7 @@ EXPLANATORY_PAGES = [
             {"title": "Use Explorer for exact inspection", "body": "Explorer is the clearest place to test candidate pairs and inspect neighborhood roles one row at a time.", "href": "/explorer#number-table-title", "label": "Open Explorer"},
             {"title": "Need the residue-class shortcut?", "body": "Use the modular explainer if you want the residue filter idea in plain language first.", "href": "/why-mod-6-shows-up-so-often", "label": "Read Why Mod 6 Shows Up So Often"},
             {"title": "Step back to the twin-prime overview", "body": "The twin-primes page gives the larger mathematical context around the exact pattern you are trying to find.", "href": "/what-are-twin-primes", "label": "Read What Are Twin Primes?"},
+            {"title": "Connect the search to the open question", "body": "Use the conjecture page when you want examples and range search separated from the still-unproved infinite claim.", "href": "/twin-prime-conjecture", "label": "Read Twin Prime Conjecture Explained"},
             {"title": "Compare what you found in Analysis", "body": "Analysis helps connect the candidate-finding process to larger gap and density structure.", "href": "/analysis#analysis-views-title", "label": "Open Analysis"},
         ],
     },
@@ -630,7 +635,7 @@ EXPLANATORY_PAGES = [
     {
         "route": "/what-are-twin-primes",
         "nav_label": "What Are Twin Primes?",
-        "title": "TwinPrimeExplorer.com | What Are Twin Primes?",
+        "title": "TwinPrimeExplorer.com | What Are Twin Primes? Examples, Patterns, and Meaning",
         "meta_description": "A fuller introduction to twin primes, including examples, structure, what is known versus conjectured, and how to explore the pattern on TwinPrimeExplorer.com.",
         "eyebrow": "Twin Primes",
         "hero_title": "What are twin primes?",
@@ -660,6 +665,10 @@ EXPLANATORY_PAGES = [
                 "body": "The twin prime conjecture asks whether infinitely many twin-prime pairs exist. That question is still open. The pattern is easy to understand, but proving it continues forever is much harder than finding many examples. That contrast between visible finite evidence and a missing infinite proof is exactly what makes twin primes so educationally rich.",
             },
             {
+                "title": "A few concrete examples to keep in mind",
+                "body": "Useful early examples are (3, 5), (5, 7), (11, 13), (17, 19), and (29, 31). They are enough to make the pattern feel real without pretending a short list settles the infinite question. A good practical next step is to take one of those examples into Explorer, then scan a wider finite range in the Lab to see how the same gap-2 pattern appears among many non-examples.",
+            },
+            {
                 "title": "What is known and what is still conjectured",
                 "body": "Some important facts are already proven. Brun's theorem shows that twin primes are sparse enough that the sum of their reciprocals converges, and bounded-gap results show that primes come within some fixed finite distance infinitely often. But neither of those results proves that gap 2 itself repeats forever. The expectation that infinitely many twin primes exist comes from strong heuristics and extensive computation, not from a theorem that settles the conjecture. This is why the conjecture page, the short solved-or-not page, and the bounded-gap pages all sit close to this one in the site's reading path.",
             },
@@ -676,6 +685,7 @@ EXPLANATORY_PAGES = [
         "related_links": [
             {"title": "See the pattern in the Lab", "body": "Start with a live range and watch twin primes and twin centers appear together.", "href": "/lab#visualization-title", "label": "Open the Lab"},
             {"title": "Inspect exact examples in Explorer", "body": "Use row-by-row inspection when you want to move from the definition to concrete cases.", "href": "/explorer#number-table-title", "label": "Open Explorer"},
+            {"title": "Use the practical finding guide", "body": "The finding page is the fastest route when you want examples, quick filters, and a simple range-search workflow.", "href": "/how-to-find-twin-primes", "label": "Read How To Find Twin Primes"},
             {"title": "Interpret the pattern in Analysis", "body": "Analysis connects the same idea to modular structure, pair spacing, and local density.", "href": "/analysis#analysis-views-title", "label": "Open Analysis"},
             {"title": "Step back to prime gaps", "body": "Use the prime-gaps page when you want the broader spacing language that surrounds the special gap-2 case.", "href": "/prime-gaps", "label": "Read What Are Prime Gaps?"},
             {"title": "Follow the bigger question", "body": "Use the conjecture page when you want the exact infinite-question framing behind twin primes.", "href": "/twin-prime-conjecture", "label": "Read the conjecture page"},
@@ -1160,7 +1170,7 @@ EXPLANATORY_PAGES = [
     {
         "route": "/prime-gaps-vs-prime-pairs",
         "nav_label": "Prime Gaps vs Prime Pairs",
-        "title": "TwinPrimeExplorer.com | Prime Gaps vs Prime Pairs",
+        "title": "TwinPrimeExplorer.com | Prime Gaps vs Prime Pairs - How Twin Primes Fit In",
         "meta_description": "A clear explanation of the difference between prime gaps and prime pairs, and why that distinction matters for twin primes, bounded gaps, and Analysis.",
         "eyebrow": "Clarification",
         "hero_title": "Prime gaps vs prime pairs",

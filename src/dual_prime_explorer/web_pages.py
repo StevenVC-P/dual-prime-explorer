@@ -162,6 +162,7 @@ HOME_PAGE = PageDefinition(
     <div>
       <h2>What Twin Prime Explorer is for</h2>
       <p>A compact mathematics site for exploring twin primes, prime pairs, prime gaps, and the number patterns that appear around them.</p>
+      <p class="section-copy">Use Twin Prime Explorer to visualize twin primes, inspect prime pairs inside real ranges, compare prime gaps, and move into plain-language explanations when you want more mathematical context.</p>
     </div>
   </div>
   <div class="metric-grid theory-path-grid">
