@@ -65,6 +65,9 @@ a { color: inherit; }
 .hero-block { border-radius: 24px; padding: 22px; margin-bottom: 22px; }
 .hero-copy { max-width: 68ch; display: grid; gap: 12px; }
 .theory-copy { max-width: 76ch; }
+.hero-metric-grid { margin-top: 6px; align-items: stretch; }
+.hero-metric-grid .metric-box { background: rgba(255,255,255,0.76); }
+.hero-metric-grid p { color: var(--muted); }
 .theory-hero { margin-bottom: 30px; }
 .lab-layout { display: grid; grid-template-columns: minmax(220px, 260px) minmax(0, 1fr) minmax(220px, 280px); gap: 16px; align-items: start; }
 .explorer-lab-controls { position: sticky; top: 18px; }
@@ -194,7 +197,7 @@ a { color: inherit; }
 .lab-swatch.twin-center { background: #d97706; }
 .eyebrow { margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.76rem; color: var(--accent); }
 h1, h2, h3, h4 { margin: 0; font-weight: 600; }
-h1 { font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.02; letter-spacing: -0.02em; }
+h1 { font-size: clamp(2rem, 4.2vw, 3.35rem); line-height: 1.08; letter-spacing: -0.02em; }
 h2 { font-size: clamp(1.35rem, 2vw, 1.85rem); }
 h3 { font-size: 1rem; }
 p { margin: 0; line-height: 1.65; }
@@ -464,7 +467,7 @@ p { margin: 0; line-height: 1.65; }
 @media (max-width: 640px) {
   .page-shell { padding: 14px 12px 30px; }
   .hero-block, .panel, .control-panel { padding: 18px; }
-  h1 { line-height: 1.06; }
+  h1 { line-height: 1.1; }
   .top-nav { gap: 8px; }
   .nav-link, .tab-button, .theory-tab, .filter-reset-button { width: 100%; justify-content: flex-start; }
 }
@@ -3071,7 +3074,7 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
         for item in PAGE_DEFINITIONS
         if item.include_in_nav
     )
-    footer_routes = ["/lab", "/about", "/contact", "/privacy"]
+    footer_routes = ["/", "/lab", "/about", "/contact", "/privacy"]
     footer_html = "".join(
         f'<a class="footer-link" href="{route}">{PAGE_BY_ROUTE_FOOTER[route]}</a>'
         for route in footer_routes
@@ -3086,6 +3089,13 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
     canonical_url = f"https://www.twinprimeexplorer.com{page.route}"
     canonical_html = f'  <link rel="canonical" href="{html.escape(canonical_url, quote=True)}">\n'
     meta_description = f'  <meta name="description" content="{html.escape(page.meta_description, quote=True)}">\n' if page.meta_description else ""
+    og_description = page.meta_description or page.title
+    open_graph_meta = (
+        f'  <meta property="og:title" content="{html.escape(page.title, quote=True)}">\n'
+        f'  <meta property="og:description" content="{html.escape(og_description, quote=True)}">\n'
+        f'  <meta property="og:url" content="{html.escape(canonical_url, quote=True)}">\n'
+        '  <meta property="og:type" content="website">\n'
+    )
     robots_directive = page.robots_directive or "index,follow"
     robots_meta = f'  <meta name="robots" content="{html.escape(robots_directive, quote=True)}">\n'
     adsense_script = ""
@@ -3117,13 +3127,13 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{page.title}</title>
-{meta_description}{robots_meta}{canonical_html}  <meta name="google-site-verification" content="{google_site_verification_meta}">
+{meta_description}{robots_meta}{canonical_html}{open_graph_meta}  <meta name="google-site-verification" content="{google_site_verification_meta}">
 {adsense_script}  <link rel="stylesheet" href="/styles.css?v={asset_version}">
 </head>
 <body>
   <div class="page-shell">
     <header class="site-header">
-      <a class="brand-mark" href="/lab">
+      <a class="brand-mark" href="/">
         <span class="brand-kicker">TwinPrimeExplorer.com</span>
         <span class="brand-title">Twin-prime analysis and reference</span>
       </a>
@@ -3196,11 +3206,13 @@ def render_not_found_page(asset_version: str | None = None) -> str:
 <body>
   <div class="page-shell">
     <header class="site-header">
-      <a class="brand-mark" href="/lab">
+      <a class="brand-mark" href="/">
         <span class="brand-kicker">TwinPrimeExplorer.com</span>
         <span class="brand-title">Twin-prime analysis and reference</span>
       </a>
       <nav class="top-nav" aria-label="Primary">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/">Home</a>
         <a class="nav-link" href="/lab">Lab</a>
         <a class="nav-link" href="/explorer">Explorer</a>
         <a class="nav-link" href="/analysis">Analysis</a>
@@ -3220,7 +3232,7 @@ def render_not_found_page(asset_version: str | None = None) -> str:
           <article class="theory-section">
             <h2>Where to go next</h2>
             <p>Use the links below to return to the main exploration and reference pages.</p>
-            <p><a class="inline-link" href="/lab">Open the Lab</a> | <a class="inline-link" href="/explorer">Open Explorer</a> | <a class="inline-link" href="/analysis">Open Analysis</a> | <a class="inline-link" href="/theory">Open Theory</a> | <a class="inline-link" href="/glossary">Open the Glossary</a></p>
+            <p><a class="inline-link" href="/">Open Home</a> | <a class="inline-link" href="/lab">Open the Lab</a> | <a class="inline-link" href="/explorer">Open Explorer</a> | <a class="inline-link" href="/analysis">Open Analysis</a> | <a class="inline-link" href="/theory">Open Theory</a> | <a class="inline-link" href="/glossary">Open the Glossary</a></p>
           </article>
         </div>
       </section>
