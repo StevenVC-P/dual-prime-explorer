@@ -3096,6 +3096,36 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
         f'  <meta property="og:url" content="{html.escape(canonical_url, quote=True)}">\n'
         '  <meta property="og:type" content="website">\n'
     )
+    twitter_meta = (
+        '  <meta name="twitter:card" content="summary">\n'
+        f'  <meta name="twitter:title" content="{html.escape(page.title, quote=True)}">\n'
+        f'  <meta name="twitter:description" content="{html.escape(og_description, quote=True)}">\n'
+        f'  <meta name="twitter:url" content="{html.escape(canonical_url, quote=True)}">\n'
+    )
+    if page.route == "/":
+        structured_data = {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Twin Prime Explorer",
+            "url": canonical_url,
+            "description": page.meta_description or page.title,
+        }
+    else:
+        structured_data = {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": page.title,
+            "url": canonical_url,
+            "description": page.meta_description or page.title,
+            "isPartOf": {
+                "@type": "WebSite",
+                "name": "Twin Prime Explorer",
+                "url": "https://www.twinprimeexplorer.com/",
+            },
+        }
+    structured_data_html = '  <script type="application/ld+json">{}</script>\n'.format(
+        html.escape(json.dumps(structured_data, separators=(",", ":")), quote=False)
+    )
     robots_directive = page.robots_directive or "index,follow"
     robots_meta = f'  <meta name="robots" content="{html.escape(robots_directive, quote=True)}">\n'
     adsense_script = ""
@@ -3127,7 +3157,7 @@ def render_page(page: PageDefinition, asset_version: str | None = None) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{page.title}</title>
-{meta_description}{robots_meta}{canonical_html}{open_graph_meta}  <meta name="google-site-verification" content="{google_site_verification_meta}">
+{meta_description}{robots_meta}{canonical_html}{open_graph_meta}{twitter_meta}{structured_data_html}  <meta name="google-site-verification" content="{google_site_verification_meta}">
 {adsense_script}  <link rel="stylesheet" href="/styles.css?v={asset_version}">
 </head>
 <body>
