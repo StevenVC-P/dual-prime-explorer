@@ -143,17 +143,109 @@ def _build_explanatory_page(content: dict[str, object]) -> PageDefinition:
     )
 
 
+HOME_PAGE = PageDefinition(
+    route="/",
+    title="Twin Prime Explorer - Explore Prime Pairs, Patterns, and Gaps",
+    nav_label="Home",
+    active_route="home",
+    meta_description="Explore twin primes, prime pairs, patterns, and gaps with Twin Prime Explorer. Start with the Lab, inspect ranges in Explorer, or use Analysis for deeper pattern views.",
+    hero_html="""<section class="hero-block theory-hero">
+  <div class="hero-copy theory-copy">
+    <p class="eyebrow">Twin Prime Explorer</p>
+    <h1>Explore Twin Primes Visually</h1>
+    <p class="hero-text">TwinPrimeExplorer.com helps you visualize prime pairs, inspect ranges, study gaps and patterns, and move between live tools and plain-language explanations without losing the thread.</p>
+    <p class="section-copy"><a class="inline-link" href="/lab">Open the Lab</a> | <a class="inline-link" href="/explorer">Open Explorer</a> | <a class="inline-link" href="/analysis">Open Analysis</a></p>
+  </div>
+</section>""",
+    main_html="""<section class="panel theory-panel">
+  <div class="panel-heading theory-heading">
+    <div>
+      <h2>What Twin Prime Explorer is for</h2>
+      <p>A compact mathematics site for exploring twin primes, prime pairs, prime gaps, and the number patterns that appear around them.</p>
+    </div>
+  </div>
+  <div class="metric-grid theory-path-grid">
+    <article class="metric-box theory-path-card">
+      <h3>See the pattern</h3>
+      <p>Open the Lab when you want the fastest visual view of twin primes, twin centers, and range-level structure.</p>
+      <p><a class="inline-link" href="/lab">Open the Lab</a></p>
+    </article>
+    <article class="metric-box theory-path-card">
+      <h3>Inspect exact ranges</h3>
+      <p>Use Explorer when you want row-by-row inspection, divisors, and number-level detail inside a chosen range.</p>
+      <p><a class="inline-link" href="/explorer">Open Explorer</a></p>
+    </article>
+    <article class="metric-box theory-path-card">
+      <h3>Read the pattern</h3>
+      <p>Use Analysis when you want modular structure, gaps, density, and expected-versus-observed views of the same range.</p>
+      <p><a class="inline-link" href="/analysis">Open Analysis</a></p>
+    </article>
+  </div>
+</section>
+
+<section class="panel theory-panel">
+  <div class="panel-heading theory-heading">
+    <div>
+      <h2>Start with the math</h2>
+      <p>These pages give the quickest route into the main ideas behind the tools.</p>
+    </div>
+  </div>
+  <div class="metric-grid theory-path-grid">
+    <article class="metric-box theory-path-card">
+      <h3>Twin primes</h3>
+      <p>Start with the core definition, simple examples, and the plain-language foundation for the whole site.</p>
+      <p><a class="inline-link" href="/what-are-twin-primes">Read What Are Twin Primes?</a></p>
+    </article>
+    <article class="metric-box theory-path-card">
+      <h3>Prime gaps</h3>
+      <p>Use the gap page when you want the spacing story that sits behind twin primes and nearby comparisons.</p>
+      <p><a class="inline-link" href="/prime-gaps">Read What Are Prime Gaps?</a></p>
+    </article>
+    <article class="metric-box theory-path-card">
+      <h3>The open question</h3>
+      <p>Read the conjecture page when you want the shortest careful statement of what is still unproved.</p>
+      <p><a class="inline-link" href="/twin-prime-conjecture">Read Twin Prime Conjecture Explained</a></p>
+    </article>
+  </div>
+</section>
+
+<section class="panel theory-panel">
+  <div class="panel-heading theory-heading">
+    <div>
+      <h2>Choose your next step</h2>
+      <p>Use the route that matches how you want to learn or explore.</p>
+    </div>
+  </div>
+  <div class="section-stack">
+    <article class="theory-section">
+      <h3>Use Lab first</h3>
+      <p>Choose Lab when you want a visual entry point and want to see twin primes, residues, and twin centers appear together in a live field.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Use Explorer first</h3>
+      <p>Choose Explorer when your question is about exact numbers, divisors, local neighborhoods, or which rows belong in a twin-prime pair.</p>
+    </article>
+    <article class="theory-section">
+      <h3>Use Analysis first</h3>
+      <p>Choose Analysis when your question is about structure: gaps, density, modular patterns, or how a selected range compares with a rough benchmark.</p>
+      <p>Need the reading path first? Open <a class="inline-link" href="/start-here">Start Here</a> for a guided route through the content, or use the <a class="inline-link" href="/glossary">Glossary</a> if you want quick definitions before opening the tools.</p>
+    </article>
+  </div>
+</section>""",
+    script_name="theory.js",
+)
+
 LAB_PAGE = PageDefinition(
     route="/lab",
-    title="TwinPrimeExplorer.com | Lab",
+    title="Twin Prime Explorer - Visualize, Find, and Analyze Twin Primes",
     nav_label="Lab",
     active_route="lab",
-    meta_description="An educational math platform for exploring twin primes, prime patterns, and twin centers through interactive visual, structural, and explanatory tools.",
+    meta_description="Explore twin primes visually, inspect prime pairs by range, and analyze prime gaps, patterns, and twin centers with Twin Prime Explorer.",
     hero_html="""<section class="hero-block">
   <div class="hero-copy">
     <p class="eyebrow">Lab</p>
-    <h1>See twin-prime structure as a visual field.</h1>
-    <p class="hero-text">Adjust the range, watch primes and <a class="inline-link" href="/glossary#glossary-term-twin-center">twin centers</a> light up, and move into exact inspection, deeper analysis, or theory context when you want more structure.</p>
+    <h1>Explore Twin Primes Visually</h1>
+    <p class="hero-text">Use the Lab to visualize twin primes, explore prime pairs by range, and study patterns, gaps, and <a class="inline-link" href="/glossary#glossary-term-twin-center">twin-center</a> structure in the prime landscape.</p>
   </div>
 </section>""",
     main_html="""<section class="panel theory-panel">
@@ -167,6 +259,7 @@ LAB_PAGE = PageDefinition(
     <article class="theory-section">
       <p>Twin primes are pairs of prime numbers that differ by two, such as 11 and 13 or 17 and 19. This site combines visual exploration, structured analysis, and guided explanations so you can study how prime gaps behave, how twin-prime candidates appear, and why certain number patterns repeat across ranges.</p>
       <p>You can <a class="inline-link" href="/lab#visualization-title">explore patterns visually in the Lab</a>, <a class="inline-link" href="/explorer">inspect exact ranges in Explorer</a>, <a class="inline-link" href="/analysis">use Analysis to interpret what the patterns are showing</a>, and read <a class="inline-link" href="/theory">Theory</a> or the <a class="inline-link" href="/glossary">Glossary</a> for mathematical context.</p>
+      <p>If you want the clearest background first, start with <a class="inline-link" href="/what-are-twin-primes">What Are Twin Primes?</a>, then compare that picture with <a class="inline-link" href="/prime-gaps">What Are Prime Gaps?</a> and the open-question framing in <a class="inline-link" href="/twin-prime-conjecture">Twin Prime Conjecture Explained</a>.</p>
     </article>
   </div>
 </section>
@@ -300,15 +393,25 @@ LAB_PAGE = PageDefinition(
 
 EXPLORER_PAGE = PageDefinition(
     route="/explorer",
-    title="TwinPrimeExplorer.com | Explorer",
+    title="Twin Prime Finder and Explorer - Inspect Prime Pairs by Range",
     nav_label="Explorer",
     active_route="explorer",
-    meta_description="Inspect primes, twin-prime structure, divisors, and prime neighborhoods one number at a time across a selected range.",
+    meta_description="Find twin primes in a selected range, inspect prime pairs row by row, and explore number structure through divisors, neighborhoods, and prime roles.",
     hero_html="""<section class="hero-block hero-grid">
   <div class="hero-copy">
     <p class="eyebrow">Explorer</p>
     <h1>Inspect the range one number at a time.</h1>
     <p class="hero-text">Exact rows, <a class="inline-link" href="/glossary#glossary-term-divisor">divisor</a> filters, and number-level classifications that complement the visualization-first Lab.</p>
+    <div class="metric-grid hero-metric-grid">
+      <article class="metric-box">
+        <h3>Best for</h3>
+        <p>Checking exact twin-prime pairs, divisor patterns, and which numbers sit inside the range story you are inspecting.</p>
+      </article>
+      <article class="metric-box">
+        <h3>Best next move</h3>
+        <p>Use Explorer after the <a class="inline-link" href="/lab">Lab</a>, or move to <a class="inline-link" href="/analysis">Analysis</a> when you want the same range summarized through gaps and density.</p>
+      </article>
+    </div>
   </div>
   <form id="analysis-form" class="control-panel">
     <label>
@@ -322,6 +425,7 @@ EXPLORER_PAGE = PageDefinition(
     <button type="submit">Analyze Range</button>
     <p class="section-copy">Web ranges are capped at 20,000 numbers and an end value of 200,000 to keep the app responsive.</p>
     <p class="section-copy"><a class="inline-link" href="/lab">Open the Visualization Lab</a></p>
+    <p class="section-copy">Need a fast refresher first? Read <a class="inline-link" href="/how-to-find-twin-primes">How To Find Twin Primes</a> or start with <a class="inline-link" href="/what-are-twin-primes">What Are Twin Primes?</a>.</p>
   </form>
 </section>""",
     main_html="""<section class="panel summary-panel">
@@ -456,15 +560,25 @@ EXPLORER_PAGE = PageDefinition(
 
 ANALYSIS_PAGE = PageDefinition(
     route="/analysis",
-    title="TwinPrimeExplorer.com | Analysis",
+    title="Twin Prime Analysis - Prime Gaps, Density, and Pattern Views",
     nav_label="Analysis",
     active_route="analysis",
-    meta_description="Read twin-prime ranges through modular structure, gaps, factors, density, and rough expected-versus-observed benchmarks.",
+    meta_description="Analyze twin-prime ranges through prime gaps, density patterns, modular structure, and observed versus expected distributions.",
     hero_html="""<section class="hero-block hero-grid">
   <div class="hero-copy">
     <p class="eyebrow">Analysis</p>
     <h1>Structured views for twin-prime patterns.</h1>
     <p class="hero-text">Deeper mathematical breakdowns for <a class="inline-link" href="/glossary#glossary-term-mod-6">modular structure</a>, <a class="inline-link" href="/glossary#glossary-term-prime-gap">prime gaps</a>, factorization signals, density windows, and expected-versus-observed counts.</p>
+    <div class="metric-grid hero-metric-grid">
+      <article class="metric-box">
+        <h3>Best for</h3>
+        <p>Reading a selected range through structure instead of rows: modular patterns, spacing behavior, density, and center comparisons.</p>
+      </article>
+      <article class="metric-box">
+        <h3>Best next move</h3>
+        <p>Start here after <a class="inline-link" href="/explorer">Explorer</a> if you want interpretation, or open <a class="inline-link" href="/how-to-read-analysis">How To Read Analysis</a> for the fastest orientation.</p>
+      </article>
+    </div>
   </div>
   <form id="analysis-form" class="control-panel">
     <label>
@@ -512,10 +626,11 @@ ANALYSIS_PAGE = PageDefinition(
     <article class="metric-box">
       <h3>How this page helps</h3>
       <p>The Analysis page gives several coordinated reads of the same twin-prime range. Each tab changes the interpretation lens, not the underlying numbers.</p>
+      <p><a class="inline-link" href="/how-to-read-analysis">Open the shorter analysis companion page</a> if you want the quick orientation first, or step back to <a class="inline-link" href="/prime-gaps">What Are Prime Gaps?</a> if the spacing language still feels unfamiliar.</p>
     </article>
     <article class="metric-box">
       <h3>If terms feel unfamiliar</h3>
-      <p>Start with Modular or Gaps for the clearest pattern read. If terms like Mod 6, twin center, or heuristic feel unfamiliar, use the <a class="inline-link" href="/glossary">Glossary</a> for quick definitions, read <a class="inline-link" href="/why-mod-6-shows-up-so-often">Why Mod 6 Shows Up So Often</a> for a short modular refresher, or use the guide for a slightly fuller read.</p>
+      <p>Start with Modular or Gaps for the clearest pattern read. If terms like Mod 6, twin center, or heuristic feel unfamiliar, use the <a class="inline-link" href="/glossary">Glossary</a> for quick definitions, read <a class="inline-link" href="/why-mod-6-shows-up-so-often">Why Mod 6 Shows Up So Often</a> for a short modular refresher, revisit <a class="inline-link" href="/prime-gaps">What Are Prime Gaps?</a> for the spacing background, or compare the page with <a class="inline-link" href="/what-bounded-gaps-between-primes-actually-proved">What Bounded Gaps Between Primes Actually Proved</a> before using the guide for a slightly fuller read.</p>
       <p><a class="inline-link" href="/how-to-read-analysis">Open the shorter analysis companion page</a></p>
       <p><a class="inline-link" href="/analysis-guide" target="_blank" rel="noopener noreferrer">Open the full analysis guide in a new tab</a></p>
     </article>
@@ -1126,6 +1241,6 @@ EXPERIMENTS_PAGE = PageDefinition(
 
 EXPLANATORY_PAGE_DEFINITIONS = [_build_explanatory_page(content) for content in EXPLANATORY_PAGES]
 
-PAGE_DEFINITIONS = [LAB_PAGE, EXPLORER_PAGE, ANALYSIS_PAGE, ANALYSIS_GUIDE_PAGE, GLOSSARY_PAGE, THEORY_PAGE, *EXPLANATORY_PAGE_DEFINITIONS, ABOUT_PAGE, CONTACT_PAGE, PRIVACY_PAGE, EXPERIMENTS_PAGE]
+PAGE_DEFINITIONS = [HOME_PAGE, LAB_PAGE, EXPLORER_PAGE, ANALYSIS_PAGE, ANALYSIS_GUIDE_PAGE, GLOSSARY_PAGE, THEORY_PAGE, *EXPLANATORY_PAGE_DEFINITIONS, ABOUT_PAGE, CONTACT_PAGE, PRIVACY_PAGE, EXPERIMENTS_PAGE]
 PAGE_BY_ROUTE = {page.route: page for page in PAGE_DEFINITIONS}
 PAGE_BY_ACTIVE_ROUTE = {page.active_route: page for page in PAGE_DEFINITIONS}

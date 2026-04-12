@@ -215,9 +215,22 @@ def test_web_payload_enforces_range_limits() -> None:
 
 def test_route_registry_is_ready_for_more_pages() -> None:
     explanatory_routes = {page["route"] for page in EXPLANATORY_PAGES}
-    assert set(PAGE_BY_ROUTE) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/about", "/contact", "/privacy", "/experiments", *explanatory_routes}
+    assert set(PAGE_BY_ROUTE) == {"/", "/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/about", "/contact", "/privacy", "/experiments", *explanatory_routes}
     rendered_pages = build_page_registry()
+    assert "/" in rendered_pages
     assert "/analysis" in rendered_pages
+    assert '<title>Twin Prime Explorer - Explore Prime Pairs, Patterns, and Gaps</title>' in rendered_pages["/"]
+    assert '<meta name="description" content="Explore twin primes, prime pairs, patterns, and gaps with Twin Prime Explorer. Start with the Lab, inspect ranges in Explorer, or use Analysis for deeper pattern views.">' in rendered_pages["/"]
+    assert '<meta property="og:url" content="https://www.twinprimeexplorer.com/">' in rendered_pages["/"]
+    assert 'Explore Twin Primes Visually' in rendered_pages["/"]
+    assert 'Open the Lab' in rendered_pages["/"]
+    assert 'Open Explorer' in rendered_pages["/"]
+    assert 'Open Analysis' in rendered_pages["/"]
+    assert 'Read What Are Twin Primes?' in rendered_pages["/"]
+    assert 'Read What Are Prime Gaps?' in rendered_pages["/"]
+    assert 'Read Twin Prime Conjecture Explained' in rendered_pages["/"]
+    assert 'Start Here' in rendered_pages["/"]
+    assert 'Glossary' in rendered_pages["/"]
     assert rendered_pages["/lab"].count('aria-label="Advertisement"') == 1
     assert rendered_pages["/explorer"].count('aria-label="Advertisement"') == 1
     assert rendered_pages["/analysis"].count('aria-label="Advertisement"') == 1
@@ -225,12 +238,30 @@ def test_route_registry_is_ready_for_more_pages() -> None:
     assert rendered_pages["/what-are-twin-primes"].count('aria-label="Advertisement"') == 2
     assert 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6401940195640064' in rendered_pages["/lab"]
     assert rendered_pages["/lab"].count('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js') == 1
+    assert '<title>Twin Prime Explorer - Visualize, Find, and Analyze Twin Primes</title>' in rendered_pages["/lab"]
+    assert '<meta name="description" content="Explore twin primes visually, inspect prime pairs by range, and analyze prime gaps, patterns, and twin centers with Twin Prime Explorer.">' in rendered_pages["/lab"]
+    assert '<meta property="og:title" content="Twin Prime Explorer - Visualize, Find, and Analyze Twin Primes">' in rendered_pages["/lab"]
+    assert '<meta property="og:url" content="https://www.twinprimeexplorer.com/lab">' in rendered_pages["/lab"]
+    assert "Explore Twin Primes Visually" in rendered_pages["/lab"]
     assert "What is Twin Prime Explorer?" in rendered_pages["/lab"]
     assert "Why study twin primes?" in rendered_pages["/lab"]
     assert "Read What Are Twin Primes?" in rendered_pages["/lab"]
+    assert "What Are Prime Gaps?" in rendered_pages["/lab"]
+    assert "Twin Prime Conjecture Explained" in rendered_pages["/lab"]
     assert 'Ad space reserved' in rendered_pages["/lab"]
+    assert '<title>Twin Prime Finder and Explorer - Inspect Prime Pairs by Range</title>' in rendered_pages["/explorer"]
+    assert '<meta name="description" content="Find twin primes in a selected range, inspect prime pairs row by row, and explore number structure through divisors, neighborhoods, and prime roles.">' in rendered_pages["/explorer"]
+    assert "How To Find Twin Primes" in rendered_pages["/explorer"]
+    assert "What Are Twin Primes?" in rendered_pages["/explorer"]
+    assert "Checking exact twin-prime pairs" in rendered_pages["/explorer"]
     assert "href=\"/analysis\"" in rendered_pages["/explorer"]
+    assert '<title>Twin Prime Analysis - Prime Gaps, Density, and Pattern Views</title>' in rendered_pages["/analysis"]
+    assert '<meta name="description" content="Analyze twin-prime ranges through prime gaps, density patterns, modular structure, and observed versus expected distributions.">' in rendered_pages["/analysis"]
     assert "Analysis Views" in rendered_pages["/analysis"]
+    assert "Open the shorter analysis companion page" in rendered_pages["/analysis"]
+    assert "Reading a selected range through structure instead of rows" in rendered_pages["/analysis"]
+    assert "What Are Prime Gaps?" in rendered_pages["/analysis"]
+    assert "What Bounded Gaps Between Primes Actually Proved" in rendered_pages["/analysis"]
     assert "Hypothesis Workbench" in rendered_pages["/experiments"]
     assert "Start here" in rendered_pages["/start-here"]
     assert "A simple reading path" in rendered_pages["/start-here"]
@@ -451,8 +482,8 @@ class _TestableHandler(web.DualPrimeRequestHandler):
 def test_request_handler_uses_crawlable_status_codes() -> None:
     root_handler = _TestableHandler('/')
     root_handler.do_GET()
-    assert root_handler.responses[-1] == HTTPStatus.PERMANENT_REDIRECT
-    assert ('Location', '/lab') in root_handler.sent_headers
+    assert root_handler.responses[-1] == HTTPStatus.OK
+    assert b'Explore twin primes through visual tools and clear mathematical context.' in root_handler.wfile.getvalue()
 
     page_handler = _TestableHandler('/theory')
     page_handler.do_GET()
@@ -484,12 +515,22 @@ def test_load_web_runtime_supports_dev_mode() -> None:
     runtime = load_web_runtime(dev_mode=True)
 
     explanatory_routes = {page["route"] for page in EXPLANATORY_PAGES}
-    assert set(runtime["page_by_route"]) == {"/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/about", "/contact", "/privacy", "/experiments", *explanatory_routes}
+    assert set(runtime["page_by_route"]) == {"/", "/lab", "/explorer", "/analysis", "/analysis-guide", "/glossary", "/theory", "/about", "/contact", "/privacy", "/experiments", *explanatory_routes}
+    assert '<title>Twin Prime Explorer - Explore Prime Pairs, Patterns, and Gaps</title>' in runtime["page_registry"]["/"]
+    assert 'Explore Twin Primes Visually' in runtime["page_registry"]["/"]
+    assert 'href="/lab"' in runtime["page_registry"]["/"]
+    assert 'href="/explorer"' in runtime["page_registry"]["/"]
+    assert 'href="/analysis"' in runtime["page_registry"]["/"]
+    assert 'Read Twin Prime Conjecture Explained' in runtime["page_registry"]["/"]
+    assert 'href="/glossary"' in runtime["page_registry"]["/"]
+    assert 'href="/"' in runtime["page_registry"]["/"]
+    assert 'class="nav-link active" href="/">Home</a>' in runtime["page_registry"]["/"]
     assert "Visualization Lab" in runtime["page_registry"]["/lab"]
     assert "visualization-stage" in runtime["page_registry"]["/lab"]
     assert "visualization-pagination" in runtime["page_registry"]["/lab"]
     assert runtime["ads_txt"].strip() == "google.com, pub-6401940195640064, DIRECT, f08c47fec0942fa0"
     assert runtime["robots_txt"] == "User-agent: *\nAllow: /\n\nSitemap: https://www.twinprimeexplorer.com/sitemap.xml\n"
+    assert "<loc>https://www.twinprimeexplorer.com/</loc>" in runtime["sitemap_xml"]
     assert "<loc>https://www.twinprimeexplorer.com/lab</loc>" in runtime["sitemap_xml"]
     assert "Page not found" in runtime["not_found_html"]
     assert "mod-base-input" in runtime["page_registry"]["/lab"]
@@ -630,6 +671,7 @@ def test_load_web_runtime_supports_dev_mode() -> None:
     assert "analysis-views-title" in runtime["explorer_js"]
     assert "Analyze centers in Factors" in runtime["explorer_js"]
     assert "Glossary" in runtime["page_registry"]["/glossary"]
+    assert "site-footer" in runtime["page_registry"]["/"]
     assert "site-footer" in runtime["page_registry"]["/lab"]
     assert "href=\"/about\"" in runtime["page_registry"]["/lab"]
     assert "href=\"/contact\"" in runtime["page_registry"]["/lab"]
